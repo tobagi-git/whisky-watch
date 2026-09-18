@@ -1,0 +1,50 @@
+name: whisky-watch
+
+on:
+  schedule:
+    # GitHub cron은 UTC 기준 (KST = UTC+9). 실행이 5~15분 늦어질 수 있다.
+    - cron: "10 23 * * *"          # 08:10 KST
+    - cron: "10 4 * * *"           # 13:10 KST
+    - cron: "40,50 7 * * *"        # 16:40, 16:50 KST — 무카와 17시 업데이트 대비
+    - cron: "*/10 8 * * *"         # 17:00~17:50 KST (10분 간격)
+    - cron: "0,10,20,30 9 * * *"   # 18:00~18:30 KST
+    - cron: "10 14 * * *"          # 23:10 KST
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: whisky-watch
+  cancel-in-progress: false
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      TZ: Asia/Seoul
+      WHISKY_DATA_DIR: ${{ github.workspace }}/data
+      WHISKY_WATCHLIST: ${{ github.workspace }}/watchlist.json
+      GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Poll shops
+        run: python whisky_watch.py --force
+
+      - name: Save state
+        run: |
+          # 로그는 최근 3000줄만 유지
+          if [ -f data/watch.log ]; then tail -n 3000 data/watch.log > data/watch.log.tmp && mv data/watch.log.tmp data/watch.log; fi
+          git config user.name "whisky-watch-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "state: $(date '+%Y-%m-%d %H:%M') KST"
+          git pull --rebase
+          git push

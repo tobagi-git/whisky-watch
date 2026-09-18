@@ -1,0 +1,56 @@
+{
+  "notify": {
+    "email": "[수신 메일]"
+  },
+  "keywords_en": [
+    "1991", "springbank", "longrow", "hazelburn", "kilkerran",
+    "brora", "port ellen", "rosebank", "karuizawa", "hanyu",
+    "laphroaig", "ardbeg", "lagavulin", "bowmore", "caol ila",
+    "octomore", "bruichladdich", "kilchoman", "port charlotte",
+    "cairdeas", "feis ile", "committee",
+    "stagg", "booker's", "bookers", "russell's", "russells",
+    "weller", "elijah craig", "michter's", "michters", "little book",
+    "glen keith", "ben nevis", "brackla"
+  ],
+  "keywords_ko": [
+    "1991", "스프링뱅크", "브로라", "포트엘렌", "로즈뱅크", "가루이자와", "하뉴",
+    "라프로익", "아드벡", "라가불린", "보모어", "카올일라",
+    "옥토모어", "브룩라딕", "킬호만", "포트샬럿",
+    "스태그", "부커스", "러셀스", "웰러", "엘리야 크레이그", "미히터스", "리틀북"
+  ],
+  "keywords_ja": [
+    "1991", "スプリングバンク", "ロングロウ", "ヘーゼルバーン", "キルカラン",
+    "ブローラ", "ポートエレン", "ローズバンク", "軽井沢", "羽生",
+    "ラフロイグ", "アードベッグ", "アードベック", "ラガヴーリン", "ボウモア", "カリラ",
+    "オクトモア", "ブルイックラディ", "キルホーマン", "ポートシャーロット",
+    "スタッグ", "ブッカーズ", "ラッセルズ", "ウェラー", "イライジャクレイグ",
+    "ミクターズ", "リトルブック", "グレンキース", "ベンネヴィス", "ブラックラ"
+  ],
+  "sites": {
+    "rudder": {
+      "enabled": true,
+      "collections": [
+        "new", "old-rare-bottle", "decadent-drinks", "club-qing",
+        "the-maltman-frontier", "scout-drinks", "the-absolute-choice",
+        "trickster", "eidolon", "requiem"
+      ]
+    },
+    "mukawa": { "enabled": true },
+    "deinwhisky": {
+      "enabled": true,
+      "categories": ["neues", "angebote", "raritaeten", "exklusiv"]
+    },
+    "shinanoya": {
+      "enabled": true,
+      "categories": { "신착": "ct211", "세일": "ct1443" }
+    },
+    "vitalaus": {
+      "enabled": true,
+      "categories": {
+        "아메리칸위스키": "list-5010",
+        "스카치위스키": "list-5050",
+        "주류특가(세일)": "list-60"
+      }
+    }
+  }
+}
