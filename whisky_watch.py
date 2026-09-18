@@ -329,6 +329,13 @@ def main():
     wl = load_json(WATCHLIST, {})
     seen = load_json(SEEN, {"items": {}, "last_ok": None})
 
+    if "--test-email" in args:
+        addr = wl.get("notify", {}).get("email")
+        send_email("[테스트] 위스키 워치 (클라우드)",
+                   "GitHub Actions에서 보낸 테스트 메일입니다. 이 메일이 왔으면 클라우드 발송이 정상입니다.", addr)
+        log(f"[TEST] 테스트 메일 발송 시도 → {addr}")
+        return
+
     if "--status" in args:
         by_site = {}
         for k in seen["items"]:

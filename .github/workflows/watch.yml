@@ -10,6 +10,11 @@ on:
     - cron: "0,10,20,30 9 * * *"   # 18:00~18:30 KST
     - cron: "10 14 * * *"          # 23:10 KST
   workflow_dispatch:
+    inputs:
+      test_email:
+        description: "폴링 대신 테스트 메일만 보내기"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -34,7 +39,12 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Send test email
+        if: ${{ inputs.test_email }}
+        run: python whisky_watch.py --test-email
+
       - name: Poll shops
+        if: ${{ !inputs.test_email }}
         run: python whisky_watch.py --force
 
       - name: Save state
