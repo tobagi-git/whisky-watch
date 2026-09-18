@@ -356,6 +356,7 @@ def main():
     known = seen["items"]
     new_hits, sale_hits, errors = [], [], 0
     total_fetched = 0
+    per_site = {}
 
     for site, cfg in wl.get("sites", {}).items():
         if not cfg.get("enabled", True):
@@ -371,6 +372,7 @@ def main():
             continue
 
         total_fetched += len(items)
+        per_site[site] = len(items)
         for it in items:
             iid = it["id"]
             kw = matches_keyword(it["title"], kws)
@@ -427,7 +429,8 @@ def main():
     SEEN.write_text(json.dumps(seen, ensure_ascii=False, indent=1))
 
     log(f"[OK] 폴링 완료 → 신규 {len(new_hits)}건, 세일 {len(sale_hits)}건"
-        + (f", 사이트 오류 {errors}건" if errors else ""))
+        + (f", 사이트 오류 {errors}건" if errors else "")
+        + " | 수집 " + ", ".join(f"{k} {v}" for k, v in per_site.items()))
 
     if new_hits or sale_hits:
         all_hits = [(it, kw) for it, kw in new_hits] + [(it, kw) for it, kw, _ in sale_hits]
