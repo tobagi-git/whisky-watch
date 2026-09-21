@@ -422,8 +422,10 @@ def handle_telegram(state, dry):
     for u in updates:
         state["tg_offset"] = u["update_id"] + 1
         if "callback_query" in u:
+            log(f"텔레그램 콜백 수신: {u['callback_query'].get('data')}")
             state.setdefault("_callbacks", []).append(u["callback_query"])
             continue
+        log(f"텔레그램 업데이트 수신: {[k for k in u if k != 'update_id']}")
         msg = u.get("message") or u.get("edited_message")
         if not msg or "text" not in msg:
             continue
@@ -507,6 +509,7 @@ def apply_callbacks(state, dry):
         key, choice = m.group(1), m.group(2)
         p = pend.get(key)
         if not p:
+            log(f"콜백 키 미존재: {key} (보류 목록: {list(pend)})")
             tg.edit(chat_id, msg_id, "⌛ 만료된 요청입니다. /add 를 다시 보내주세요.")
             continue
         if choice == "x":
