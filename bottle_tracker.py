@@ -315,6 +315,23 @@ CHECKERS = {"rudder": check_rudder, "mukawa": check_mukawa, "shinanoya": check_s
 
 
 # ---------------------------------------------------------------- 키워드 후보
+_AGE_RE = re.compile(r"(?<!\d)(\d{1,2})\s*(?:年|years?\s*old|years?|yo|jahre|y\.o\.)(?!\d)", re.I)
+
+
+def title_age(title):
+    """제목에 명시된 숙성연수(예: '34年', '23 Year Old', '12 Jahre'). 없으면 None."""
+    m = _AGE_RE.search(title or "")
+    return int(m.group(1)) if m else None
+
+
+def age_conflict(title, numbers):
+    """검색어에 숙성연수로 보이는 숫자(3~70)가 있고 제목에도 명시 연수가 있는데 서로 다르면 True.
+    'Chapter 23' 같은 숫자가 23년으로 오인되는 것을 막는다(2026-09-22 실측)."""
+    ages = [int(n) for n in numbers if n.isdigit() and 3 <= int(n) <= 70]
+    ta = title_age(title)
+    return bool(ages) and ta is not None and ta not in ages
+
+
 # 상품명에서 검색어를 만들 때 버리는 범용 단어 — 사이트마다 표기가 달라 매칭만 방해한다
 _STOP = {"year", "years", "old", "yo", "single", "malt", "whisky", "whiskey", "scotch", "cask", "casks",
          "edition", "release", "bottle", "bottling", "the", "of", "&", "and", "strength", "limited",
@@ -340,12 +357,18 @@ def title_matches(title, alias):
 
 
 def find_candidates(bottle, items, exclude_urls):
-    """구체적인 별칭(토큰 많은)에 걸린 순으로 정렬. 가타카나 한 단어 같은 넓은 별칭은 뒤로 밀린다."""
+    """구체적인 별칭(토큰 많은)에 걸린 순으로 정렬. 가타카나 한 단어 같은 넓은 별칭은 뒤로 밀린다.
+    exclude_urls: 이 보틀 및 다른 보틀에 이미 확정된 링크(다른 병의 매물을 후보로 내지 않음)."""
     scored = []
+    aliases = alias_list(bottle)
+    nums = [t for a in aliases for t in re.split(r"\s+", a) if t.isdigit()]
     for it in items:
         if norm_url(it["url"]) in exclude_urls:
             continue
-        best = max((title_matches(it.get("title", ""), a) for a in alias_list(bottle)), default=0)
+        title = it.get("title", "")
+        if age_conflict(title, nums):
+            continue
+        best = max((title_matches(title, a) for a in aliases), default=0)
         if best:
             scored.append((best, it))
     scored.sort(key=lambda x: -x[0])
@@ -433,6 +456,8 @@ def search_candidates(q, items, limit=6):
             continue
         if num_toks and not any(hit(vs, title) for vs, _ in num_toks):
             continue  # 숙성연수·빈티지·배치 번호를 적었으면 그 숫자는 반드시 있어야 함
+        if age_conflict(title, [vs[0] for vs, _ in num_toks]):
+            continue  # 제목의 명시 연수가 검색 숫자와 다르면 다른 병
         if not any(hit(vs, title) for vs, w in toks if w != 1.5):
             continue  # 숫자만 맞는 건 후보가 아님
         score = sum(w for vs, w in toks if hit(vs, title))
@@ -712,6 +737,7 @@ def main():
     ts = now().strftime("%Y-%m-%d %H:%M")
     bstate_all = state.setdefault("bottles", {})
 
+    all_confirmed = {norm_url(u) for b in bottles for u in re.split(r"[\s,]+", b["links"]) if u.strip().startswith("http")}
     for b in bottles:
         bs = bstate_all.setdefault(b["id"], {"links": {}, "suggested": []})
         urls = [norm_url(u) for u in re.split(r"[\s,]+", b["links"]) if u.strip().startswith("http")]
@@ -760,7 +786,7 @@ def main():
 
         # 후보 제안 (확정 링크가 없는 사이트만)
         covered = {site_of(u) for u in urls}
-        cands = [it for it in find_candidates(b, items, set(urls))
+        cands = [it for it in find_candidates(b, items, set(urls) | all_confirmed)
                  if it["site"] not in covered]
         new_c = [it for it in cands if norm_url(it["url"]) not in bs["suggested"]]
         if new_c:
