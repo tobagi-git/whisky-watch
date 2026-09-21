@@ -454,8 +454,8 @@ def search_candidates(q, items, limit=6):
         title = (it.get("title") or "").lower()
         if brand_toks and not all(hit(vs, title) for vs, _ in brand_toks):
             continue
-        if num_toks and not any(hit(vs, title) for vs, _ in num_toks):
-            continue  # 숙성연수·빈티지·배치 번호를 적었으면 그 숫자는 반드시 있어야 함
+        if num_toks and not all(hit(vs, title) for vs, _ in num_toks):
+            continue  # 숙성연수·빈티지·배치 번호를 적었으면 그 숫자들이 전부 있어야 함(1991 23 → 1989 23 제외)
         if age_conflict(title, [vs[0] for vs, _ in num_toks]):
             continue  # 제목의 명시 연수가 검색 숫자와 다르면 다른 병
         if not any(hit(vs, title) for vs, w in toks if w != 1.5):
