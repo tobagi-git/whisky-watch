@@ -553,7 +553,7 @@ def handle_telegram(state, dry):
             tg.send(chat_id, f"⚠️ 실패: {tg.esc(e)}")
 
 
-def offer_add_candidates(state, items, rates):
+def offer_add_candidates(state, items, rates, tracked_urls=None):
     """/add 질의마다 후보를 찾아 버튼 메시지로 보낸다. 실제 생성은 사용자가 버튼을 누른 뒤(다음 실행)."""
     chat_default = state.get("chat_id")
     pend = state.setdefault("pending_adds", {})
@@ -580,8 +580,10 @@ def offer_add_candidates(state, items, rates):
         for i, c in enumerate(cands, 1):
             cur = SITE_CUR.get(c["site"], "KRW")
             k = to_krw(c.get("price"), cur, rates)
+            owner = (tracked_urls or {}).get(norm_url(c["url"]))
             lines.append(f"<b>{i}.</b> [{SITE_LABEL.get(c['site'], c['site'])}] {tg.esc(c['title'])} {fmt_price(c.get('price'), cur)}"
-                         + (f" (≈{k:,}원)" if k else "") + f"\n    {c['url']}")
+                         + (f" (≈{k:,}원)" if k else "")
+                         + (f"\n    ⚠️ 이미 추적 중인 매물: {tg.esc(owner)}" if owner else "") + f"\n    {c['url']}")
         if not cands:
             lines.append("현재 5개 사이트 매물에는 비슷한 게 없습니다. 이름만으로 추가해두면 이후 새로 뜰 때 후보를 보내드립니다.")
         btns = [{"text": str(i), "callback_data": f"add:{key}:{i}"} for i in range(1, len(cands) + 1)]
@@ -745,7 +747,9 @@ def main():
         except Exception as e:
             log(f"폴링 결과 없음·직접 수집 실패: {e}")
     latest_by_url = {norm_url(it["url"]): it for it in items}
-    offer_add_candidates(state, items, rates)
+    tracked_urls = {norm_url(u): b["name"] for b in bottles
+                    for u in re.split(r"[\s,]+", b["links"]) if u.strip().startswith("http")}
+    offer_add_candidates(state, items, rates, tracked_urls)
 
     alerts, list_lines = [], []
     hist_rows = []
