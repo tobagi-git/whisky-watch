@@ -189,7 +189,34 @@ def parse_page(pg):
         "target_krw": (g("목표가KRW").get("number")),
         "status_text": _rt(g("추적 현황")),
         "stock": ((g("재고").get("select") or {}).get("name")),
+        "wb_id": _rt(g("WB_ID")),
     }
+
+
+def notion_find_existing(wb_id=None, url=None, title=None):
+    """중복 방지 — WB_ID, 추적 링크에 같은 URL, 또는 같은 상품명이 있는 행을 찾는다. 없으면 None."""
+    if not NOTION_TOKEN:
+        return None
+    ors = []
+    if wb_id:
+        ors.append({"property": "WB_ID", "rich_text": {"equals": str(wb_id)}})
+    if url:
+        ors.append({"property": "추적 링크", "rich_text": {"contains": norm_url(url)}})
+    if title:
+        ors.append({"property": "상품명", "title": {"equals": title}})
+    if not ors:
+        return None
+    flt = {"filter": {"or": ors} if len(ors) > 1 else ors[0], "page_size": 5}
+    for path, ver in ((f"/data_sources/{DS_ID}/query", "2025-09-03"), (f"/databases/{DB_ID}/query", "2022-06-28")):
+        try:
+            r = notion("POST", path, flt, ver)
+            res = [parse_page(pg) for pg in r.get("results", [])]
+            # 중복 표시된 행은 제외
+            res = [b for b in res if not b["name"].startswith("[중복")]
+            return res[0] if res else None
+        except RuntimeError as e:
+            log(f"기존 행 조회 실패({path}): {e}")
+    return None
 
 
 def notion_update(page_id, props):
@@ -496,10 +523,19 @@ def offer_add_candidates(state, items, rates):
         key = f"{int(time.time()) % 100000000:x}"
         pend[key] = {"query": q, "chat": chat_id, "ts": now().isoformat(), "wb_id": wb_id,
                      "cands": [{"site": c["site"], "title": c["title"], "url": c["url"], "price": c.get("price")} for c in cands]}
+        existing = None
+        if not dry:
+            try:
+                existing = notion_find_existing(wb_id=wb_id)
+            except Exception as e:
+                log(f"기존 행 조회 예외: {e}")
+        pend[key]["existing"] = {"id": existing["id"], "name": existing["name"]} if existing else None
         head = f"🔍 <b>{tg.esc(q)}</b>" + (f" (WB {wb_id})" if wb_id else "")
-        lines = [f"{head} 후보 {len(cands)}건 — 번호를 누르거나 숫자로 답하면 노션에 추가됩니다(반영은 다음 실행, ≤20분)"]
-        if wb_id and len(cands) > 6:
-            lines.append("위스키베이스 링크는 증류소·빈티지만 알 수 있어 후보가 넓습니다. 링크 뒤에 숙성연수·병입자를 덧붙이면 좁혀집니다.")
+        lines = [f"{head} — 현재 매물 중 이 글자가 들어간 것 {len(cands)}건 (같은 병이라는 뜻은 아님, 숙성연수·병입자 확인 후 고르세요)"]
+        if existing:
+            lines.append(f"📒 노션에 이미 있는 행: <b>{tg.esc(existing['name'])}</b> → <b>0번</b>을 누르면 이 행에 추적을 켭니다(새 행 안 만듦)")
+        if wb_id:
+            lines.append("위스키베이스 페이지는 봇이 못 읽어 링크의 증류소·빈티지만 씁니다. 링크 뒤에 '23년 OB'처럼 덧붙이면 후보가 좁혀집니다.")
         rows = []
         for i, c in enumerate(cands, 1):
             cur = SITE_CUR.get(c["site"], "KRW")
@@ -511,7 +547,7 @@ def offer_add_candidates(state, items, rates):
         btns = [{"text": str(i), "callback_data": f"add:{key}:{i}"} for i in range(1, len(cands) + 1)]
         for i in range(0, len(btns), 4):
             rows.append(btns[i:i + 4])
-        rows.append([{"text": "이름만 추가(후보 없음)", "callback_data": f"add:{key}:0"},
+        rows.append([{"text": ("0: 기존 행에 추적 켜기" if existing else "0: 이름만 추가(후보 없음)"), "callback_data": f"add:{key}:0"},
                      {"text": "취소", "callback_data": f"add:{key}:x"}])
         r = tg.send(chat_id or chat_default, "\n".join(lines), reply_markup={"inline_keyboard": rows})
         try:
@@ -559,16 +595,33 @@ def apply_callbacks(state, dry):
             else:
                 c = p["cands"][n - 1]
                 name, aliases, url = c["title"], f"{p['query']}, {c['title']}", c["url"]
+            target = p.get("existing")  # WB_ID로 이미 찾아둔 행
+            if not dry and not target:
+                ex = notion_find_existing(url=url or None, title=name if n else None)
+                target = {"id": ex["id"], "name": ex["name"], "links": ex["links"], "aliases": ex["aliases"]} if ex else None
             if dry:
-                log(f"(dry) 노션 생성: {name} / {url}")
+                log(f"(dry) 노션 {'갱신' if target else '생성'}: {name} / {url}")
+            elif target:
+                props = {"추적": {"checkbox": True}}
+                old_links = target.get("links") or ""
+                if url and norm_url(url) not in old_links:
+                    props["추적 링크"] = {"rich_text": [{"text": {"content": (old_links + "\n" + url).strip()}}]}
+                old_al = target.get("aliases") or ""
+                if p["query"].lower() not in old_al.lower():
+                    props["추적 키워드"] = {"rich_text": [{"text": {"content": (old_al + ", " + p["query"]).strip(", ")[:1900]}}]}
+                if p.get("wb_id"):
+                    props["WB_ID"] = {"rich_text": [{"text": {"content": p["wb_id"]}}]}
+                notion_update(target["id"], props)
+                name = target["name"]
+                log(f"노션 기존 행에 추적 설정(텔레그램): {name}")
             else:
                 props_extra = {"추적 링크": {"rich_text": [{"text": {"content": url}}]}} if url else {}
                 if p.get("wb_id"):
                     props_extra["WB_ID"] = {"rich_text": [{"text": {"content": p["wb_id"]}}]}
-                page = notion_create_tracked(name, aliases, props_extra)
+                notion_create_tracked(name, aliases, props_extra)
                 log(f"노션 행 생성(텔레그램): {name}")
             del pend[key]
-            tg.edit(chat_id, msg_id, f"✅ 추가·추적 시작: <b>{tg.esc(name)}</b>" + (f"\n{url}" if url else "")
+            tg.edit(chat_id, msg_id, f"✅ {'기존 행에 추적 설정' if target else '추가·추적 시작'}: <b>{tg.esc(name)}</b>" + (f"\n{url}" if url else "")
                     + (f"\nWB_ID {p['wb_id']} 기록" if p.get("wb_id") else "")
                     + "\n다음 실행부터 재고·가격을 확인합니다.")
         except Exception as e:
