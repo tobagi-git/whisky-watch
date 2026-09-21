@@ -553,7 +553,7 @@ def handle_telegram(state, dry):
             tg.send(chat_id, f"⚠️ 실패: {tg.esc(e)}")
 
 
-def offer_add_candidates(state, items, rates, tracked_urls=None):
+def offer_add_candidates(state, items, rates, tracked_urls=None, dry=False):
     """/add 질의마다 후보를 찾아 버튼 메시지로 보낸다. 실제 생성은 사용자가 버튼을 누른 뒤(다음 실행)."""
     chat_default = state.get("chat_id")
     pend = state.setdefault("pending_adds", {})
@@ -749,7 +749,7 @@ def main():
     latest_by_url = {norm_url(it["url"]): it for it in items}
     tracked_urls = {norm_url(u): b["name"] for b in bottles
                     for u in re.split(r"[\s,]+", b["links"]) if u.strip().startswith("http")}
-    offer_add_candidates(state, items, rates, tracked_urls)
+    offer_add_candidates(state, items, rates, tracked_urls, dry)
 
     alerts, list_lines = [], []
     hist_rows = []
