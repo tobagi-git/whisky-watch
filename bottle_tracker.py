@@ -324,10 +324,24 @@ def title_age(title):
     return int(m.group(1)) if m else None
 
 
-def age_conflict(title, numbers):
-    """검색어에 숙성연수로 보이는 숫자(3~70)가 있고 제목에도 명시 연수가 있는데 서로 다르면 True.
-    'Chapter 23' 같은 숫자가 23년으로 오인되는 것을 막는다(2026-09-22 실측)."""
-    ages = [int(n) for n in numbers if n.isdigit() and 3 <= int(n) <= 70]
+_NOT_AGE_PREV = {"batch", "배치", "バッチ", "cask", "캐스크", "カスク", "chapter", "ch", "ch.", "no", "no.", "#",
+                 "release", "릴리즈", "リリース", "edition", "에디션", "vol", "vol.", "lot", "bottle", "bottling"}
+
+
+def query_ages(text):
+    """검색어/별칭에서 숙성연수로 볼 숫자(3~70)만 뽑는다 — 배치·캐스크·챕터·No. 뒤의 숫자는 제외."""
+    toks = [t for t in re.split(r"\s+", (text or "").lower().replace("#", " # ")) if t]
+    ages = []
+    for i, t in enumerate(toks):
+        t2 = re.sub(r"(년|yo|years?|jahre)$", "", t)
+        if t2.isdigit() and 3 <= int(t2) <= 70 and (i == 0 or toks[i - 1] not in _NOT_AGE_PREV):
+            ages.append(int(t2))
+    return ages
+
+
+def age_conflict(title, ages):
+    """검색어에 숙성연수(query_ages)가 있고 제목에도 명시 연수가 있는데 서로 다르면 True.
+    'Chapter 23'이 23년으로 오인되거나(2026-09-22 실측), 34年 병이 23년 검색에 걸리는 것을 막는다."""
     ta = title_age(title)
     return bool(ages) and ta is not None and ta not in ages
 
@@ -361,12 +375,12 @@ def find_candidates(bottle, items, exclude_urls):
     exclude_urls: 이 보틀 및 다른 보틀에 이미 확정된 링크(다른 병의 매물을 후보로 내지 않음)."""
     scored = []
     aliases = alias_list(bottle)
-    nums = [t for a in aliases for t in re.split(r"\s+", a) if t.isdigit()]
+    ages = [a for al in aliases for a in query_ages(al)]
     for it in items:
         if norm_url(it["url"]) in exclude_urls:
             continue
         title = it.get("title", "")
-        if age_conflict(title, nums):
+        if age_conflict(title, ages):
             continue
         best = max((title_matches(title, a) for a in aliases), default=0)
         if best:
@@ -437,6 +451,7 @@ def expand_query(q):
 def search_candidates(q, items, limit=6):
     """현재 매물 전체에서 유사 후보. 브랜드 토큰이 있으면 브랜드가 맞는 것만."""
     toks = expand_query(q)
+    ages = query_ages(q)
     if not toks:
         return []
     brand_toks = [t for t in toks if t[1] == 2.0]
@@ -456,8 +471,8 @@ def search_candidates(q, items, limit=6):
             continue
         if num_toks and not all(hit(vs, title) for vs, _ in num_toks):
             continue  # 숙성연수·빈티지·배치 번호를 적었으면 그 숫자들이 전부 있어야 함(1991 23 → 1989 23 제외)
-        if age_conflict(title, [vs[0] for vs, _ in num_toks]):
-            continue  # 제목의 명시 연수가 검색 숫자와 다르면 다른 병
+        if age_conflict(title, ages):
+            continue  # 제목의 명시 연수가 검색의 숙성연수와 다르면 다른 병
         if not any(hit(vs, title) for vs, w in toks if w != 1.5):
             continue  # 숫자만 맞는 건 후보가 아님
         score = sum(w for vs, w in toks if hit(vs, title))
