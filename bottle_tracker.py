@@ -438,6 +438,16 @@ def handle_telegram(state, dry):
             continue  # 등록된 사람만
         cmd, _, arg = text.partition(" ")
         cmd = cmd.lower().split("@")[0]
+        # 후보 메시지에 버튼 대신 숫자/취소를 문자로 답한 경우 → 가장 최근 보류 건의 선택으로 간주
+        pend = state.get("pending_adds", {})
+        mine = sorted((k for k, v in pend.items() if v.get("chat") == chat_id), key=lambda k: pend[k]["ts"])
+        if mine and re.fullmatch(r"\d{1,2}|취소|x", text.strip().lower()):
+            key = mine[-1]
+            choice = "x" if text.strip().lower() in ("취소", "x") else text.strip()
+            state.setdefault("_callbacks", []).append(
+                {"id": None, "data": f"add:{key}:{choice}",
+                 "message": {"chat": {"id": chat_id}, "message_id": pend[key].get("message_id")}})
+            continue
         try:
             if cmd in ("/start", "/help"):
                 tg.send(chat_id, HELP)
@@ -502,7 +512,8 @@ def apply_callbacks(state, dry):
         data = cb.get("data", "")
         chat_id = cb.get("message", {}).get("chat", {}).get("id")
         msg_id = cb.get("message", {}).get("message_id")
-        tg.answer_callback(cb.get("id"))
+        if cb.get("id"):
+            tg.answer_callback(cb["id"])
         m = re.fullmatch(r"add:([0-9a-f]+):(\d+|x)", data)
         if not m:
             continue
@@ -517,6 +528,9 @@ def apply_callbacks(state, dry):
             tg.edit(chat_id, msg_id, f"🚫 취소: {tg.esc(p['query'])}")
             continue
         n = int(choice)
+        if n > len(p["cands"]):
+            tg.send(chat_id, f"후보는 1~{len(p['cands'])}번입니다. 다시 답해주세요.")
+            continue
         try:
             if n == 0:
                 name, aliases, url = p["query"], p["query"], ""

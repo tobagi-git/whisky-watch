@@ -46,8 +46,13 @@ def send(chat_id, text, html=True, reply_markup=None):
 
 
 def edit(chat_id, message_id, text, reply_markup=None):
-    return api("editMessageText", chat_id=chat_id, message_id=message_id, text=text[:4000],
-               parse_mode="HTML", disable_web_page_preview="true", reply_markup=reply_markup)
+    if not message_id:
+        return send(chat_id, text, reply_markup=reply_markup)
+    r = api("editMessageText", chat_id=chat_id, message_id=message_id, text=text[:4000],
+            parse_mode="HTML", disable_web_page_preview="true", reply_markup=reply_markup)
+    if not (r or {}).get("ok"):
+        return send(chat_id, text, reply_markup=reply_markup)
+    return r
 
 
 def answer_callback(callback_id, text=None):
