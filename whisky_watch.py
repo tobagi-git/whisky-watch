@@ -364,6 +364,7 @@ def main():
     new_hits, sale_hits, errors = [], [], 0
     total_fetched = 0
     per_site = {}
+    all_items = []
 
     for site, cfg in wl.get("sites", {}).items():
         if not cfg.get("enabled", True):
@@ -380,6 +381,7 @@ def main():
 
         total_fetched += len(items)
         per_site[site] = len(items)
+        all_items.extend(items)
         for it in items:
             iid = it["id"]
             kw = matches_keyword(it["title"], kws)
@@ -408,6 +410,12 @@ def main():
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
                                "on_sale_flag": it.get("on_sale_flag", False),
                                "first_seen": prev.get("first_seen")}
+
+    # 보틀 추적기(bottle_tracker.py)가 후보 탐색에 쓰도록 이번 폴링의 전체 상품을 저장
+    try:
+        (DATA / "latest_items.json").write_text(json.dumps(all_items, ensure_ascii=False))
+    except Exception as e:
+        log(f"  [ERR] latest_items 저장: {e}")
 
     # 정상 폴링이면 항상 상품이 수백 개 나온다 — 0개면 전 사이트 실패(네트워크 등)로 보고
     # 실패 처리(seen.json·last_ok 갱신 안 함). 이전엔 이 경우도 "[OK] 신규 0건"으로 기록했다.
@@ -448,6 +456,15 @@ def main():
             lines.append(f"...외 {len(all_hits) - 3}건")
         subject = f"위스키 신규 {len(new_hits)}건 · 세일 {len(sale_hits)}건"
         notify(subject, "\n".join(lines), url=all_hits[0][0]["url"])
+
+        try:
+            import tg
+            chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
+            if tg.TOKEN and chat:
+                tg.send(chat, "<b>" + tg.esc(subject) + "</b>\n" + "\n".join(
+                    f"· [{it['site']}] {tg.esc(it['title'])} {it.get('price') or ''}\n  {it['url']}" for it, kw in all_hits))
+        except Exception as e:
+            log(f"  [ERR] telegram: {e}")
 
         email_addr = wl.get("notify", {}).get("email")
         if email_addr:

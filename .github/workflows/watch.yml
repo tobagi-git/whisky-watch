@@ -32,6 +32,8 @@ jobs:
       WHISKY_DATA_DIR: ${{ github.workspace }}/data
       WHISKY_WATCHLIST: ${{ github.workspace }}/watchlist.json
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+      NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
@@ -46,6 +48,10 @@ jobs:
       - name: Poll shops
         if: ${{ !inputs.test_email }}
         run: python whisky_watch.py --force
+
+      - name: Track wanted bottles (Notion + Telegram)
+        if: ${{ !inputs.test_email }}
+        run: python bottle_tracker.py
 
       - name: Save state
         run: |
