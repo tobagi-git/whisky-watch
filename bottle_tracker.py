@@ -336,6 +336,21 @@ def _load_brands():
     return groups, generic
 
 
+WB_URL_RE = re.compile(r"whiskybase\.com/whiskies/whisky/(\d+)(?:/([a-z0-9\-]+))?", re.I)
+
+
+def parse_wb_url(text):
+    """위스키베이스 링크 → (wb_id, 검색어, 나머지 텍스트). 페이지는 Cloudflare로 못 읽으니 URL 슬러그만 쓴다.
+    예: .../whisky/58360/laphroaig-1991 → ('58360', 'laphroaig 1991', '')"""
+    m = WB_URL_RE.search(text)
+    if not m:
+        return None, text, ""
+    wb_id, slug = m.group(1), (m.group(2) or "")
+    rest = re.sub(r"https?://\S+", " ", text).strip()
+    query = (slug.replace("-", " ") + " " + rest).strip()
+    return wb_id, query, rest
+
+
 def expand_query(q):
     """입력을 토큰으로 쪼개고, 브랜드 표기는 모든 언어 변형으로 펼친다.
     반환: [(variants:list, weight:float)] — variants 중 하나라도 제목에 있으면 그 토큰은 매칭."""
@@ -408,6 +423,7 @@ def search_candidates(q, items, limit=6):
 # ---------------------------------------------------------------- 텔레그램 명령
 HELP = ("<b>위스키 추적 봇</b>\n"
         "/add 보틀명 — 한/영/일 대충 써도 됨. 현재 매물에서 후보를 찾아 버튼으로 보여주고, 고른 것만 노션에 추가\n"
+        "위스키베이스 링크만 보내도 됨(뒤에 '34년 whiskyland'처럼 덧붙이면 후보가 좁혀짐) — WB_ID도 함께 기록\n"
         "/list — 추적 중인 보틀과 현황\n"
         "/link 보틀명일부 URL — 확정 상품 링크 추가\n"
         "/stop 보틀명일부 — 추적 해제\n"
@@ -451,12 +467,14 @@ def handle_telegram(state, dry):
         try:
             if cmd in ("/start", "/help"):
                 tg.send(chat_id, HELP)
-            elif cmd == "/add":
-                name = arg.replace("|", " ").strip()
+            elif cmd == "/add" or WB_URL_RE.search(text):
+                raw = text if cmd != "/add" else arg
+                wb_id, name, _ = parse_wb_url(raw.replace("|", " "))
+                name = name.strip()
                 if not name:
-                    tg.send(chat_id, "사용법: /add 보틀명 (예: /add 라프로익 10 cs 배치 17)")
+                    tg.send(chat_id, "사용법: /add 보틀명 (예: /add 라프로익 10 cs 배치 17) 또는 위스키베이스 링크")
                 else:
-                    state.setdefault("_add_queries", []).append((name, chat_id))
+                    state.setdefault("_add_queries", []).append((name, chat_id, wb_id))
             elif cmd == "/list":
                 state["_want_list"] = chat_id
             elif cmd in ("/stop", "/link"):
@@ -472,12 +490,16 @@ def offer_add_candidates(state, items, rates):
     """/add 질의마다 후보를 찾아 버튼 메시지로 보낸다. 실제 생성은 사용자가 버튼을 누른 뒤(다음 실행)."""
     chat_default = state.get("chat_id")
     pend = state.setdefault("pending_adds", {})
-    for q, chat_id in state.pop("_add_queries", []):
+    for entry in state.pop("_add_queries", []):
+        q, chat_id, wb_id = (list(entry) + [None])[:3]
         cands = search_candidates(q, items)
         key = f"{int(time.time()) % 100000000:x}"
-        pend[key] = {"query": q, "chat": chat_id, "ts": now().isoformat(),
+        pend[key] = {"query": q, "chat": chat_id, "ts": now().isoformat(), "wb_id": wb_id,
                      "cands": [{"site": c["site"], "title": c["title"], "url": c["url"], "price": c.get("price")} for c in cands]}
-        lines = [f"🔍 <b>{tg.esc(q)}</b> 후보 {len(cands)}건 — 맞는 번호를 누르면 노션에 추가됩니다(반영은 다음 실행, ≤20분)"]
+        head = f"🔍 <b>{tg.esc(q)}</b>" + (f" (WB {wb_id})" if wb_id else "")
+        lines = [f"{head} 후보 {len(cands)}건 — 번호를 누르거나 숫자로 답하면 노션에 추가됩니다(반영은 다음 실행, ≤20분)"]
+        if wb_id and len(cands) > 6:
+            lines.append("위스키베이스 링크는 증류소·빈티지만 알 수 있어 후보가 넓습니다. 링크 뒤에 숙성연수·병입자를 덧붙이면 좁혀집니다.")
         rows = []
         for i, c in enumerate(cands, 1):
             cur = SITE_CUR.get(c["site"], "KRW")
@@ -541,10 +563,13 @@ def apply_callbacks(state, dry):
                 log(f"(dry) 노션 생성: {name} / {url}")
             else:
                 props_extra = {"추적 링크": {"rich_text": [{"text": {"content": url}}]}} if url else {}
+                if p.get("wb_id"):
+                    props_extra["WB_ID"] = {"rich_text": [{"text": {"content": p["wb_id"]}}]}
                 page = notion_create_tracked(name, aliases, props_extra)
                 log(f"노션 행 생성(텔레그램): {name}")
             del pend[key]
             tg.edit(chat_id, msg_id, f"✅ 추가·추적 시작: <b>{tg.esc(name)}</b>" + (f"\n{url}" if url else "")
+                    + (f"\nWB_ID {p['wb_id']} 기록" if p.get("wb_id") else "")
                     + "\n다음 실행부터 재고·가격을 확인합니다.")
         except Exception as e:
             log(f"콜백 처리 실패: {e}")
