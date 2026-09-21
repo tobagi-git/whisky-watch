@@ -17,7 +17,8 @@ GitHub Actions cron이 위스키 온라인숍 5곳(RUDDER·Mukawa·DeinWhisky·S
 - `목표가KRW`: 이 값 이하로 내려오면 🎯 알림.
 
 ## 텔레그램 명령
-`/start` 등록 · `/add 보틀명 | 별칭1, 별칭2` 노션에 추적 행 생성 · `/list` 현황 · `/link 보틀명일부 URL` 링크 확정 · `/stop 보틀명일부` 해제
+`/start` 등록 · `/add 보틀명`(한/영/일 혼용 OK — 현재 매물에서 후보를 찾아 번호 버튼으로 회신, 누른 것만 노션에 생성·링크 확정; `brands.json`이 표기 변환표) · `/list` 현황 · `/link 보틀명일부 URL` 링크 확정 · `/stop 보틀명일부` 해제
+봇 응답은 폴링 구조라 다음 실행 때(≤20분, KST 17시대 10분) 온다.
 
 ## 비밀 (Repository secrets)
 `GMAIL_APP_PASSWORD` · `NOTION_TOKEN`(내부 통합, DB에 연결 필요) · `TELEGRAM_BOT_TOKEN`(BotFather)

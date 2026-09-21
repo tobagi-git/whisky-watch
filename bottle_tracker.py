@@ -196,13 +196,14 @@ def notion_update(page_id, props):
     notion("PATCH", f"/pages/{page_id}", {"properties": props}, "2022-06-28")
 
 
-def notion_create_tracked(name, aliases):
+def notion_create_tracked(name, aliases, extra=None):
     props = {
-        "상품명": {"title": [{"text": {"content": name}}]},
+        "상품명": {"title": [{"text": {"content": name[:200]}}]},
         "상태": {"select": {"name": "관심"}},
         "추적": {"checkbox": True},
-        "추적 키워드": {"rich_text": [{"text": {"content": aliases}}]},
+        "추적 키워드": {"rich_text": [{"text": {"content": aliases[:1900]}}]},
     }
+    props.update(extra or {})
     for parent, ver in (({"data_source_id": DS_ID}, "2025-09-03"), ({"database_id": DB_ID}, "2022-06-28")):
         try:
             return notion("POST", "/pages", {"parent": parent, "properties": props}, ver)
@@ -324,9 +325,89 @@ def find_candidates(bottle, items, exclude_urls):
     return [it for _, it in scored]
 
 
+# ---------------------------------------------------------------- /add 후보 검색 (한/영/일 혼용)
+BRANDS_FILE = Path(__file__).with_name("brands.json")
+
+
+def _load_brands():
+    d = load_json(BRANDS_FILE, {})
+    groups = [[x.lower() for x in g] for g in d.get("brands", [])]
+    generic = {k.lower(): [x.lower() for x in v] for k, v in d.get("generic", {}).items() if not k.startswith("_")}
+    return groups, generic
+
+
+def expand_query(q):
+    """입력을 토큰으로 쪼개고, 브랜드 표기는 모든 언어 변형으로 펼친다.
+    반환: [(variants:list, weight:float)] — variants 중 하나라도 제목에 있으면 그 토큰은 매칭."""
+    groups, generic = _load_brands()
+    ql = q.lower()
+    # 한글 '10년' → '10', 'yo' 등 정리
+    ql = re.sub(r"(\d+)\s*(년|yo|years?|jahre)", r"\1", ql)
+    ql = ql.replace("년", " ").replace("/", " ")
+    toks, used = [], set()
+    # 브랜드(여러 단어 표기 포함)를 먼저 통째로 찾는다
+    for g in groups:
+        for v in sorted(g, key=len, reverse=True):
+            if v in ql and v not in used:
+                toks.append((g, 2.0))
+                used.add(v)
+                ql = ql.replace(v, " ")
+                break
+    for t in re.split(r"[\s,]+", ql):
+        t = t.strip("()[]【】")
+        if not t:
+            continue
+        if t in generic:
+            vs = generic[t]
+            if vs:
+                toks.append(([t] + vs, 1.0))
+            continue
+        if re.fullmatch(r"\d+(\.\d+)?", t):
+            toks.append(([t], 1.5))
+        elif len(t) >= 2:
+            toks.append(([t], 1.0))
+    return toks
+
+
+def search_candidates(q, items, limit=6):
+    """현재 매물 전체에서 유사 후보. 브랜드 토큰이 있으면 브랜드가 맞는 것만."""
+    toks = expand_query(q)
+    if not toks:
+        return []
+    brand_toks = [t for t in toks if t[1] == 2.0]
+    num_toks = [t for t in toks if t[1] == 1.5]
+    total = sum(w for _, w in toks)
+
+    def hit(vs, title):
+        # 숫자는 통단어로만(15가 2015에 걸리지 않게), 문자열은 부분일치
+        # 숫자는 통단어로만(15가 2015에 걸리지 않게, 4는 #004에도 걸리게), 문자열은 부분일치
+        return any((re.search(rf"(?<!\d)0*{re.escape(v.lstrip('0') or '0')}(?!\d)", title) if re.fullmatch(r"\d+(\.\d+)?", v) else v in title)
+                   for v in vs)
+
+    scored, seen = [], set()
+    for it in items:
+        title = (it.get("title") or "").lower()
+        if brand_toks and not all(hit(vs, title) for vs, _ in brand_toks):
+            continue
+        if num_toks and not any(hit(vs, title) for vs, _ in num_toks):
+            continue  # 숙성연수·빈티지·배치 번호를 적었으면 그 숫자는 반드시 있어야 함
+        if not any(hit(vs, title) for vs, w in toks if w != 1.5):
+            continue  # 숫자만 맞는 건 후보가 아님
+        score = sum(w for vs, w in toks if hit(vs, title))
+        if score <= 0 or (score / total) < 0.5:
+            continue
+        u = norm_url(it["url"])
+        if u in seen:
+            continue
+        seen.add(u)
+        scored.append((score / total, -len(title), it))
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    return [it for _, _, it in scored[:limit]]
+
+
 # ---------------------------------------------------------------- 텔레그램 명령
 HELP = ("<b>위스키 추적 봇</b>\n"
-        "/add 보틀명 | 별칭1, 별칭2 — 노션에 추적 행 추가(별칭 생략 가능)\n"
+        "/add 보틀명 — 한/영/일 대충 써도 됨. 현재 매물에서 후보를 찾아 버튼으로 보여주고, 고른 것만 노션에 추가\n"
         "/list — 추적 중인 보틀과 현황\n"
         "/link 보틀명일부 URL — 확정 상품 링크 추가\n"
         "/stop 보틀명일부 — 추적 해제\n"
@@ -340,6 +421,9 @@ def handle_telegram(state, dry):
     updates = tg.get_updates(offset)
     for u in updates:
         state["tg_offset"] = u["update_id"] + 1
+        if "callback_query" in u:
+            state.setdefault("_callbacks", []).append(u["callback_query"])
+            continue
         msg = u.get("message") or u.get("edited_message")
         if not msg or "text" not in msg:
             continue
@@ -356,15 +440,11 @@ def handle_telegram(state, dry):
             if cmd in ("/start", "/help"):
                 tg.send(chat_id, HELP)
             elif cmd == "/add":
-                name, _, aliases = arg.partition("|")
-                name, aliases = name.strip(), aliases.strip()
+                name = arg.replace("|", " ").strip()
                 if not name:
-                    tg.send(chat_id, "사용법: /add 보틀명 | 별칭1, 별칭2")
-                elif dry:
-                    tg.send(chat_id, f"(dry) 추가 예정: {tg.esc(name)}")
+                    tg.send(chat_id, "사용법: /add 보틀명 (예: /add 라프로익 10 cs 배치 17)")
                 else:
-                    notion_create_tracked(name, aliases or name)
-                    tg.send(chat_id, f"✅ 노션에 추가·추적 시작: <b>{tg.esc(name)}</b>\n다음 실행(≤20분)에 사이트 후보를 찾아 보내드립니다.")
+                    state.setdefault("_add_queries", []).append((name, chat_id))
             elif cmd == "/list":
                 state["_want_list"] = chat_id
             elif cmd in ("/stop", "/link"):
@@ -374,6 +454,84 @@ def handle_telegram(state, dry):
         except Exception as e:
             log(f"텔레그램 명령 처리 실패 {cmd}: {e}")
             tg.send(chat_id, f"⚠️ 실패: {tg.esc(e)}")
+
+
+def offer_add_candidates(state, items, rates):
+    """/add 질의마다 후보를 찾아 버튼 메시지로 보낸다. 실제 생성은 사용자가 버튼을 누른 뒤(다음 실행)."""
+    chat_default = state.get("chat_id")
+    pend = state.setdefault("pending_adds", {})
+    for q, chat_id in state.pop("_add_queries", []):
+        cands = search_candidates(q, items)
+        key = f"{int(time.time()) % 100000000:x}"
+        pend[key] = {"query": q, "chat": chat_id, "ts": now().isoformat(),
+                     "cands": [{"site": c["site"], "title": c["title"], "url": c["url"], "price": c.get("price")} for c in cands]}
+        lines = [f"🔍 <b>{tg.esc(q)}</b> 후보 {len(cands)}건 — 맞는 번호를 누르면 노션에 추가됩니다(반영은 다음 실행, ≤20분)"]
+        rows = []
+        for i, c in enumerate(cands, 1):
+            cur = SITE_CUR.get(c["site"], "KRW")
+            k = to_krw(c.get("price"), cur, rates)
+            lines.append(f"<b>{i}.</b> [{SITE_LABEL.get(c['site'], c['site'])}] {tg.esc(c['title'])} {fmt_price(c.get('price'), cur)}"
+                         + (f" (≈{k:,}원)" if k else "") + f"\n    {c['url']}")
+        if not cands:
+            lines.append("현재 5개 사이트 매물에는 비슷한 게 없습니다. 이름만으로 추가해두면 이후 새로 뜰 때 후보를 보내드립니다.")
+        btns = [{"text": str(i), "callback_data": f"add:{key}:{i}"} for i in range(1, len(cands) + 1)]
+        for i in range(0, len(btns), 4):
+            rows.append(btns[i:i + 4])
+        rows.append([{"text": "이름만 추가(후보 없음)", "callback_data": f"add:{key}:0"},
+                     {"text": "취소", "callback_data": f"add:{key}:x"}])
+        r = tg.send(chat_id or chat_default, "\n".join(lines), reply_markup={"inline_keyboard": rows})
+        try:
+            pend[key]["message_id"] = r["result"]["message_id"]
+        except (TypeError, KeyError):
+            pass
+    # 3일 지난 보류 건 정리
+    for k in list(pend):
+        try:
+            if now() - datetime.fromisoformat(pend[k]["ts"]) > timedelta(days=3):
+                del pend[k]
+        except Exception:
+            del pend[k]
+
+
+def apply_callbacks(state, dry):
+    """버튼 응답(add:<key>:<n>) → 노션 행 생성. 메시지를 결과로 편집해 중복 탭을 막는다."""
+    pend = state.setdefault("pending_adds", {})
+    for cb in state.pop("_callbacks", []):
+        data = cb.get("data", "")
+        chat_id = cb.get("message", {}).get("chat", {}).get("id")
+        msg_id = cb.get("message", {}).get("message_id")
+        tg.answer_callback(cb.get("id"))
+        m = re.fullmatch(r"add:([0-9a-f]+):(\d+|x)", data)
+        if not m:
+            continue
+        key, choice = m.group(1), m.group(2)
+        p = pend.get(key)
+        if not p:
+            tg.edit(chat_id, msg_id, "⌛ 만료된 요청입니다. /add 를 다시 보내주세요.")
+            continue
+        if choice == "x":
+            del pend[key]
+            tg.edit(chat_id, msg_id, f"🚫 취소: {tg.esc(p['query'])}")
+            continue
+        n = int(choice)
+        try:
+            if n == 0:
+                name, aliases, url = p["query"], p["query"], ""
+            else:
+                c = p["cands"][n - 1]
+                name, aliases, url = c["title"], f"{p['query']}, {c['title']}", c["url"]
+            if dry:
+                log(f"(dry) 노션 생성: {name} / {url}")
+            else:
+                props_extra = {"추적 링크": {"rich_text": [{"text": {"content": url}}]}} if url else {}
+                page = notion_create_tracked(name, aliases, props_extra)
+                log(f"노션 행 생성(텔레그램): {name}")
+            del pend[key]
+            tg.edit(chat_id, msg_id, f"✅ 추가·추적 시작: <b>{tg.esc(name)}</b>" + (f"\n{url}" if url else "")
+                    + "\n다음 실행부터 재고·가격을 확인합니다.")
+        except Exception as e:
+            log(f"콜백 처리 실패: {e}")
+            tg.send(chat_id, f"⚠️ 추가 실패: {tg.esc(e)}")
 
 
 def apply_pending(state, bottles, dry):
@@ -419,6 +577,7 @@ def main():
     rates = fx_rates(wl)
 
     handle_telegram(state, dry)
+    apply_callbacks(state, dry)  # 버튼으로 확정된 /add → 노션 행 생성 (조회 전에 해야 이번 실행에 포함)
 
     # 추적 목록
     if dry:
@@ -451,6 +610,7 @@ def main():
         except Exception as e:
             log(f"폴링 결과 없음·직접 수집 실패: {e}")
     latest_by_url = {norm_url(it["url"]): it for it in items}
+    offer_add_candidates(state, items, rates)
 
     alerts, list_lines = [], []
     hist_rows = []
