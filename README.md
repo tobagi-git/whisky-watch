@@ -18,11 +18,11 @@ GitHub Actions cron이 위스키 온라인숍 5곳(RUDDER·Mukawa·DeinWhisky·S
 
 ## 텔레그램 명령
 `/start` 등록 · `/add 보틀명`(한/영/일 혼용 OK — 현재 매물에서 후보를 찾아 번호 버튼으로 회신, 누른 것만 노션에 생성·링크 확정; `brands.json`이 표기 변환표) · 위스키베이스 링크를 보내도 같은 흐름(슬러그로 검색, 확정 시 `WB_ID` 기록) · `/list` 현황 · `/link 보틀명일부 URL` 링크 확정 · `/stop 보틀명일부` 해제
-봇 응답은 폴링 구조라 다음 실행 때(≤20분, KST 17시대 10분) 온다.
+봇 응답은 폴링 구조라 다음 실행 때 온다(보통 ≤1시간, KST 16:40~18:30은 ≤10분).
 
 ## 비밀 (Repository secrets)
 `GMAIL_APP_PASSWORD` · `NOTION_TOKEN`(내부 통합, DB에 연결 필요) · `TELEGRAM_BOT_TOKEN`(BotFather)
 
 ## 스케줄
-`.github/workflows/watch.yml` — UTC 기준. KST 16:40~18:30은 10분 간격(무카와 17시 업데이트 대비), 그 외 08:10/13:10/23:10.
+`.github/workflows/watch.yml` — UTC 기준. 하루 33회: 매시 10분(텔레그램 응답 ≤1시간) + KST 16:40~18:30은 10분 간격(무카와 17시 업데이트 대비). 잡당 1분 과금 기준 월 약 1,000분(무료 한도 2,000분).
 수동 실행: `gh workflow run watch.yml` (`-f test_email=true`면 테스트 메일만).
