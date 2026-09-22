@@ -24,5 +24,11 @@ GitHub Actions cron이 위스키 온라인숍 5곳(RUDDER·Mukawa·DeinWhisky·S
 `GMAIL_APP_PASSWORD` · `NOTION_TOKEN`(내부 통합, DB에 연결 필요) · `TELEGRAM_BOT_TOKEN`(BotFather)
 
 ## 스케줄
-`.github/workflows/watch.yml` — UTC 기준. 하루 33회: 매시 10분(텔레그램 응답 ≤1시간) + KST 16:40~18:30은 10분 간격(무카와 17시 업데이트 대비). 잡당 1분 과금 기준 월 약 1,000분(무료 한도 2,000분).
+**주 트리거는 Cloudflare Worker** (`worker/`, 이름 `whisky-watch-trigger`). 매분 깨어나서
+- KST 16:40~18:30은 10분 간격, 그 외엔 짝수시 10분에 이 워크플로를 dispatch (하루 23회)
+- 텔레그램에 처리 안 된 메시지가 있으면 즉시 dispatch → 봇 응답 1~2분
+GitHub 자체 예약(`watch.yml`의 cron)은 실측상 대부분 버려져서(하루 3~6회) 6시간 간격 예비로만 둔다.
+
+Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기/쓰기만, 만료 없음) · `TG_TOKEN`.
+배포: `cd worker && npx wrangler deploy` · 로그: `npx wrangler tail`
 수동 실행: `gh workflow run watch.yml` (`-f test_email=true`면 테스트 메일만).

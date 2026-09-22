@@ -1,0 +1,19 @@
+name = "whisky-watch-trigger"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+workers_dev = false
+
+# 매분 깨어나 ①정해진 시각이면 폴링 실행 ②텔레그램에 새 메시지가 있으면 즉시 실행.
+# GitHub Actions 예약 실행은 대부분 버려져서(2026-09-19~22 실측 하루 3~6회) 이쪽이 주 트리거다.
+[triggers]
+crons = ["* * * * *"]
+
+[[kv_namespaces]]
+binding = "STATE"
+id = "26096ca8da6f47c292e2d3907c2afac1"
+
+[vars]
+GH_REPO = "tobagi-git/whisky-watch"
+GH_WORKFLOW = "watch.yml"
+
+# 시크릿(wrangler secret put): GH_TOKEN(저장소 전용 Actions 쓰기 토큰), TG_TOKEN(텔레그램 봇 토큰)
