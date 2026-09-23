@@ -106,17 +106,19 @@ def fx_rates(wl):
     """KRW 기준 환율 {JPY: 원/엔, EUR: 원/유로}. 하루 1회 open.er-api.com, 실패 시 캐시→watchlist fx."""
     cache = DATA / "fx.json"
     c = load_json(cache, {})
-    if c.get("date") == now().strftime("%Y-%m-%d"):
+    need = {"JPY", "EUR", "GBP", "KRW"}                  # 통화가 하나라도 빠졌으면 캐시를 버린다
+    if c.get("date") == now().strftime("%Y-%m-%d") and need <= set(c.get("rates", {})):
         return c["rates"]
     try:
         d = json.loads(fetch("https://open.er-api.com/v6/latest/KRW", timeout=10))
         r = d["rates"]
-        rates = {"JPY": round(1 / r["JPY"], 4), "EUR": round(1 / r["EUR"], 2), "KRW": 1.0}
+        rates = {"JPY": round(1 / r["JPY"], 4), "EUR": round(1 / r["EUR"], 2),
+                 "GBP": round(1 / r["GBP"], 2), "KRW": 1.0}
         cache.write_text(json.dumps({"date": now().strftime("%Y-%m-%d"), "rates": rates}))
         return rates
     except Exception as e:
         log(f"환율 조회 실패({e}) — 캐시/기본값 사용")
-        return c.get("rates") or {**{"JPY": 8.8, "EUR": 1590, "KRW": 1.0}, **wl.get("fx", {})}
+        return c.get("rates") or {**{"JPY": 8.8, "EUR": 1590, "GBP": 1800, "KRW": 1.0}, **wl.get("fx", {})}
 
 
 def to_krw(price, cur, rates):

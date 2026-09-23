@@ -49,9 +49,9 @@ jobs:
         if: ${{ !inputs.test_email }}
         run: python bottle_tracker.py
 
-      - name: Watch Yahoo Auctions (Telegram)
+      - name: Watch auctions & UK shops (Telegram)
         if: ${{ !inputs.test_email }}
-        run: python yahoo_watch.py
+        run: python auction_watch.py
 
       - name: Save state
         run: |
