@@ -21,6 +21,7 @@ from pathlib import Path
 import bottle_tracker as bt
 import sources
 import tg
+import whisky_watch
 
 DATA = bt.DATA
 SEEN = DATA / "auction_seen.json"
@@ -247,12 +248,26 @@ def main():
     if not alerts:
         log(f"변화 없음 (매치 {total}건)")
         return
-    if not chat:
+    if chat:
+        for head, body in alerts:
+            tg.send(chat, f"{head}\n\n{body}")
+        log(f"텔레그램 알림 {len(alerts)}건 발송")
+    else:
         log("알림 있으나 텔레그램 chat_id 미등록 — 봇에 /start 를 보내야 함")
+    send_mail(alerts)
+
+
+def send_mail(alerts):
+    """텔레그램과 같은 내용을 메일로도 한 통에 묶어 보낸다(수신자: watchlist.json notify.email).
+    HTML 태그는 빼고 평문으로. 메일 설정이 없으면 whisky_watch.send_email이 조용히 넘어간다."""
+    to = (bt.load_json(bt.WATCHLIST, {}).get("notify") or {}).get("email")
+    if not to:
         return
-    for head, body in alerts:
-        tg.send(chat, f"{head}\n\n{body}")
-    log(f"텔레그램 알림 {len(alerts)}건 발송")
+    strip = lambda t: re.sub(r"<[^>]+>", "", t).replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")
+    body = "\n\n".join(f"{strip(h)}\n{strip(b)}" for h, b in alerts)
+    subject = strip(alerts[0][0]) if len(alerts) == 1 else f"위스키 경매 알림 {len(alerts)}건"
+    whisky_watch.send_email(f"[위스키] {subject}", body, to)
+    log(f"메일 발송 → {to}")
 
 
 if __name__ == "__main__":
