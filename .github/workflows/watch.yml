@@ -49,6 +49,10 @@ jobs:
         if: ${{ !inputs.test_email }}
         run: python bottle_tracker.py
 
+      - name: Watch Yahoo Auctions (Telegram)
+        if: ${{ !inputs.test_email }}
+        run: python yahoo_watch.py
+
       - name: Save state
         run: |
           # 로그는 최근 3000줄만 유지
