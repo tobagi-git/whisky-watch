@@ -15,7 +15,7 @@ whisky_watch.py(상점 폴링)·bottle_tracker.py(노션 추적)와 같은 워�
       python3 yahoo_watch.py --dry    알림 없이 현재 매치 목록만 출력
       python3 yahoo_watch.py --report 현재 매치 전체를 텔레그램으로 1회 보고(상태 점검용)
 """
-import argparse, html, json, re, urllib.error, urllib.parse, urllib.request
+import argparse, html, json, re, time, urllib.error, urllib.parse, urllib.request
 from datetime import datetime
 from pathlib import Path
 
@@ -36,10 +36,26 @@ def log(msg):
     _log(msg.replace("[TRK] ", ""))
 
 
-def fetch(url):
-    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept-Language": "ja,en;q=0.8"})
-    with urllib.request.urlopen(req, timeout=25) as r:
-        return r.read().decode("utf-8", errors="replace")
+def fetch(url, tries=3):
+    """야후는 가끔 500으로 튕긴다(러너에서 실측) — 짧게 물러섰다 재시도한다. 404는 그대로 올린다."""
+    req = urllib.request.Request(url, headers={
+        "User-Agent": UA,
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "ja,en-US;q=0.9,en;q=0.8",
+        "Referer": "https://auctions.yahoo.co.jp/",
+    })
+    for i in range(tries):
+        try:
+            with urllib.request.urlopen(req, timeout=25) as r:
+                return r.read().decode("utf-8", errors="replace")
+        except urllib.error.HTTPError as e:
+            if e.code == 404 or e.code < 500 or i == tries - 1:
+                raise
+            time.sleep(2 * (i + 1))
+        except urllib.error.URLError:
+            if i == tries - 1:
+                raise
+            time.sleep(2 * (i + 1))
 
 
 def search(q, pages=3, n=100):
@@ -111,6 +127,7 @@ def collect(rule):
         except Exception as e:
             log(f"[YHO] 검색 실패 '{q}': {e}")
             continue
+        time.sleep(1)
         for it in items:
             if it["id"] in seen_ids or not matches(it["title"], rule):
                 continue
