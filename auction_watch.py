@@ -100,10 +100,20 @@ def targets_from_notion():
     return out
 
 
+def _has(low, token):
+    """제외어 포함 여부. 숫자로 시작하는 용량 토큰은 앞에 숫자가 붙어 있으면 다른 용량이다 —
+    단순 부분 문자열로 보면 '5cl'이 '75cl'에, '50ml'이 '750ml'에 걸려 올드 보틀 표준 용량이
+    통째로 빠진다(2026-09-25 Glen Moray 1962 추가 때 실측)."""
+    tok = token.lower()
+    if tok[:1].isdigit():
+        return re.search(r"(?<![0-9.])" + re.escape(tok), low) is not None
+    return tok in low
+
+
 def matches(title, target):
     low = title.lower()
     rule = target["rule"]
-    if any(bad.lower() in low for bad in rule.get("none_of", [])):
+    if any(_has(low, bad) for bad in rule.get("none_of", [])):
         return False
     if target.get("ages") and bt.age_conflict(title, target["ages"]):
         return False
