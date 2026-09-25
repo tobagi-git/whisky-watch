@@ -11,6 +11,10 @@ on:
         description: "폴링 대신 테스트 메일만 보내기"
         type: boolean
         default: false
+      deep:
+        description: "정밀 스캔(카탈로그 전체 — 오래된 상품 재입고까지). Worker가 07:55·18:55에 켠다"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -22,7 +26,7 @@ concurrency:
 jobs:
   poll:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     env:
       TZ: Asia/Seoul
       WHISKY_DATA_DIR: ${{ github.workspace }}/data
@@ -43,7 +47,7 @@ jobs:
 
       - name: Poll shops
         if: ${{ !inputs.test_email }}
-        run: python whisky_watch.py --force
+        run: python whisky_watch.py --force ${{ inputs.deep && '--deep' || '' }}
 
       - name: Track wanted bottles (Notion + Telegram)
         if: ${{ !inputs.test_email }}
@@ -52,6 +56,10 @@ jobs:
       - name: Watch auctions & UK shops (Telegram)
         if: ${{ !inputs.test_email }}
         run: python auction_watch.py
+
+      - name: Shop report 08·19시 (위스키 신제품·재입고, Telegram + mail)
+        if: ${{ !inputs.test_email }}
+        run: python shop_digest.py --auto
 
       - name: Save state
         run: |

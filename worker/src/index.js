@@ -12,7 +12,14 @@ function isScheduledSlot(d) {
   return m === 10 && h % 2 === 0;
 }
 
-async function dispatch(env, reason) {
+// 샵 리포트(08:00·19:00 KST) 직전 정밀 스캔 — 카탈로그 전체를 읽어 재입고까지 잡은 뒤 리포트를 보낸다.
+function isDeepSlot(d) {
+  const h = d.getUTCHours();
+  const m = d.getUTCMinutes();
+  return m === 55 && (h === 7 || h === 18);
+}
+
+async function dispatch(env, reason, inputs) {
   const r = await fetch(
     `https://api.github.com/repos/${env.GH_REPO}/actions/workflows/${env.GH_WORKFLOW}/dispatches`,
     {
@@ -23,7 +30,7 @@ async function dispatch(env, reason) {
         "X-GitHub-Api-Version": "2022-11-28",
         "User-Agent": "whisky-watch-trigger",
       },
-      body: JSON.stringify({ ref: "main" }),
+      body: JSON.stringify(inputs ? { ref: "main", inputs } : { ref: "main" }),
     }
   );
   const ok = r.status === 204;
@@ -48,10 +55,18 @@ async function tick(env, when) {
   const kst = new Date(when + KST_OFFSET_MIN * 60 * 1000);
   const now = Date.now();
   let dispatched = false;
-
-  // 1) 텔레그램 새 메시지 → 바로 실행. 같은 메시지로는 10분에 한 번만 재시도.
   const maxId = await pendingUpdateId(env);
-  if (maxId !== null) {
+
+  // 1) 07:55·18:55 → 정밀 스캔 + 샵 리포트(08·19시). 이 실행이 텔레그램 명령도 같이 처리하므로
+  //    같은 분에 텔레그램용 dispatch를 따로 보내지 않는다(대기 실행 취소 위험 줄이기).
+  //    그래도 취소되면 다음 아무 실행이 리포트를 대신 보낸다(shop_digest.py --auto).
+  if (isDeepSlot(kst)) {
+    dispatched = await dispatch(env, `deep ${kst.toISOString().slice(11, 16)} KST`, { deep: "true" });
+    if (dispatched && maxId !== null) await env.STATE.put("tg", JSON.stringify({ id: maxId, at: now }));
+  }
+
+  // 2) 텔레그램 새 메시지 → 바로 실행. 같은 메시지로는 10분에 한 번만 재시도.
+  if (!dispatched && maxId !== null) {
     const last = JSON.parse((await env.STATE.get("tg")) || "{}");
     const isNew = !last.id || maxId > last.id;
     const stale = last.id === maxId && now - (last.at || 0) > 10 * 60 * 1000;
@@ -61,7 +76,7 @@ async function tick(env, when) {
     }
   }
 
-  // 2) 정해진 시각 → 폴링 실행 (방금 텔레그램으로 실행했으면 그걸로 갈음)
+  // 3) 정해진 시각 → 폴링 실행 (방금 다른 이유로 실행했으면 그걸로 갈음)
   if (!dispatched && isScheduledSlot(kst)) {
     dispatched = await dispatch(env, `schedule ${kst.toISOString().slice(11, 16)} KST`);
   }

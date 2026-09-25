@@ -298,6 +298,7 @@ def htfw_parse(page, source="htfw"):
             "price": g.get("price"), "cur": "GBP", "kind": "retail",
             "live": "out of stock" not in body.lower(), "end": None,
             "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매",
+            "hint": " ".join(str(g.get(k, "")) for k in ("item_category", "item_category2")).strip(),
         })
     return out
 
@@ -420,8 +421,8 @@ def whiskysite(term, pages=2):
 # ---------------------------------------------------------------- La Maison du Whisky (프랑스, whisky.fr)
 LMDW_GQL = "https://gateway.prod2.whisky.fr/graphql"
 LMDW_WHISKY_UID = "NDExNw=="     # 'Les types de whiskies' 루트 카테고리(약 2,800종)
-_LMDW_Q = ("query P($search:String,$f:ProductAttributeFilterInput!,$n:Int!,$sort:ProductAttributeSortInput)"
-           "{products(search:$search filter:$f pageSize:$n currentPage:1 sort:$sort)"
+_LMDW_Q = ("query P($search:String,$f:ProductAttributeFilterInput!,$n:Int!,$p:Int,$sort:ProductAttributeSortInput)"
+           "{products(search:$search filter:$f pageSize:$n currentPage:$p sort:$sort)"
            "{items{sku name in_stock url_key url_rewrites{url} price_range{minimum_price{final_price{currency value}}}}}}")
 
 

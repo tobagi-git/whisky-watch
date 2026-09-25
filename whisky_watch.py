@@ -100,6 +100,8 @@ def scan_rudder(cfg, kws):
                 "site": "rudder", "id": f"rudder:{p['id']}", "title": p.get("title", ""),
                 "url": f"https://theultimatespirits.jp/products/{p.get('handle', '')}",
                 "price": price, "on_sale_flag": on_sale,
+                "available": any(x.get("available") for x in (p.get("variants") or [])),
+                "hint": p.get("product_type") or "",
             })
         time.sleep(0.3)
     return items
@@ -112,7 +114,8 @@ def scan_shopify(cfg, kws):
     따라 KRW·USD 등으로 바뀐다(Shopify Markets, 2026-09-25 실측: 같은 상품이 £97.96 / ₩149,753)."""
     site, base = cfg["_site"], cfg["base"].rstrip("/")
     items = []
-    for page in range(1, int(cfg.get("pages", 2)) + 1):
+    pages = int(cfg.get("deep_pages", 40)) if cfg.get("_deep") else int(cfg.get("pages", 2))
+    for page in range(1, pages + 1):
         try:
             data = json.loads(fetch(f"{base}/products.json?limit=250&page={page}"))
         except Exception as e:
@@ -129,6 +132,7 @@ def scan_shopify(cfg, kws):
                 "price": price, "cur": cfg.get("cur"),
                 "available": any(x.get("available") for x in vs),
                 "on_sale_flag": bool(compare) and bool(price) and float(compare) > float(price),
+                "hint": (p.get("product_type") or "") + "|" + " ".join(list(p.get("tags") or [])[:8]),
             })
         if len(prods) < 250:
             break
@@ -148,7 +152,8 @@ def scan_htfw(cfg, kws):
             break
         for it in got:
             items.append({"site": "htfw", "id": f"htfw:{it['id']}", "title": it["title"], "url": it["url"],
-                          "price": it["price"], "cur": "GBP", "available": it["live"], "on_sale_flag": False})
+                          "price": it["price"], "cur": "GBP", "available": it["live"], "on_sale_flag": False,
+                          "hint": it.get("hint", "")})
         if not got:
             break
         time.sleep(0.5)
@@ -166,10 +171,18 @@ def scan_whiskymaniac(cfg, kws):
 # ---------------------------------------------------------------- Nickolls & Perks (위스키 카테고리 최신순)
 def scan_nickolls(cfg, kws):
     import sources
-    got = sources.nickolls_items({"category": cfg.get("category", 6723), "orderby": "date", "order": "desc",
-                                  "per_page": int(cfg.get("per_page", 100))})
-    return [{"site": "nickolls", "id": f"nickolls:{it['id']}", "title": it["title"], "url": it["url"],
-             "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False} for it in got]
+    pages = int(cfg.get("deep_pages", 40)) if cfg.get("_deep") else 1
+    out = []
+    for page in range(1, pages + 1):
+        got = sources.nickolls_items({"category": cfg.get("category", 6723), "orderby": "date", "order": "desc",
+                                      "per_page": int(cfg.get("per_page", 100)), "page": page})
+        out += [{"site": "nickolls", "id": f"nickolls:{it['id']}", "title": it["title"], "url": it["url"],
+                 "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False,
+                 "hint": "whisky"} for it in got]
+        if len(got) < int(cfg.get("per_page", 100)):
+            break
+        time.sleep(0.3)
+    return out
 
 
 # ---------------------------------------------------------------- Whiskysite.nl (카테고리별 최신순, 샘플 제외)
@@ -184,7 +197,8 @@ def scan_whiskysite(cfg, kws):
             log(f"  [ERR] whiskysite/{cat}: {e}")
             continue
         items += [{"site": "whiskysite", "id": f"whiskysite:{it['id']}", "title": it["title"], "url": it["url"],
-                   "price": it["price"], "cur": "EUR", "available": it["live"], "on_sale_flag": False} for it in got]
+                   "price": it["price"], "cur": "EUR", "available": it["live"], "on_sale_flag": False,
+                   "hint": "whisky"} for it in got]
         time.sleep(0.5)
     return items
 
@@ -192,10 +206,21 @@ def scan_whiskysite(cfg, kws):
 # ---------------------------------------------------------------- La Maison du Whisky (위스키 활성화일 최신순)
 def scan_lmdw(cfg, kws):
     import sources
-    got = sources.lmdw_items({"f": {"category_uid": {"eq": cfg.get("category_uid", sources.LMDW_WHISKY_UID)}},
-                              "n": int(cfg.get("page_size", 60)), "sort": {"lmdw_activation_date": "DESC"}})
-    return [{"site": "lmdw", "id": f"lmdw:{it['id']}", "title": it["title"], "url": it["url"],
-             "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False} for it in got]
+    n = int(cfg.get("page_size", 60))
+    pages = int(cfg.get("deep_pages", 20)) if cfg.get("_deep") else 1
+    if cfg.get("_deep"):
+        n = 200
+    out = []
+    for page in range(1, pages + 1):
+        got = sources.lmdw_items({"f": {"category_uid": {"eq": cfg.get("category_uid", sources.LMDW_WHISKY_UID)}},
+                                  "n": n, "p": page, "sort": {"lmdw_activation_date": "DESC"}})
+        out += [{"site": "lmdw", "id": f"lmdw:{it['id']}", "title": it["title"], "url": it["url"],
+                 "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False,
+                 "hint": "whisky"} for it in got]
+        if len(got) < n:
+            break
+        time.sleep(0.3)
+    return out
 
 
 # ---------------------------------------------------------------- Mukawa
@@ -316,6 +341,12 @@ def scan_vitalaus(cfg, kws):
         time.sleep(0.3)
     # 같은 상품이 여러 카테고리에 중복 등장할 수 있음 → id로 dedup
     return items
+
+
+def _event(kind, it, kw):
+    return {"ts": datetime.now().isoformat(timespec="seconds"), "type": kind, "site": it["site"],
+            "id": it["id"], "title": it["title"], "url": it["url"], "price": it.get("price"),
+            "cur": it.get("cur"), "available": it.get("available"), "hint": it.get("hint", ""), "kw": kw}
 
 
 def dedup_merge(items):
@@ -475,6 +506,12 @@ def main():
     per_site = {}
     all_items = []
 
+    # --deep: 리포트 직전(08·19시)에 도는 정밀 스캔. 최신 1~2페이지 대신 카탈로그 전체를 읽어
+    # 오래된 상품의 재입고(품절→재고)까지 잡는다. 이때 처음 보는 상품은 '신규'가 아니라 그냥
+    # 아직 안 본 옛 상품이므로 조용히 기록만 한다(진짜 신규는 평소 실행의 앞 페이지에서 잡힌다).
+    deep = "--deep" in args
+    events = []
+
     # 사이트 수집은 병렬로(서로 독립), 판정·상태 갱신은 아래에서 순서대로 한다.
     active = [(site, cfg) for site, cfg in wl.get("sites", {}).items()
               if cfg.get("enabled", True) and SCANNERS.get(cfg.get("type", site))]
@@ -482,7 +519,7 @@ def main():
     def _scan(pair):
         site, cfg = pair
         try:
-            return site, dedup_merge(SCANNERS[cfg.get("type", site)](dict(cfg, _site=site), kws)), None
+            return site, dedup_merge(SCANNERS[cfg.get("type", site)](dict(cfg, _site=site, _deep=deep), kws)), None
         except Exception as e:
             return site, None, e
 
@@ -512,13 +549,16 @@ def main():
             prev = known.get(iid)
             price = it.get("price")
 
+            avail = it.get("available")
             if prev is None:
                 # 신규 상품 등장
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
-                               "on_sale_flag": it.get("on_sale_flag", False),
+                               "on_sale_flag": it.get("on_sale_flag", False), "available": avail,
                                "first_seen": datetime.now().isoformat(timespec="seconds")}
-                if kw and seeded:
-                    new_hits.append((it, kw))
+                if seeded and not deep:
+                    events.append(_event("new", it, kw))
+                    if kw:
+                        new_hits.append((it, kw))
             else:
                 # 기존 상품 — "세일"은 실제 가격 하락(직전 대비 2%↑)일 때만 인정한다.
                 # HTML 배지(is--discount 등)는 같은 상품이라도 카테고리 페이지마다 렌더링이
@@ -531,9 +571,21 @@ def main():
                                     and not prev.get("on_sale_flag"))
                 if (price_drop or structured_sale) and kw:
                     sale_hits.append((it, kw, prev_price))
+                # 재입고: 직전에 품절로 기록됐던 상품이 재고로 바뀜(재고 정보를 주는 샵만 해당)
+                if prev.get("available") is False and avail is True:
+                    events.append(_event("restock", it, kw))
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
                                "on_sale_flag": it.get("on_sale_flag", False),
+                               "available": avail if avail is not None else prev.get("available"),
                                "first_seen": prev.get("first_seen")}
+
+    # 샵 리포트(shop_digest.py)용 이벤트 적재 — 신규·재입고. 필터(위스키 한정)는 리포트 쪽에서 한다.
+    if events:
+        with (DATA / "shop_events.jsonl").open("a") as f:
+            for e in events:
+                f.write(json.dumps(e, ensure_ascii=False) + "\n")
+    log(f"  [EVENT] 신규 {sum(e['type'] == 'new' for e in events)} · 재입고 {sum(e['type'] == 'restock' for e in events)}"
+        + (" (정밀 스캔)" if deep else ""))
 
     # 보틀 추적기(bottle_tracker.py)가 후보 탐색에 쓰도록 이번 폴링의 전체 상품을 저장
     try:

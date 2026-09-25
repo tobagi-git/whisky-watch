@@ -203,6 +203,13 @@
       "enabled": true,
       "cur": "EUR",
       "page_size": 60
+    },
+    "wio": {
+      "enabled": true,
+      "type": "shopify",
+      "base": "https://whiskyinternationalonline.com",
+      "cur": "GBP",
+      "pages": 2
     }
   }
 }
