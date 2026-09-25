@@ -43,11 +43,17 @@ KST = timezone(timedelta(hours=9))
 SITE_BY_HOST = {
     "theultimatespirits.jp": "rudder", "mukawa-spirit.com": "mukawa",
     "deinwhisky.de": "deinwhisky", "shinanoya-tokyo.jp": "shinanoya", "vitalaus.com": "vitalaus",
+    "thewhiskybarrel.com": "whiskybarrel", "inn-out-shop.com": "innout", "topwhiskies.com": "topwhiskies",
+    "abbeywhisky.com": "abbey", "reallygoodwhisky.com": "reallygood", "whiskyinternationalonline.com": "wio",
 }
 SITE_LABEL = {"rudder": "RUDDER", "mukawa": "무카와", "deinwhisky": "DeinWhisky",
-              "shinanoya": "시나노야", "vitalaus": "비탈라우스", "other": "기타"}
-SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW"}
-CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩"}
+              "shinanoya": "시나노야", "vitalaus": "비탈라우스",
+              "whiskybarrel": "TWB", "innout": "Inn-Out", "topwhiskies": "Top Whiskies",
+              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "other": "기타"}
+SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW",
+            "whiskybarrel": "GBP", "innout": "EUR", "topwhiskies": "GBP", "abbey": "GBP",
+            "reallygood": "GBP", "wio": "GBP"}
+CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩", "GBP": "£"}
 
 
 def now():
@@ -314,6 +320,9 @@ def check_deinwhisky(url):
 
 
 CHECKERS = {"rudder": check_rudder, "mukawa": check_mukawa, "shinanoya": check_shinanoya, "deinwhisky": check_deinwhisky}
+# Shopify 샵은 RUDDER와 같은 방식({url}.js — 샵 기준 통화, 접속 국가 영향 없음)으로 확인한다
+for _s in ("whiskybarrel", "innout", "topwhiskies", "abbey", "reallygood", "wio"):
+    CHECKERS[_s] = check_rudder
 
 
 # ---------------------------------------------------------------- 키워드 후보

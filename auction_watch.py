@@ -147,11 +147,11 @@ def collect(target):
 def landed(it, rates):
     """일본 수령 기준 추정 총액(원) — 사이트별 수수료·일본 배송비까지 포함.
     한국까지는 **휴대 반입 전제**다. 정식통관하면 여기에 관세·주세·교육세·부가세로 약 2.55배가 더 붙는다.
-    WIO는 영국 외 배송이면 VAT 20%가 빠지므로 fee가 음수(-0.20)다."""
+    리테일은 표시가에 든 부가세(vat)를 먼저 빼고(수출가), 수수료·배송비를 더한다."""
     if it["price"] is None:
         return None
     src = sources.REGISTRY[it["source"]]
-    base = (it["price"] + it.get("postage", 0)) * (1 + src["fee"])
+    base = (it["price"] + it.get("postage", 0)) / (1 + src.get("vat", 0)) * (1 + src["fee"])
     if src.get("ship"):
         base += src["ship"]
     return bt.to_krw(base, it["cur"], rates)
@@ -162,7 +162,7 @@ def fmt(it, target, rates):
     head = f"<b>{tg.esc(it['title'])}</b>\n{label}"
     lines = [head]
     if it["price"] is not None:
-        sym = "¥" if it["cur"] == "JPY" else "£"
+        sym = {"JPY": "¥", "GBP": "£", "EUR": "€"}.get(it["cur"], it["cur"] + " ")
         line = f"현재가 {sym}{it['price']:,}"
         if it.get("postage"):
             line += f" +송료 ¥{it['postage']:,}"
@@ -238,7 +238,8 @@ def main():
                 head = f"⏰ 종료 {SOON_H}시간 이내 — {target['name']}"
             elif (it["kind"] == "retail" and it["price"] and rec.get("price")
                   and it["price"] <= rec["price"] * (1 - DROP)):
-                head = f"📉 가격 하락 (£{rec['price']:,}→£{it['price']:,}) — {target['name']}"
+                sym = {"JPY": "¥", "GBP": "£", "EUR": "€"}.get(it["cur"], "")
+                head = f"📉 가격 하락 ({sym}{rec['price']:,}→{sym}{it['price']:,}) — {target['name']}"
             elif args.report:
                 head = f"📋 현재 매물 — {target['name']}"
             if head:

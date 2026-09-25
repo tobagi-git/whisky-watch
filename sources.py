@@ -195,26 +195,45 @@ def justwhisky(term, page_size=100, max_pages=2):
     return out
 
 
-# ---------------------------------------------------------------- Whisky International Online (영국 리테일)
-def wio(term, limit=10):
-    qs = urllib.parse.urlencode({"q": term, "resources[type]": "product", "resources[limit]": limit})
-    d = json.loads(_get(f"https://whiskyinternationalonline.com/search/suggest.json?{qs}",
-                        accept="application/json"))
-    out = []
-    for p in d.get("resources", {}).get("results", {}).get("products", []):
-        if not p.get("available"):
-            continue
-        price = p.get("price")
-        out.append({
-            "source": "wio", "id": str(p.get("id") or p.get("handle") or p.get("url")),
-            "title": html.unescape(p.get("title", "")),
-            "url": "https://whiskyinternationalonline.com" + p.get("url", "").split("?")[0],
-            "price": int(round(float(price))) if price else None, "cur": "GBP",
-            "kind": "retail", "live": True, "end": None,
-            "bids": None, "postage": 0, "buynow": None,
-            "note": "리테일 즉시구매 · 표시가 VAT 포함여부 확인 필요",
-        })
-    return out
+# ---------------------------------------------------------------- Shopify 리테일 공용 (WIO·TWB·Inn-Out 등)
+def shopify(base, source, cur, limit=10):
+    """Shopify 샵 검색. 후보는 suggest.json으로 찾고 **가격·재고는 /products/{handle}.js로 다시 읽는다.**
+
+    ⚠️ suggest.json과 쿠키 기반 가격은 접속 국가에 따라 KRW·USD 등으로 바뀐다(Shopify Markets).
+    같은 상품이 한국 IP에선 ₩149,753, 기준 통화로는 £97.96이었다(2026-09-25 실측). GitHub 러너는
+    미국 IP라 그대로 쓰면 USD가 섞인다. .js는 샵 기준 통화의 최소단위(센트)라 ÷100.
+    """
+    base = base.rstrip("/")
+
+    def search(term):
+        qs = urllib.parse.urlencode({"q": term, "resources[type]": "product", "resources[limit]": limit})
+        d = json.loads(_get(f"{base}/search/suggest.json?{qs}", accept="application/json"))
+        out = []
+        for p in d.get("resources", {}).get("results", {}).get("products", []):
+            handle = (p.get("handle") or p.get("url", "").split("/products/")[-1]).split("?")[0]
+            if not handle:
+                continue
+            try:
+                js = json.loads(_get(f"{base}/products/{handle}.js", accept="application/json"))
+            except Exception:
+                continue
+            if not js.get("available"):
+                continue
+            price = js.get("price")
+            out.append({
+                "source": source, "id": str(js.get("id") or handle),
+                "title": html.unescape(js.get("title", "")),
+                "url": f"{base}/products/{handle}",
+                "price": round(price / 100, 2) if price is not None else None, "cur": cur,
+                "kind": "retail", "live": True, "end": None,
+                "bids": None, "postage": 0, "buynow": None,
+                "note": "리테일 즉시구매",
+            })
+        return out
+    return search
+
+
+wio = shopify("https://whiskyinternationalonline.com", "wio", "GBP")
 
 
 # ---------------------------------------------------------------- Whisky.Auction (영국, 런던)
@@ -261,6 +280,24 @@ REGISTRY = {
                    "fee": 0.125, "ship": 69, "fee_note": "수수료 12.5%(영국 외 VAT 없음)+배송 £69"},
     "whiskyauction": {"fn": whiskyauction, "label": "Whisky.Auction(영국옥션)", "script": "en", "cur": "GBP",
                       "fee": 0.15, "ship": 37, "fee_note": "수수료 15%+배송 £37"},
+    # 리테일: vat = 표시가에 들어 있고 수출 시 빠지는 부가세율(표시가 ÷ (1+vat)).
+    # 영국 샵의 한국·일본 마켓 가격이 기준가의 약 ÷1.2로 나오는 것을 확인했다(2026-09-25).
+    # ⚠️ 이전 WIO 계산은 ×0.8(−20%)이었는데 VAT 포함가에서 20%를 빼는 건 ÷1.2(−16.7%)가 맞다.
     "wio": {"fn": wio, "label": "WIO(영국리테일)", "script": "en", "cur": "GBP",
-            "fee": -0.20, "ship": 33, "fee_note": "영국 외 배송은 VAT 20% 차감+배송 £33"},
+            "fee": 0, "vat": 0.20, "ship": 33, "fee_note": "영국 VAT 제외+배송 £33"},
+    "whiskybarrel": {"fn": shopify("https://www.thewhiskybarrel.com", "whiskybarrel", "GBP"),
+                     "label": "The Whisky Barrel(영국)", "script": "en", "cur": "GBP",
+                     "fee": 0, "vat": 0.20, "ship": 44, "fee_note": "영국 VAT 제외+배송 £44(안내가)"},
+    "innout": {"fn": shopify("https://inn-out-shop.com", "innout", "EUR"),
+               "label": "Inn-Out(독일)", "script": "en", "cur": "EUR",
+               "fee": 0, "vat": 0.19, "ship": 49.99, "fee_note": "독일 VAT 제외+배송 €49.99(아시아 1~5kg)"},
+    "topwhiskies": {"fn": shopify("https://topwhiskies.com", "topwhiskies", "GBP"),
+                    "label": "Top Whiskies(영국)", "script": "en", "cur": "GBP",
+                    "fee": 0, "vat": 0.20, "ship": None, "fee_note": "영국 VAT 제외, 배송 결제 시 산정"},
+    "abbey": {"fn": shopify("https://www.abbeywhisky.com", "abbey", "GBP"),
+              "label": "Abbey Whisky(영국)", "script": "en", "cur": "GBP",
+              "fee": 0, "vat": 0.20, "ship": None, "fee_note": "영국 VAT 제외, 배송(DHL) 결제 시 산정"},
+    "reallygood": {"fn": shopify("https://reallygoodwhisky.com", "reallygood", "GBP"),
+                   "label": "Really Good Whisky(영국)", "script": "en", "cur": "GBP",
+                   "fee": 0, "vat": 0.20, "ship": None, "fee_note": "영국 VAT 제외, 배송 결제 시 산정(직배 여부 주문 전 확인)"},
 }

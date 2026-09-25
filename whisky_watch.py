@@ -105,6 +105,37 @@ def scan_rudder(cfg, kws):
     return items
 
 
+# ---------------------------------------------------------------- Shopify 공용 (영국·독일 샵)
+def scan_shopify(cfg, kws):
+    """Shopify 샵의 최신 게시 상품 N페이지. products.json은 게시일 최신순이라 앞쪽만 보면 신착이 잡힌다.
+    ⚠️ 가격은 반드시 products.json(샵 기준 통화)에서 읽는다 — 검색 API·쿠키 기반 가격은 접속 국가에
+    따라 KRW·USD 등으로 바뀐다(Shopify Markets, 2026-09-25 실측: 같은 상품이 £97.96 / ₩149,753)."""
+    site, base = cfg["_site"], cfg["base"].rstrip("/")
+    items = []
+    for page in range(1, int(cfg.get("pages", 2)) + 1):
+        try:
+            data = json.loads(fetch(f"{base}/products.json?limit=250&page={page}"))
+        except Exception as e:
+            log(f"  [ERR] {site}/p{page}: {e}")
+            break
+        prods = data.get("products", [])
+        for p in prods:
+            vs = p.get("variants") or [{}]
+            v = vs[0]
+            price, compare = v.get("price"), v.get("compare_at_price")
+            items.append({
+                "site": site, "id": f"{site}:{p['id']}", "title": p.get("title", ""),
+                "url": f"{base}/products/{p.get('handle', '')}",
+                "price": price, "cur": cfg.get("cur"),
+                "available": any(x.get("available") for x in vs),
+                "on_sale_flag": bool(compare) and bool(price) and float(compare) > float(price),
+            })
+        if len(prods) < 250:
+            break
+        time.sleep(0.3)
+    return items
+
+
 # ---------------------------------------------------------------- Mukawa
 def scan_mukawa(cfg, kws):
     url = "https://mukawa-spirit.com/?mode=srh&sort=n"
@@ -246,7 +277,18 @@ SCANNERS = {
     "deinwhisky": scan_deinwhisky,
     "shinanoya": scan_shinanoya,
     "vitalaus": scan_vitalaus,
+    "shopify": scan_shopify,
 }
+
+CUR_SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}
+DEFAULT_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW"}
+
+
+def fmt_price(it):
+    p = it.get("price")
+    if not p:
+        return "가격 미확인"
+    return f"{CUR_SYM.get(it.get('cur'), '')}{p}"
 
 
 _TERMINAL_NOTIFIER_CANDIDATES = [
@@ -369,18 +411,25 @@ def main():
     for site, cfg in wl.get("sites", {}).items():
         if not cfg.get("enabled", True):
             continue
-        scanner = SCANNERS.get(site)
+        scanner = SCANNERS.get(cfg.get("type", site))
         if not scanner:
             continue
+        # 처음 붙인 샵은 첫 실행을 '기준선'으로만 기록한다 — 안 그러면 카탈로그 수천 개 중
+        # 키워드에 걸리는 기존 상품 수백 건이 한꺼번에 '신규'로 쏟아진다.
+        seeded = any(k.startswith(site + ":") for k in known)
         try:
-            items = dedup_merge(scanner(cfg, kws))
+            items = dedup_merge(scanner(dict(cfg, _site=site), kws))
         except Exception as e:
             log(f"  [ERR] {site}: {e}")
             errors += 1
             continue
 
+        for it in items:                       # 기존 스캐너는 통화를 안 달아서 사이트 기본값으로 채운다
+            it.setdefault("cur", cfg.get("cur") or DEFAULT_CUR.get(site))
         total_fetched += len(items)
         per_site[site] = len(items)
+        if not seeded and items:
+            log(f"  [BASELINE] {site} 첫 수집 {len(items)}개 — 기준선으로만 기록(알림 없음)")
         all_items.extend(items)
         for it in items:
             iid = it["id"]
@@ -393,7 +442,7 @@ def main():
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
                                "on_sale_flag": it.get("on_sale_flag", False),
                                "first_seen": datetime.now().isoformat(timespec="seconds")}
-                if kw:
+                if kw and seeded:
                     new_hits.append((it, kw))
             else:
                 # 기존 상품 — "세일"은 실제 가격 하락(직전 대비 2%↑)일 때만 인정한다.
@@ -432,11 +481,11 @@ def main():
                 f.write("# 위스키 매물 인박스\n\n브리핑 전 신규/세일 매물. whisky 스킬이 읽고 취향 매칭 후 archive로 옮긴다.\n")
             f.write(f"\n## 수집 {datetime.now().strftime('%Y-%m-%d %H:%M')}\n")
             for it, kw in sorted(new_hits, key=lambda x: x[0]["site"]):
-                price_s = f"{it['price']}" if it.get("price") else "가격 미확인"
+                price_s = fmt_price(it)
                 f.write(f"- 🆕 [{it['site']}] **{it['title']}** (매칭: {kw}) — {price_s} — {it['url']}\n")
             for it, kw, prev_price in sorted(sale_hits, key=lambda x: x[0]["site"]):
                 f.write(f"- 💰 [{it['site']}] **{it['title']}** (매칭: {kw}) — "
-                        f"{prev_price} → {it['price']} — {it['url']}\n")
+                        f"{CUR_SYM.get(it.get('cur'), '')}{prev_price} → {fmt_price(it)} — {it['url']}\n")
 
     seen["last_ok"] = datetime.now().isoformat(timespec="seconds")
     seen["items"] = known
@@ -450,7 +499,7 @@ def main():
     if new_hits or sale_hits:
         all_hits = [(it, kw) for it, kw in new_hits] + [(it, kw) for it, kw, _ in sale_hits]
         lines = [f"[{it['site']}] {it['title']}" +
-                 (f" ({it['price']})" if it.get("price") else "")
+                 (f" ({fmt_price(it)})" if it.get("price") else "")
                  for it, kw in all_hits[:3]]
         if len(all_hits) > 3:
             lines.append(f"...외 {len(all_hits) - 3}건")
@@ -462,14 +511,14 @@ def main():
             chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
             if tg.TOKEN and chat:
                 tg.send(chat, "<b>" + tg.esc(subject) + "</b>\n" + "\n".join(
-                    f"· [{it['site']}] {tg.esc(it['title'])} {it.get('price') or ''}\n  {it['url']}" for it, kw in all_hits))
+                    f"· [{it['site']}] {tg.esc(it['title'])} {fmt_price(it) if it.get('price') else ''}\n  {it['url']}" for it, kw in all_hits))
         except Exception as e:
             log(f"  [ERR] telegram: {e}")
 
         email_addr = wl.get("notify", {}).get("email")
         if email_addr:
             body_lines = [f"[{it['site']}] {it['title']} — "
-                          f"{it['price'] if it.get('price') else '가격 미확인'}\n  {it['url']}"
+                          f"{fmt_price(it)}\n  {it['url']}"
                           for it, kw in all_hits]
             send_email(subject, "\n\n".join(body_lines), email_addr)
 
