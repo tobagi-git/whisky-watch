@@ -343,7 +343,17 @@ def nickolls_items(params, source="nickolls"):
     """WooCommerce Store API(구 네임스페이스 /wc/store — /wc/store/v1 은 401). 공개 JSON.
     ⚠️ 이 API의 가격은 **VAT 제외가**다(웹 £74.95 → API £62.46 = ÷1.2, 2026-09-25 실측) — 수출가로 그대로 쓴다.
     와인이 섞여 있으므로 신착은 위스키 카테고리(6723)로 거른다."""
-    d = json.loads(_get(NP_API + "?" + urllib.parse.urlencode(params), accept="application/json"))
+    url = NP_API + "?" + urllib.parse.urlencode(params)
+    for attempt in range(3):
+        body = _get(url, accept="application/json")
+        try:
+            d = json.loads(body)
+            break
+        except ValueError:
+            # 러너에서 가끔 JSON 대신 HTML(보호 페이지 추정)이 온다(2026-09-25) — 물러섰다 재시도
+            if attempt == 2:
+                raise RuntimeError("JSON 아님: " + re.sub(r"\s+", " ", body[:120]))
+            time.sleep(3 * (attempt + 1))
     out = []
     for x in d:
         pr = x.get("prices") or {}
