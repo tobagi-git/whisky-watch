@@ -268,6 +268,145 @@ def whiskyauction(term):
     return out
 
 
+# ---------------------------------------------------------------- HTFW (Hard To Find Whisky, 영국 버밍엄)
+_HTFW_CARD = re.compile(r'<a\s+href="(https://www\.htfw\.com/[^"]+)"\s+title="([^"]+)"\s+'
+                        r'class="group item product product-item')
+
+
+def htfw_parse(page, source="htfw"):
+    """HTFW 목록 페이지(검색·신착) → 상품. 카드에는 가격이 없고, 페이지에 박힌 GA4 전자상거래
+    데이터(dl4Objects의 ecommerce.items: item_name·item_id·price)에 있다 — 이름으로 짝지운다.
+    품절은 카드 안의 'Out Of Stock' 문구로 판정(품절 카드는 회색 처리도 됨)."""
+    ga = {}
+    m = re.search(r"var dl4Objects = (\[.*?\]);", page, re.S)
+    if m:
+        try:
+            for o in json.loads(m.group(1)):
+                for x in (o.get("ecommerce", {}).get("items") or []):
+                    ga[html.unescape(x.get("item_name", ""))] = x
+        except ValueError:
+            pass
+    cards = list(_HTFW_CARD.finditer(page))
+    out = []
+    for n, c in enumerate(cards):
+        body = page[c.end(): cards[n + 1].start() if n + 1 < len(cards) else c.end() + 8000]
+        name = html.unescape(c.group(2))
+        g = ga.get(name, {})
+        out.append({
+            "source": source, "id": str(g.get("item_id") or c.group(1).rsplit("/", 1)[-1]),
+            "title": name, "url": c.group(1),
+            "price": g.get("price"), "cur": "GBP", "kind": "retail",
+            "live": "out of stock" not in body.lower(), "end": None,
+            "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매",
+        })
+    return out
+
+
+def htfw(term):
+    page = _get("https://www.htfw.com/catalogsearch/result/?" + urllib.parse.urlencode({"q": term}))
+    return [i for i in htfw_parse(page) if i["live"]]
+
+
+# ---------------------------------------------------------------- Whisky-Maniac (독일)
+def whiskymaniac_parse(page, source="whiskymaniac"):
+    """상품마다 schema.org 마이크로데이터가 있다(sku·url·name·price·priceCurrency·availability)."""
+    out = []
+    for b in page.split('<div class="product-item" itemScope=""')[1:]:
+        sku = re.search(r'itemProp="sku" content="([^"]+)"', b)
+        url = re.search(r'class="product-item-link" href="([^"]+)"', b)
+        name = re.search(r'itemProp="name">(.*?)</h2>', b, re.S)
+        price = re.search(r'itemProp="price" content="([\d.]+)"', b)
+        av = re.search(r'itemProp="availability" href="https://schema.org/(\w+)"', b)
+        if not (sku and url and name):
+            continue
+        out.append({
+            "source": source, "id": sku.group(1), "title": html.unescape(name.group(1)).strip(),
+            "url": "https://www.whisky-maniac.de" + url.group(1),
+            "price": float(price.group(1)) if price else None, "cur": "EUR", "kind": "retail",
+            "live": (av.group(1) if av else "") == "InStock", "end": None,
+            "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매",
+        })
+    return out
+
+
+def whiskymaniac(term):
+    # ?page=2 는 1~2페이지를 누적해서 준다(더보기 방식, 2026-09-25 실측)
+    page = _get("https://www.whisky-maniac.de/search?" + urllib.parse.urlencode({"q": term, "page": 2}))
+    return [i for i in whiskymaniac_parse(page) if i["live"]]
+
+
+# ---------------------------------------------------------------- Nickolls & Perks (영국, WooCommerce)
+NP_API = "https://nickollsandperks.com/wp-json/wc/store/products"
+
+
+def nickolls_items(params, source="nickolls"):
+    """WooCommerce Store API(구 네임스페이스 /wc/store — /wc/store/v1 은 401). 공개 JSON.
+    ⚠️ 이 API의 가격은 **VAT 제외가**다(웹 £74.95 → API £62.46 = ÷1.2, 2026-09-25 실측) — 수출가로 그대로 쓴다.
+    와인이 섞여 있으므로 신착은 위스키 카테고리(6723)로 거른다."""
+    d = json.loads(_get(NP_API + "?" + urllib.parse.urlencode(params), accept="application/json"))
+    out = []
+    for x in d:
+        pr = x.get("prices") or {}
+        try:
+            price = int(pr.get("price")) / 10 ** int(pr.get("currency_minor_unit", 2))
+        except (TypeError, ValueError):
+            price = None
+        out.append({
+            "source": source, "id": str(x.get("id")), "title": html.unescape(x.get("name", "")),
+            "url": x.get("permalink"), "price": price, "cur": pr.get("currency_code") or "GBP",
+            "kind": "retail", "live": bool(x.get("is_in_stock")), "end": None,
+            "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매 · 가격은 VAT 제외가",
+        })
+    return out
+
+
+def nickolls(term):
+    return [i for i in nickolls_items({"search": term, "per_page": 50}) if i["live"]]
+
+
+# ---------------------------------------------------------------- Whiskysite.nl (네덜란드, Lightspeed) — 일본 배송만
+def _is_small(title):
+    """샘플·35cl 미만 소용량. 숫자는 통째로 읽어 값으로 비교한다 — 부분 매칭으로 보면 '70 CL'의
+    '7'만 떼어 7cl로 오판한다(2026-09-25 실측)."""
+    if re.search(r"\bsamples?\b", title, re.I):
+        return True
+    for m in re.finditer(r"(?<![\d.,])(\d+(?:[.,]\d+)?)\s?cl\b", title, re.I):
+        if float(m.group(1).replace(",", ".")) < 35:
+            return True
+    return False
+
+
+def whiskysite_items(path, params=None, source="whiskysite"):
+    """Lightspeed 샵은 아무 목록 URL에 ?format=json 을 붙이면 구조화 JSON을 준다
+    (collection.products — title·url·available·price.price_incl/price_excl). 6cl 샘플이 대량이라 거른다.
+    ⚠️ 이 샵은 **일본만** 배송하고 한국은 배송 목록에 없다(2026-09-25 배송 페이지 확인)."""
+    q = dict(params or {}, format="json")
+    d = json.loads(_get(f"https://www.whiskysite.nl/en/{path}?" + urllib.parse.urlencode(q), accept="application/json"))
+    prods = (d.get("collection") or {}).get("products") or {}
+    out = []
+    for v in prods.values():
+        title = html.unescape(v.get("title") or "")
+        if _is_small(title):
+            continue
+        pr = v.get("price") or {}
+        out.append({
+            "source": source, "id": str(v.get("id")), "title": title,
+            "url": "https://www.whiskysite.nl/en/" + (v.get("url") or ""),
+            "price": pr.get("price_incl") or pr.get("price"), "cur": "EUR", "kind": "retail",
+            "live": bool(v.get("available")), "end": None,
+            "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매 · 일본 배송만(한국 불가)",
+        })
+    return out
+
+
+def whiskysite(term, pages=2):
+    out = []
+    for page in range(1, pages + 1):          # 24개/페이지인데 샘플이 섞여 1페이지만으론 부족하다
+        got = whiskysite_items(f"search/{urllib.parse.quote(term)}/", {"page": page})
+        out += [i for i in got if i["live"]]
+    return out
+
+
 # fee: 낙찰가·판매가에 곱할 계수(구매대행·낙찰수수료). ship: 일본까지 배송비(그 통화 기준).
 # 2026-09-23 각 사이트 배송·수수료 페이지에서 확인한 값. 영국 옥션은 전부 DHL 지정이고
 # 일본 측 주세·소비세·통관비는 수취인 부담이다(어디서 사든 동일).
@@ -300,4 +439,13 @@ REGISTRY = {
     "reallygood": {"fn": shopify("https://reallygoodwhisky.com", "reallygood", "GBP"),
                    "label": "Really Good Whisky(영국)", "script": "en", "cur": "GBP",
                    "fee": 0, "vat": 0.20, "ship": None, "fee_note": "영국 VAT 제외, 배송 결제 시 산정(직배 여부 주문 전 확인)"},
+    # HTML 샵: VAT 차감이 확인 안 된 곳은 vat=0(보수적) — 추정가를 낮게 잡아 🎯를 잘못 붙이지 않도록.
+    "htfw": {"fn": htfw, "label": "HTFW(영국)", "script": "en", "cur": "GBP",
+             "fee": 0, "vat": 0, "ship": None, "fee_note": "배송 결제 시 산정·무료보험, VAT 차감 미확인(미반영)"},
+    "whiskymaniac": {"fn": whiskymaniac, "label": "Whisky-Maniac(독일)", "script": "en", "cur": "EUR",
+                     "fee": 0, "vat": 0, "ship": 40, "fee_note": "세계배송 €40~(DHL), VAT 차감 미확인(미반영)"},
+    "nickolls": {"fn": nickolls, "label": "Nickolls & Perks(영국)", "script": "en", "cur": "GBP",
+                 "fee": 0, "vat": 0, "ship": None, "fee_note": "표시가가 이미 VAT 제외가, 배송 결제 시 산정"},
+    "whiskysite": {"fn": whiskysite, "label": "Whiskysite.nl(네덜란드·일본배송만)", "script": "en", "cur": "EUR",
+                   "fee": 0, "vat": 0, "ship": None, "fee_note": "일본만 배송, 배송비 결제 시 산정, VAT 차감 미확인(미반영)"},
 }

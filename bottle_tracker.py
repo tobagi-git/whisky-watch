@@ -45,14 +45,16 @@ SITE_BY_HOST = {
     "deinwhisky.de": "deinwhisky", "shinanoya-tokyo.jp": "shinanoya", "vitalaus.com": "vitalaus",
     "thewhiskybarrel.com": "whiskybarrel", "inn-out-shop.com": "innout", "topwhiskies.com": "topwhiskies",
     "abbeywhisky.com": "abbey", "reallygoodwhisky.com": "reallygood", "whiskyinternationalonline.com": "wio",
+    "htfw.com": "htfw", "whisky-maniac.de": "whiskymaniac", "nickollsandperks.com": "nickolls",
+    "whiskysite.nl": "whiskysite",
 }
 SITE_LABEL = {"rudder": "RUDDER", "mukawa": "무카와", "deinwhisky": "DeinWhisky",
               "shinanoya": "시나노야", "vitalaus": "비탈라우스",
               "whiskybarrel": "TWB", "innout": "Inn-Out", "topwhiskies": "Top Whiskies",
-              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "other": "기타"}
+              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "other": "기타"}
 SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW",
             "whiskybarrel": "GBP", "innout": "EUR", "topwhiskies": "GBP", "abbey": "GBP",
-            "reallygood": "GBP", "wio": "GBP"}
+            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR"}
 CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩", "GBP": "£"}
 
 

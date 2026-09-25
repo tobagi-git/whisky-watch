@@ -173,6 +173,31 @@
       "base": "https://reallygoodwhisky.com",
       "cur": "GBP",
       "pages": 2
+    },
+    "htfw": {
+      "enabled": true,
+      "cur": "GBP",
+      "pages": 2
+    },
+    "whiskymaniac": {
+      "enabled": true,
+      "cur": "EUR",
+      "pages": 2
+    },
+    "nickolls": {
+      "enabled": true,
+      "cur": "GBP",
+      "category": 6723,
+      "per_page": 100
+    },
+    "whiskysite": {
+      "enabled": true,
+      "cur": "EUR",
+      "categories": [
+        "scotch-whisky",
+        "independent-bottlers",
+        "rare-old-single-malt-whisky"
+      ]
     }
   }
 }

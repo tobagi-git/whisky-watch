@@ -136,6 +136,59 @@ def scan_shopify(cfg, kws):
     return items
 
 
+# ---------------------------------------------------------------- HTFW (신착 페이지)
+def scan_htfw(cfg, kws):
+    import sources
+    items = []
+    for page in range(1, int(cfg.get("pages", 2)) + 1):
+        try:
+            got = sources.htfw_parse(fetch(f"https://www.htfw.com/new-arrivals?p={page}"))
+        except Exception as e:
+            log(f"  [ERR] htfw/p{page}: {e}")
+            break
+        for it in got:
+            items.append({"site": "htfw", "id": f"htfw:{it['id']}", "title": it["title"], "url": it["url"],
+                          "price": it["price"], "cur": "GBP", "available": it["live"], "on_sale_flag": False})
+        if not got:
+            break
+        time.sleep(0.5)
+    return items
+
+
+# ---------------------------------------------------------------- Whisky-Maniac (NEW IN)
+def scan_whiskymaniac(cfg, kws):
+    import sources
+    got = sources.whiskymaniac_parse(fetch(f"https://www.whisky-maniac.de/c/new-in?page={int(cfg.get('pages', 2))}"))
+    return [{"site": "whiskymaniac", "id": f"whiskymaniac:{it['id']}", "title": it["title"], "url": it["url"],
+             "price": it["price"], "cur": "EUR", "available": it["live"], "on_sale_flag": False} for it in got]
+
+
+# ---------------------------------------------------------------- Nickolls & Perks (위스키 카테고리 최신순)
+def scan_nickolls(cfg, kws):
+    import sources
+    got = sources.nickolls_items({"category": cfg.get("category", 6723), "orderby": "date", "order": "desc",
+                                  "per_page": int(cfg.get("per_page", 100))})
+    return [{"site": "nickolls", "id": f"nickolls:{it['id']}", "title": it["title"], "url": it["url"],
+             "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False} for it in got]
+
+
+# ---------------------------------------------------------------- Whiskysite.nl (카테고리별 최신순, 샘플 제외)
+def scan_whiskysite(cfg, kws):
+    """전체 최신순은 6cl 샘플이 앞을 다 차지한다(최신 24개 전부 샘플, 2026-09-25) — 위스키 카테고리별로 본다."""
+    import sources
+    items = []
+    for cat in cfg.get("categories", ["scotch-whisky", "independent-bottlers", "rare-old-single-malt-whisky"]):
+        try:
+            got = sources.whiskysite_items(f"{cat}/", {"sort": "newest"})
+        except Exception as e:
+            log(f"  [ERR] whiskysite/{cat}: {e}")
+            continue
+        items += [{"site": "whiskysite", "id": f"whiskysite:{it['id']}", "title": it["title"], "url": it["url"],
+                   "price": it["price"], "cur": "EUR", "available": it["live"], "on_sale_flag": False} for it in got]
+        time.sleep(0.5)
+    return items
+
+
 # ---------------------------------------------------------------- Mukawa
 def scan_mukawa(cfg, kws):
     url = "https://mukawa-spirit.com/?mode=srh&sort=n"
@@ -278,6 +331,10 @@ SCANNERS = {
     "shinanoya": scan_shinanoya,
     "vitalaus": scan_vitalaus,
     "shopify": scan_shopify,
+    "htfw": scan_htfw,
+    "whiskymaniac": scan_whiskymaniac,
+    "nickolls": scan_nickolls,
+    "whiskysite": scan_whiskysite,
 }
 
 CUR_SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}
