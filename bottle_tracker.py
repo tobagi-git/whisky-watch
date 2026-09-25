@@ -46,15 +46,15 @@ SITE_BY_HOST = {
     "thewhiskybarrel.com": "whiskybarrel", "inn-out-shop.com": "innout", "topwhiskies.com": "topwhiskies",
     "abbeywhisky.com": "abbey", "reallygoodwhisky.com": "reallygood", "whiskyinternationalonline.com": "wio",
     "htfw.com": "htfw", "whisky-maniac.de": "whiskymaniac", "nickollsandperks.com": "nickolls",
-    "whiskysite.nl": "whiskysite",
+    "whiskysite.nl": "whiskysite", "whisky.fr": "lmdw",
 }
 SITE_LABEL = {"rudder": "RUDDER", "mukawa": "무카와", "deinwhisky": "DeinWhisky",
               "shinanoya": "시나노야", "vitalaus": "비탈라우스",
               "whiskybarrel": "TWB", "innout": "Inn-Out", "topwhiskies": "Top Whiskies",
-              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "other": "기타"}
+              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "lmdw": "La Maison", "other": "기타"}
 SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW",
             "whiskybarrel": "GBP", "innout": "EUR", "topwhiskies": "GBP", "abbey": "GBP",
-            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR"}
+            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR", "lmdw": "EUR"}
 CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩", "GBP": "£"}
 
 
@@ -328,7 +328,8 @@ for _s in ("whiskybarrel", "innout", "topwhiskies", "abbey", "reallygood", "wio"
 
 
 # ---------------------------------------------------------------- 키워드 후보
-_AGE_RE = re.compile(r"(?<!\d)(\d{1,2})\s*(?:年|years?\s*old|years?|yo|jahre|y\.o\.)(?!\d)", re.I)
+# 숙성연수 표기: 일본 年 / 영어 years·yo·y.o. / 독일 Jahre / 프랑스 ans(La Maison) / 'y' 한 글자(Inn-Out)
+_AGE_RE = re.compile(r"(?<!\d)(\d{1,2})\s*(?:年|years?\s*old|years?|yo|jahre|y\.o\.|ans\b|y\b)(?!\d)", re.I)
 
 
 def title_age(title):

@@ -189,6 +189,15 @@ def scan_whiskysite(cfg, kws):
     return items
 
 
+# ---------------------------------------------------------------- La Maison du Whisky (위스키 활성화일 최신순)
+def scan_lmdw(cfg, kws):
+    import sources
+    got = sources.lmdw_items({"f": {"category_uid": {"eq": cfg.get("category_uid", sources.LMDW_WHISKY_UID)}},
+                              "n": int(cfg.get("page_size", 60)), "sort": {"lmdw_activation_date": "DESC"}})
+    return [{"site": "lmdw", "id": f"lmdw:{it['id']}", "title": it["title"], "url": it["url"],
+             "price": it["price"], "cur": it["cur"], "available": it["live"], "on_sale_flag": False} for it in got]
+
+
 # ---------------------------------------------------------------- Mukawa
 def scan_mukawa(cfg, kws):
     url = "https://mukawa-spirit.com/?mode=srh&sort=n"
@@ -335,6 +344,7 @@ SCANNERS = {
     "whiskymaniac": scan_whiskymaniac,
     "nickolls": scan_nickolls,
     "whiskysite": scan_whiskysite,
+    "lmdw": scan_lmdw,
 }
 
 CUR_SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}

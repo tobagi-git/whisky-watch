@@ -198,6 +198,11 @@
         "independent-bottlers",
         "rare-old-single-malt-whisky"
       ]
+    },
+    "lmdw": {
+      "enabled": true,
+      "cur": "EUR",
+      "page_size": 60
     }
   }
 }

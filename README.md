@@ -10,19 +10,33 @@ GitHub Actions cron이 위스키 온라인숍 5곳(RUDDER·Mukawa·DeinWhisky·S
    사이트별 재고·가격을 추적. 재입고·품절·가격하락·목표가 진입을 텔레그램으로 알리고
    노션 행(추적 현황·재고·최근확인가·통화·확인시각)에 써준다. `data/price_history.csv`에 이력 적재.
 
-3. **경매·영국숍 감시** (`auction_watch.py` + `sources.py`) — 원하는 보틀을 사이트 5곳에서 찾아 알린다.
+3. **경매·영국숍 감시** (`auction_watch.py` + `sources.py`) — 원하는 보틀을 사이트 15곳에서 찾아 알린다.
    감시 대상은 `auction_watchlist.json`에 적은 항목 + **노션에서 `추적`=✓ 인 행 전부**(텔레그램 `/add`로
    넣은 보틀이 자동 포함). 알림: 🆕 신규 · ⏰ 종료 3시간 이내(야후) · 📉 리테일 가격하락 · 🎯 목표가 진입. **텔레그램 + 메일 둘 다** 발송.
    본문에 **일본 수령 기준 추정 총액**(사이트별 수수료·일본 배송비 반영)을 함께 준다. 상태는 `data/auction_seen.json`.
 
-   | 사이트 | 구분 | 수수료·배송(일본) |
-   |---|---|---|
-   | 야후옥션 🇯🇵 | 경매 | 대행 5%, 국제배송 별도 |
-   | Scotch Whisky Auctions 🇬🇧 | 경매 | 15% + 수수료VAT, 배송 개별견적(DHL) |
-   | Just Whisky 🇬🇧 | 경매 | 12.5%(영국 외 VAT 없음) + £69 |
-   | Whisky.Auction 🇬🇧 | 경매 | 15% + £37 |
-   | WIO 🇬🇧 | 리테일 | **VAT 20% 차감** + £33 |
+   | 사이트 | 구분 | 수집 방식 | 수수료·VAT·배송(일본·한국) |
+   |---|---|---|---|
+   | 야후옥션 🇯🇵 | 경매 | HTML data-* 속성 | 대행 5%, 국제배송 별도 |
+   | Scotch Whisky Auctions 🇬🇧 | 경매 | HTML(POST 정렬) | 15% + 수수료VAT, 배송 개별견적(DHL) |
+   | Just Whisky 🇬🇧 | 경매 | 공개 JSON API | 12.5%(영국 외 VAT 없음) + £69 |
+   | Whisky.Auction 🇬🇧 | 경매 | HTML | 15% + £37 |
+   | WIO 🇬🇧 | 리테일 | Shopify | VAT 20% 제외 + £33 |
+   | The Whisky Barrel 🇬🇧 | 리테일 | Shopify | VAT 제외 + £44 |
+   | Inn-Out 🇩🇪 | 리테일 | Shopify | 독일 VAT 19% 제외 + €49.99(아시아) |
+   | Top Whiskies 🇬🇧 | 리테일 | Shopify | VAT 제외, 배송 결제 시 |
+   | Abbey Whisky 🇬🇧 | 리테일 | Shopify | VAT 제외, DHL 결제 시 |
+   | Really Good Whisky 🇬🇧 | 리테일 | Shopify | VAT 제외, 직배 여부 주문 전 확인 |
+   | HTFW 🇬🇧 | 리테일 | HTML + GA4 데이터 | VAT 미확인, 배송 결제 시·무료보험 |
+   | Whisky-Maniac 🇩🇪 | 리테일 | schema.org 마이크로데이터 | VAT 미확인, €40~ |
+   | Nickolls & Perks 🇬🇧 | 리테일 | WooCommerce Store API | API 가격이 이미 VAT 제외가 |
+   | Whiskysite.nl 🇳🇱 | 리테일 | Lightspeed ?format=json | **일본만** 배송, VAT 미확인 |
+   | La Maison du Whisky 🇫🇷 | 리테일 | Magento GraphQL | 존5(한·일) €20~, VAT 미확인 |
 
+   - 리테일 샵들은 키워드 신착 폴러(`whisky_watch.py`)에도 붙어 있다. **새 샵의 첫 수집은 기준선으로만 기록**한다
+     (카탈로그 수천 개가 '신규'로 쏟아지는 것 방지). VAT 차감이 확인 안 된 샵은 추정가에 반영하지 않는다(🎯 오판 방지).
+   - ⚠️ Shopify 가격은 `products.json`·`/products/{handle}.js`(샵 기준 통화)에서만 읽는다. `suggest.json`·쿠키 가격은
+     Shopify Markets 때문에 접속 국가 통화로 바뀐다(같은 상품 £97.96 / ₩149,753). 러너는 미국 IP다.
    - 영국 사이트는 **일본 배송이 되는 곳**만 넣었다(일본 수령 후 휴대 반입이 세금상 최선).
      Whisky Hammer·Whisky Auctioneer는 일본 배송은 되지만 평문 요청을 403/404로 막아 미지원.
    - 한국까지 정식통관하면 위 추정액에 **약 2.55배**가 더 붙는다. 일본 측 주세·소비세는 수취인 부담.

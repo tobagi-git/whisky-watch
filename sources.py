@@ -407,6 +407,40 @@ def whiskysite(term, pages=2):
     return out
 
 
+# ---------------------------------------------------------------- La Maison du Whisky (프랑스, whisky.fr)
+LMDW_GQL = "https://gateway.prod2.whisky.fr/graphql"
+LMDW_WHISKY_UID = "NDExNw=="     # 'Les types de whiskies' 루트 카테고리(약 2,800종)
+_LMDW_Q = ("query P($search:String,$f:ProductAttributeFilterInput!,$n:Int!,$sort:ProductAttributeSortInput)"
+           "{products(search:$search filter:$f pageSize:$n currentPage:1 sort:$sort)"
+           "{items{sku name in_stock url_key url_rewrites{url} price_range{minimum_price{final_price{currency value}}}}}}")
+
+
+def lmdw_items(variables, source="lmdw"):
+    """검색 결과는 브라우저에서 JS로 그려지고 HTML엔 상품이 없다 — 실제 원천은 Magento GraphQL
+    게이트웨이(GET)다(2026-09-25 브라우저 네트워크에서 확인). 신착은 sort lmdw_activation_date DESC."""
+    u = LMDW_GQL + "?" + urllib.parse.urlencode({"query": _LMDW_Q, "operationName": "P",
+                                                 "variables": json.dumps(variables)})
+    d = json.loads(_get(u, accept="application/json"))
+    if d.get("errors"):
+        raise RuntimeError(d["errors"][0].get("message", "graphql error")[:200])
+    out = []
+    for x in (d.get("data") or {}).get("products", {}).get("items", []):
+        fp = (((x.get("price_range") or {}).get("minimum_price") or {}).get("final_price") or {})
+        path = ((x.get("url_rewrites") or [{}])[0] or {}).get("url") or f"{x.get('url_key')}.html"
+        out.append({
+            "source": source, "id": str(x.get("sku")), "title": html.unescape(x.get("name") or ""),
+            "url": "https://www.whisky.fr/en/" + path,
+            "price": fp.get("value"), "cur": fp.get("currency") or "EUR", "kind": "retail",
+            "live": bool(x.get("in_stock")), "end": None,
+            "bids": None, "postage": 0, "buynow": None, "note": "리테일 즉시구매",
+        })
+    return out
+
+
+def lmdw(term):
+    return [i for i in lmdw_items({"search": term, "f": {}, "n": 50}) if i["live"]]
+
+
 # fee: 낙찰가·판매가에 곱할 계수(구매대행·낙찰수수료). ship: 일본까지 배송비(그 통화 기준).
 # 2026-09-23 각 사이트 배송·수수료 페이지에서 확인한 값. 영국 옥션은 전부 DHL 지정이고
 # 일본 측 주세·소비세·통관비는 수취인 부담이다(어디서 사든 동일).
@@ -448,4 +482,6 @@ REGISTRY = {
                  "fee": 0, "vat": 0, "ship": None, "fee_note": "표시가가 이미 VAT 제외가, 배송 결제 시 산정"},
     "whiskysite": {"fn": whiskysite, "label": "Whiskysite.nl(네덜란드·일본배송만)", "script": "en", "cur": "EUR",
                    "fee": 0, "vat": 0, "ship": None, "fee_note": "일본만 배송, 배송비 결제 시 산정, VAT 차감 미확인(미반영)"},
+    "lmdw": {"fn": lmdw, "label": "La Maison du Whisky(프랑스)", "script": "en", "cur": "EUR",
+             "fee": 0, "vat": 0, "ship": 20, "fee_note": "존5(한·일) 배송 €20~, 레어 병은 DHL, VAT 차감 미확인(미반영)"},
 }
