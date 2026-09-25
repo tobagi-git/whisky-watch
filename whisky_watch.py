@@ -28,7 +28,7 @@ Master of Malt·The Whisky Exchange는 Cloudflare로 막혀 순수 스크립트�
   상태        ~/Claude/Projects/위스키/모니터링/seen.json      (상품ID→마지막 가격, 중복/세일 판정)
   로그        ~/Claude/Projects/위스키/모니터링/watch.log
 """
-import sys, re, json, time, html, urllib.request
+import sys, re, json, time, html, urllib.error, urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -116,10 +116,22 @@ def scan_shopify(cfg, kws):
     items = []
     pages = int(cfg.get("deep_pages", 40)) if cfg.get("_deep") else int(cfg.get("pages", 2))
     for page in range(1, pages + 1):
-        try:
-            data = json.loads(fetch(f"{base}/products.json?limit=250&page={page}"))
-        except Exception as e:
-            log(f"  [ERR] {site}/p{page}: {e}")
+        data = None
+        for attempt in range(4):
+            try:
+                data = json.loads(fetch(f"{base}/products.json?limit=250&page={page}"))
+                break
+            except urllib.error.HTTPError as e:
+                # Shopify는 페이지를 연달아 긁으면 503/429로 막는다(정밀 스캔 때 실측) — 물러섰다 재시도
+                if e.code in (429, 503) and attempt < 3:
+                    time.sleep(5 * (attempt + 1))
+                    continue
+                log(f"  [ERR] {site}/p{page}: {e}")
+                break
+            except Exception as e:
+                log(f"  [ERR] {site}/p{page}: {e}")
+                break
+        if data is None:
             break
         prods = data.get("products", [])
         for p in prods:
@@ -136,7 +148,7 @@ def scan_shopify(cfg, kws):
             })
         if len(prods) < 250:
             break
-        time.sleep(0.3)
+        time.sleep(1.0 if cfg.get("_deep") else 0.3)
     return items
 
 
