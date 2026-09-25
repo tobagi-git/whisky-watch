@@ -15,6 +15,7 @@ auction_watch.py — 원하는 보틀을 경매·리테일 사이트에서 찾�
 상태: data/auction_seen.json   사용: --dry(알림 없이 목록) / --report(현재 매물 전체 1회 보고)
 """
 import argparse, json, re, urllib.error
+from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
@@ -122,25 +123,35 @@ def matches(title, target):
 
 # ---------------------------------------------------------------- 수집·판정
 def collect(target):
-    found, seen_ids = [], set()
+    """대상 하나를 모든 사이트에서 병렬 조회한다(순차면 대상당 20~40초 — 15곳 x 23회/일이면
+    GitHub Actions 무료 한도 월 2,000분을 넘긴다, 2026-09-25 실측 1회 2.9분)."""
+    jobs = []
     for key in target["sources"]:
         src = sources.REGISTRY.get(key)
         if not src:
             continue
         for term in target["terms"].get(key, []):
-            if not term:
+            if term:
+                jobs.append((key, src, term))
+
+    def run(job):
+        key, src, term = job
+        try:
+            return src["fn"](term)
+        except Exception as e:
+            log(f"{src['label']} 검색 실패 '{term}': {type(e).__name__} {e}")
+            return []
+
+    found, seen_ids = [], set()
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        results = list(ex.map(run, jobs))          # 순서 보존 → 결과가 실행마다 같다
+    for items in results:
+        for it in items:
+            k = f"{it['source']}:{it['id']}"
+            if k in seen_ids or not matches(it["title"], target):
                 continue
-            try:
-                items = src["fn"](term)
-            except Exception as e:
-                log(f"{src['label']} 검색 실패 '{term}': {type(e).__name__} {e}")
-                continue
-            for it in items:
-                k = f"{it['source']}:{it['id']}"
-                if k in seen_ids or not matches(it["title"], target):
-                    continue
-                seen_ids.add(k)
-                found.append(it)
+            seen_ids.add(k)
+            found.append(it)
     return found
 
 

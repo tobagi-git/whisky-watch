@@ -475,19 +475,27 @@ def main():
     per_site = {}
     all_items = []
 
-    for site, cfg in wl.get("sites", {}).items():
-        if not cfg.get("enabled", True):
-            continue
-        scanner = SCANNERS.get(cfg.get("type", site))
-        if not scanner:
-            continue
+    # 사이트 수집은 병렬로(서로 독립), 판정·상태 갱신은 아래에서 순서대로 한다.
+    active = [(site, cfg) for site, cfg in wl.get("sites", {}).items()
+              if cfg.get("enabled", True) and SCANNERS.get(cfg.get("type", site))]
+
+    def _scan(pair):
+        site, cfg = pair
+        try:
+            return site, dedup_merge(SCANNERS[cfg.get("type", site)](dict(cfg, _site=site), kws)), None
+        except Exception as e:
+            return site, None, e
+
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        scanned = list(ex.map(_scan, active))
+
+    for (site, cfg), (_, items, err) in zip(active, scanned):
         # 처음 붙인 샵은 첫 실행을 '기준선'으로만 기록한다 — 안 그러면 카탈로그 수천 개 중
         # 키워드에 걸리는 기존 상품 수백 건이 한꺼번에 '신규'로 쏟아진다.
         seeded = any(k.startswith(site + ":") for k in known)
-        try:
-            items = dedup_merge(scanner(dict(cfg, _site=site), kws))
-        except Exception as e:
-            log(f"  [ERR] {site}: {e}")
+        if err is not None:
+            log(f"  [ERR] {site}: {err}")
             errors += 1
             continue
 
