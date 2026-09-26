@@ -635,32 +635,69 @@ def main():
         + (f", 사이트 오류 {errors}건" if errors else "")
         + " | 수집 " + ", ".join(f"{k} {v}" for k, v in per_site.items()))
 
-    if new_hits or sale_hits:
-        all_hits = [(it, kw) for it, kw in new_hits] + [(it, kw) for it, kw, _ in sale_hits]
-        lines = [f"[{it['site']}] {it['title']}" +
-                 (f" ({fmt_price(it)})" if it.get("price") else "")
-                 for it, kw in all_hits[:3]]
-        if len(all_hits) > 3:
-            lines.append(f"...외 {len(all_hits) - 3}건")
-        subject = f"위스키 신규 {len(new_hits)}건 · 세일 {len(sale_hits)}건"
-        notify(subject, "\n".join(lines), url=all_hits[0][0]["url"])
+    send_instant(new_hits, sale_hits, [] if deep else events, wl)
 
-        try:
-            import tg
-            chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
-            if tg.TOKEN and chat:
-                tg.send(chat, "<b>" + tg.esc(subject) + "</b>\n" + "\n".join(
-                    f"· [{it['site']}] {tg.esc(it['title'])} {fmt_price(it) if it.get('price') else ''}\n  {it['url']}" for it, kw in all_hits))
-        except Exception as e:
-            log(f"  [ERR] telegram: {e}")
 
-        email_addr = wl.get("notify", {}).get("email")
-        if email_addr:
-            body_lines = [f"[{it['site']}] {it['title']} — "
-                          f"{fmt_price(it)}\n  {it['url']}"
-                          for it, kw in all_hits]
-            send_email(subject, "\n\n".join(body_lines), email_addr)
+def send_instant(new_hits, sale_hits, events, wl):
+    """실행마다 한 건으로 묶는 즉시 알림 — ⭐ 키워드 신규 + 💰 가격 하락 + 🆕/🔁 위스키 신제품·재입고.
+    예전 '키워드 즉시 알림'과 합친 것이다(같은 병이 두 메시지로 오지 않도록). 08·19시 리포트는 별개로 하루치 정리.
+    정밀 스캔(--deep) 실행은 이벤트를 넘기지 않는다 — 몇 분 뒤 리포트가 같은 내용을 보낸다."""
+    import shop_digest as D                     # 위스키 판별·가격 표기 공용
+    whisky = [e for e in events if D.is_whisky(e)]
+    star_ids = {it["id"] for it, _ in new_hits}
+    fresh = [e for e in whisky if e["type"] == "new" and e["id"] not in star_ids]
+    back = [e for e in whisky if e["type"] == "restock"]
+    if not (new_hits or sale_hits or fresh or back):
+        return
+    rates = D.bt.fx_rates({})
 
+    def row(tag, d, extra=""):
+        oos = " · 품절" if d.get("available") is False else ""
+        return (f"{tag} {d['title']}\n   {D.SHOP_LABEL.get(d['site'], d['site'])} · "
+                f"{D.fmt_price(d, rates)}{extra}{oos}\n   {d['url']}")
+
+    sections = []
+    if new_hits:
+        sections.append(("⭐ 취향 키워드 신규", [row("⭐", it, f" · {kw}") for it, kw in new_hits]))
+    if sale_hits:
+        sections.append(("💰 가격 하락", [row("💰", it, f" (이전 {CUR_SYM.get(it.get('cur'), '')}{pp})")
+                                        for it, kw, pp in sale_hits]))
+    if back:
+        sections.append(("🔁 재입고", [row("🔁⭐" if e.get("kw") else "🔁", e) for e in back]))
+    if fresh:
+        sections.append(("🆕 위스키 신제품", [row("🆕", e) for e in fresh]))
+    subject = (f"위스키 샵 알림 — ⭐{len(new_hits)} · 🆕{len(fresh)} · 🔁{len(back)}"
+               + (f" · 💰{len(sale_hits)}" if sale_hits else ""))
+
+    first = (new_hits and new_hits[0][0]) or (back and back[0]) or (fresh and fresh[0]) or sale_hits[0][0]
+    notify(subject, first["title"], url=first["url"])          # 맥에서 돌 때만 의미 있음
+
+    try:
+        import tg
+        chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
+        if tg.TOKEN and chat:
+            body, shown = [f"<b>🛎 {tg.esc(subject)}</b>"], 0
+            for head, rows in sections:
+                body.append(f"\n<b>{tg.esc(head)} {len(rows)}건</b>")
+                for r in rows:
+                    if shown >= 30:
+                        break
+                    body.append(tg.esc(r))
+                    shown += 1
+            total = sum(len(r) for _, r in sections)
+            if total > shown:
+                body.append(f"\n…외 {total - shown}건은 메일 참조")
+            tg.send(chat, "\n".join(body))
+    except Exception as e:
+        log(f"  [ERR] telegram: {e}")
+
+    email_addr = wl.get("notify", {}).get("email")
+    if email_addr:
+        mail = [subject, ""]
+        for head, rows in sections:
+            mail += [f"■ {head} {len(rows)}건", ""] + rows + [""]
+        send_email(subject, "\n".join(mail), email_addr)
+    log(f"  [ALERT] 즉시 알림 — {subject}")
 
 if __name__ == "__main__":
     main()
