@@ -106,6 +106,9 @@ def norm_url(u):
     path = p.path.rstrip("/")
     q = p.query
     # mukawa는 ?pid= 가 식별자라 쿼리를 남기고, 나머지는 쿼리(?c=45 등) 제거
+    if "dailyshot" in p.netloc:  # ?item= 은 API 폴백에 쓰는 매물 ID
+        m = re.search(r"item=(\d+)", q)
+        return f"{p.scheme}://{p.netloc}{path}" + (f"?item={m.group(1)}" if m else "")
     if "mukawa" in p.netloc:
         m = re.search(r"pid=(\d+)", q)
         return f"https://mukawa-spirit.com/?pid={m.group(1)}" if m else u.strip()
@@ -276,17 +279,31 @@ _DS_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/60
 
 def check_dailyshot(url):
     """데일리샷 상품 페이지(/m/item/{top_product_id}) — 대표(최저가) 매물의 가격·재고·판매처.
-    데스크톱 UA는 403, 모바일 UA+Accept 헤더면 200 (2026-09-26 실측)."""
-    h = fetch(url, headers={"User-Agent": _DS_UA, "Accept": "text/html,application/xhtml+xml",
-                            "Accept-Language": "ko-KR,ko;q=0.9"})
-    m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', h, re.S)
-    qs = json.loads(m.group(1))["props"]["pageProps"]["dehydratedState"]["queries"]
-    d = next(q["state"]["data"] for q in qs if isinstance(q.get("state", {}).get("data"), dict)
-             and "price" in q["state"]["data"])
+    데스크톱 UA는 403, 모바일 UA+Accept 헤더면 200 (2026-09-26 실측).
+    GitHub Actions에서는 페이지에 데이터가 없는 응답이 와서, 링크에 ?item={매물ID}가 있으면
+    API(api.dailyshot.co/items/{id}/ — 그 판매처 매물 하나)로 폴백한다."""
+    hdr = {"User-Agent": _DS_UA, "Accept": "text/html,application/xhtml+xml", "Accept-Language": "ko-KR,ko;q=0.9"}
+    d = None
+    try:
+        h = fetch(url.split("?")[0], headers=hdr)
+        m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', h, re.S)
+        if m:
+            qs = json.loads(m.group(1))["props"]["pageProps"]["dehydratedState"]["queries"]
+            d = next((q["state"]["data"] for q in qs if isinstance(q.get("state", {}).get("data"), dict)
+                      and "price" in q["state"]["data"]), None)
+        else:
+            log(f"  데일리샷 페이지에 데이터 없음({len(h)}B): {re.sub(r'\\s+', ' ', h[:120])}")
+    except urllib.error.HTTPError as e:
+        log(f"  데일리샷 페이지 {e.code}")
+    item = re.search(r"[?&]item=(\d+)", url)
+    if d is None and item:
+        d = json.loads(fetch(f"https://api.dailyshot.co/items/{item.group(1)}/", headers={"User-Agent": _DS_UA}))
+    if d is None:
+        raise RuntimeError("데일리샷 가격 확인 불가")
     stock = d.get("stock")
-    seller = (d.get("seller") or {}).get("name", "")
+    seller = (d.get("seller") or {}).get("name", "") if isinstance(d.get("seller"), dict) else ""
     return {"in_stock": d.get("status") == 0 and (stock is None or stock > 0), "price": d.get("price"),
-            "title": f"{d.get('en_name') or d.get('name', '')} @{seller}".strip(), "stock_num": stock}
+            "title": f"{d.get('en_name') or d.get('name', '')} @{seller}".rstrip(" @"), "stock_num": stock}
 
 
 def check_rudder(url):
