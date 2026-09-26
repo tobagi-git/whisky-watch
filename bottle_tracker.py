@@ -36,6 +36,8 @@ LOG = DATA / "watch.log"
 NOTION_TOKEN = os.environ.get("NOTION_TOKEN", "")
 DS_ID = os.environ.get("NOTION_DATA_SOURCE_ID", "d26a9b2e-76a2-4d6a-bc0c-31d10ce5fa2f")
 DB_ID = os.environ.get("NOTION_DATABASE_ID", "eed23479c4074bc0a710f780570e6369")
+# 와인 리스트 DB — 같은 추적 속성(추적·추적 링크·목표가KRW…)을 가진 행을 함께 추적한다. 제목 속성은 "와인명".
+WINE_DS_ID = os.environ.get("NOTION_WINE_DATA_SOURCE_ID", "1340db61-664f-4610-b303-0234ec99799a")
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
 KST = timezone(timedelta(hours=9))
@@ -47,14 +49,15 @@ SITE_BY_HOST = {
     "abbeywhisky.com": "abbey", "reallygoodwhisky.com": "reallygood", "whiskyinternationalonline.com": "wio",
     "htfw.com": "htfw", "whisky-maniac.de": "whiskymaniac", "nickollsandperks.com": "nickolls",
     "whiskysite.nl": "whiskysite", "whisky.fr": "lmdw",
+    "dailyshot.co": "dailyshot",
 }
 SITE_LABEL = {"rudder": "RUDDER", "mukawa": "무카와", "deinwhisky": "DeinWhisky",
               "shinanoya": "시나노야", "vitalaus": "비탈라우스",
               "whiskybarrel": "TWB", "innout": "Inn-Out", "topwhiskies": "Top Whiskies",
-              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "lmdw": "La Maison", "other": "기타"}
+              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "lmdw": "La Maison", "dailyshot": "데일리샷", "other": "기타"}
 SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW",
             "whiskybarrel": "GBP", "innout": "EUR", "topwhiskies": "GBP", "abbey": "GBP",
-            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR", "lmdw": "EUR"}
+            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR", "lmdw": "EUR", "dailyshot": "KRW"}
 CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩", "GBP": "£"}
 
 
@@ -179,6 +182,19 @@ def notion_query_tracked():
     raise RuntimeError("노션 조회 실패 (data_source·database 둘 다)")
 
 
+def notion_query_tracked_all():
+    """위스키 DB + 와인 DB의 추적 행. 와인 DB 조회가 실패해도 위스키 추적은 계속한다."""
+    results = notion_query_tracked()
+    if WINE_DS_ID:
+        flt = {"filter": {"property": "추적", "checkbox": {"equals": True}}, "page_size": 100}
+        try:
+            r = notion("POST", f"/data_sources/{WINE_DS_ID}/query", flt, "2025-09-03")
+            results += r.get("results", [])
+        except RuntimeError as e:
+            log(f"와인 DB 추적 조회 실패: {e}")
+    return results
+
+
 def _rt(prop):
     t = prop.get("type")
     if t == "title":
@@ -193,7 +209,8 @@ def parse_page(pg):
     g = lambda k: p.get(k, {})
     return {
         "id": pg["id"],
-        "name": _rt(g("상품명")),
+        "name": _rt(g("상품명")) or _rt(g("와인명")),
+        "kind": "wine" if "와인명" in p else "whisky",
         "aliases": _rt(g("추적 키워드")),
         "links": _rt(g("추적 링크")),
         "target_krw": (g("목표가KRW").get("number")),
@@ -251,6 +268,25 @@ def notion_create_tracked(name, aliases, extra=None):
 
 # ---------------------------------------------------------------- 상품 페이지 확인
 _mukawa_opener = None
+
+
+_DS_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
+          "(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1")
+
+
+def check_dailyshot(url):
+    """데일리샷 상품 페이지(/m/item/{top_product_id}) — 대표(최저가) 매물의 가격·재고·판매처.
+    데스크톱 UA는 403, 모바일 UA+Accept 헤더면 200 (2026-09-26 실측)."""
+    h = fetch(url, headers={"User-Agent": _DS_UA, "Accept": "text/html,application/xhtml+xml",
+                            "Accept-Language": "ko-KR,ko;q=0.9"})
+    m = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', h, re.S)
+    qs = json.loads(m.group(1))["props"]["pageProps"]["dehydratedState"]["queries"]
+    d = next(q["state"]["data"] for q in qs if isinstance(q.get("state", {}).get("data"), dict)
+             and "price" in q["state"]["data"])
+    stock = d.get("stock")
+    seller = (d.get("seller") or {}).get("name", "")
+    return {"in_stock": d.get("status") == 0 and (stock is None or stock > 0), "price": d.get("price"),
+            "title": f"{d.get('en_name') or d.get('name', '')} @{seller}".strip(), "stock_num": stock}
 
 
 def check_rudder(url):
@@ -321,7 +357,8 @@ def check_deinwhisky(url):
     return {"in_stock": in_stock, "price": price, "title": html.unescape(tm.group(1)) if tm else ""}
 
 
-CHECKERS = {"rudder": check_rudder, "mukawa": check_mukawa, "shinanoya": check_shinanoya, "deinwhisky": check_deinwhisky}
+CHECKERS = {"rudder": check_rudder, "mukawa": check_mukawa, "shinanoya": check_shinanoya, "deinwhisky": check_deinwhisky,
+            "dailyshot": check_dailyshot}
 # Shopify 샵은 RUDDER와 같은 방식({url}.js — 샵 기준 통화, 접속 국가 영향 없음)으로 확인한다
 for _s in ("whiskybarrel", "innout", "topwhiskies", "abbey", "reallygood", "wio"):
     CHECKERS[_s] = check_rudder
@@ -745,7 +782,7 @@ def main():
             log("NOTION_TOKEN 없음 — 추적 건너뜀")
             STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1))
             return
-        bottles = [parse_page(pg) for pg in notion_query_tracked()]
+        bottles = [parse_page(pg) for pg in notion_query_tracked_all()]
     apply_pending(state, bottles, dry)
     log(f"추적 보틀 {len(bottles)}개")
 
@@ -819,8 +856,8 @@ def main():
 
         # 후보 제안 (확정 링크가 없는 사이트만)
         covered = {site_of(u) for u in urls}
-        cands = [it for it in find_candidates(b, items, set(urls) | all_confirmed)
-                 if it["site"] not in covered]
+        cands = [] if b.get("kind") == "wine" else [  # 와인은 위스키 숍 매물 후보를 내지 않는다
+            it for it in find_candidates(b, items, set(urls) | all_confirmed) if it["site"] not in covered]
         new_c = [it for it in cands if norm_url(it["url"]) not in bs["suggested"]]
         if new_c:
             shown = new_c[:6]
