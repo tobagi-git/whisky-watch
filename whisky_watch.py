@@ -639,7 +639,7 @@ def main():
 
 
 def send_instant(new_hits, sale_hits, events, wl):
-    """실행마다 한 건으로 묶는 즉시 알림 — ⭐ 키워드 신규 + 💰 가격 하락 + 🆕/🔁 위스키 신제품·재입고.
+    """실행마다 한 건으로 묶는 즉시 알림(텔레그램만) — ⭐ 키워드 신규 + 💰 가격 하락 + 🆕/🔁 위스키 신제품·재입고.
     예전 '키워드 즉시 알림'과 합친 것이다(같은 병이 두 메시지로 오지 않도록). 08·19시 리포트는 별개로 하루치 정리.
     정밀 스캔(--deep) 실행은 이벤트를 넘기지 않는다 — 몇 분 뒤 리포트가 같은 내용을 보낸다."""
     import shop_digest as D                     # 위스키 판별·가격 표기 공용
@@ -686,18 +686,13 @@ def send_instant(new_hits, sale_hits, events, wl):
                     shown += 1
             total = sum(len(r) for _, r in sections)
             if total > shown:
-                body.append(f"\n…외 {total - shown}건은 메일 참조")
+                body.append(f"\n…외 {total - shown}건은 다음 샵 리포트(08·19시 메일)에 포함")
             tg.send(chat, "\n".join(body))
     except Exception as e:
         log(f"  [ERR] telegram: {e}")
 
-    email_addr = wl.get("notify", {}).get("email")
-    if email_addr:
-        mail = [subject, ""]
-        for head, rows in sections:
-            mail += [f"■ {head} {len(rows)}건", ""] + rows + [""]
-        send_email(subject, "\n".join(mail), email_addr)
-    log(f"  [ALERT] 즉시 알림 — {subject}")
+    # 메일은 보내지 않는다(2026-09-26 사용자 요청) — 메일은 08·19시 샵 리포트로만.
+    log(f"  [ALERT] 즉시 알림(텔레그램) — {subject}")
 
 if __name__ == "__main__":
     main()
