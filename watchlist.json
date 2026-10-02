@@ -210,6 +210,14 @@
       "base": "https://whiskyinternationalonline.com",
       "cur": "GBP",
       "pages": 2
+    },
+    "bruichladdich": {
+      "enabled": true,
+      "start": "2027-08-15",
+      "type": "shopify",
+      "base": "https://www.bruichladdich.com",
+      "cur": "GBP",
+      "pages": 2
     }
   }
 }

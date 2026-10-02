@@ -476,6 +476,11 @@ def wait_for_network(timeout=25):
             time.sleep(3)
 
 
+def site_on(cfg):
+    """enabled 이고, start(YYYY-MM-DD)가 있으면 그 날짜부터만 감시한다(발매 시즌 한정 감시용)."""
+    return cfg.get("enabled", True) and (not cfg.get("start") or datetime.now().strftime("%Y-%m-%d") >= cfg["start"])
+
+
 def main():
     args = sys.argv[1:]
     wl = load_json(WATCHLIST, {})
@@ -526,7 +531,7 @@ def main():
 
     # 사이트 수집은 병렬로(서로 독립), 판정·상태 갱신은 아래에서 순서대로 한다.
     active = [(site, cfg) for site, cfg in wl.get("sites", {}).items()
-              if cfg.get("enabled", True) and SCANNERS.get(cfg.get("type", site))]
+              if site_on(cfg) and SCANNERS.get(cfg.get("type", site))]
 
     def _scan(pair):
         site, cfg = pair

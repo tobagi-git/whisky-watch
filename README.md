@@ -77,3 +77,5 @@ GitHub 자체 예약(`watch.yml`의 cron)은 실측상 대부분 버려져서(�
 Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기/쓰기만, 만료 없음) · `TG_TOKEN`.
 배포: `cd worker && npx wrangler deploy` · 로그: `npx wrangler tail`
 수동 실행: `gh workflow run watch.yml` (`-f test_email=true`면 테스트 메일만).
+
+- **Bruichladdich(옥토모어) 발매 시즌 감시:** `watchlist.json`의 `bruichladdich` 사이트는 `start: 2027-08-15`부터만 켜진다(`site_on()`) — 옥토모어 18시리즈(.1~.3 통상 9월 첫 주, .4 10~11월 온라인 한정) 발매 3주 전부터 신규 상품·재입고를 텔레그램으로 알린다. 시작일 전에는 건너뛴다.

@@ -49,15 +49,15 @@ SITE_BY_HOST = {
     "abbeywhisky.com": "abbey", "reallygoodwhisky.com": "reallygood", "whiskyinternationalonline.com": "wio",
     "htfw.com": "htfw", "whisky-maniac.de": "whiskymaniac", "nickollsandperks.com": "nickolls",
     "whiskysite.nl": "whiskysite", "whisky.fr": "lmdw",
-    "dailyshot.co": "dailyshot",
+    "dailyshot.co": "dailyshot", "bruichladdich.com": "bruichladdich",
 }
 SITE_LABEL = {"rudder": "RUDDER", "mukawa": "무카와", "deinwhisky": "DeinWhisky",
               "shinanoya": "시나노야", "vitalaus": "비탈라우스",
               "whiskybarrel": "TWB", "innout": "Inn-Out", "topwhiskies": "Top Whiskies",
-              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "lmdw": "La Maison", "dailyshot": "데일리샷", "other": "기타"}
+              "abbey": "Abbey", "reallygood": "Really Good", "wio": "WIO", "htfw": "HTFW", "whiskymaniac": "Whisky-Maniac", "nickolls": "N&P", "whiskysite": "Whiskysite", "lmdw": "La Maison", "dailyshot": "데일리샷", "bruichladdich": "Bruichladdich", "other": "기타"}
 SITE_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW",
             "whiskybarrel": "GBP", "innout": "EUR", "topwhiskies": "GBP", "abbey": "GBP",
-            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR", "lmdw": "EUR", "dailyshot": "KRW"}
+            "reallygood": "GBP", "wio": "GBP", "htfw": "GBP", "whiskymaniac": "EUR", "nickolls": "GBP", "whiskysite": "EUR", "lmdw": "EUR", "dailyshot": "KRW", "bruichladdich": "GBP"}
 CUR_SYM = {"JPY": "¥", "EUR": "€", "KRW": "₩", "GBP": "£"}
 
 
@@ -377,7 +377,7 @@ def check_deinwhisky(url):
 CHECKERS = {"rudder": check_rudder, "mukawa": check_mukawa, "shinanoya": check_shinanoya, "deinwhisky": check_deinwhisky,
             "dailyshot": check_dailyshot}
 # Shopify 샵은 RUDDER와 같은 방식({url}.js — 샵 기준 통화, 접속 국가 영향 없음)으로 확인한다
-for _s in ("whiskybarrel", "innout", "topwhiskies", "abbey", "reallygood", "wio"):
+for _s in ("whiskybarrel", "innout", "topwhiskies", "abbey", "reallygood", "wio", "bruichladdich"):
     CHECKERS[_s] = check_rudder
 
 
@@ -810,7 +810,7 @@ def main():
             import whisky_watch as ww
             kws = wl.get("keywords_en", []) + wl.get("keywords_ko", []) + wl.get("keywords_ja", [])
             for site, cfg in wl.get("sites", {}).items():
-                if cfg.get("enabled", True) and site in ww.SCANNERS:
+                if ww.site_on(cfg) and site in ww.SCANNERS:
                     items += ww.dedup_merge(ww.SCANNERS[site](cfg, kws))
         except Exception as e:
             log(f"폴링 결과 없음·직접 수집 실패: {e}")
