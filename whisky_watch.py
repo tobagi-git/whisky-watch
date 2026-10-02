@@ -481,6 +481,33 @@ def site_on(cfg):
     return cfg.get("enabled", True) and (not cfg.get("start") or datetime.now().strftime("%Y-%m-%d") >= cfg["start"])
 
 
+def announce_site_starts(wl, seen, dry=False):
+    """start 날짜가 지나 처음 켜지는 사이트에 'announce' 문구가 있으면 텔레그램으로 한 번만 알린다
+    (seen['started']에 기록). 발매 시즌 한정 감시가 '지금부터 시작'임을 알려 주는 용도."""
+    sent = []
+    for site, cfg in wl.get("sites", {}).items():
+        msg = cfg.get("announce")
+        if not (msg and cfg.get("start") and site_on(cfg)):
+            continue
+        done = seen.setdefault("started", {})
+        if done.get(site):
+            continue
+        if not dry:
+            try:
+                import tg
+                chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
+                if not (tg.TOKEN and chat):
+                    continue                       # 발송 수단이 없으면 기록하지 않고 다음 실행에 다시 시도
+                tg.send(chat, "<b>🔔 " + tg.esc(cfg.get("announce_title", site + " 감시 개시")) + "</b>\n\n" + tg.esc(msg))
+            except Exception as e:
+                log(f"  [ERR] 시작 알림({site}): {e}")
+                continue
+        done[site] = datetime.now().isoformat(timespec="seconds")
+        sent.append(site)
+        log(f"[START] {site} 감시 개시 알림 발송")
+    return sent
+
+
 def main():
     args = sys.argv[1:]
     wl = load_json(WATCHLIST, {})
@@ -528,6 +555,8 @@ def main():
     # 아직 안 본 옛 상품이므로 조용히 기록만 한다(진짜 신규는 평소 실행의 앞 페이지에서 잡힌다).
     deep = "--deep" in args
     events = []
+
+    announce_site_starts(wl, seen)                  # 발매 시즌 감시가 오늘부터 켜지면 텔레그램으로 1회 알림
 
     # 사이트 수집은 병렬로(서로 독립), 판정·상태 갱신은 아래에서 순서대로 한다.
     active = [(site, cfg) for site, cfg in wl.get("sites", {}).items()
