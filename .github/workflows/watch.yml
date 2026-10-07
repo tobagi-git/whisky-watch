@@ -34,6 +34,7 @@ jobs:
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}   # 공개 저장소라 채팅 ID는 시크릿에만(상태 파일엔 "@chat")
       KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
       KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
       KAKAO_TOKEN_KEY: ${{ secrets.KAKAO_TOKEN_KEY }}

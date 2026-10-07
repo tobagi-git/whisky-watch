@@ -289,7 +289,7 @@ def send_mail(alerts):
     body = "\n\n".join(f"{strip(h)}\n{strip(b)}" for h, b in alerts)
     subject = strip(alerts[0][0]) if len(alerts) == 1 else f"위스키 경매 알림 {len(alerts)}건"
     whisky_watch.send_email(f"[위스키] {subject}", body, to)
-    log(f"메일 발송 → {to}")
+    log("메일 발송")   # 받는 주소는 남기지 않는다(공개 저장소)
 
 
 if __name__ == "__main__":

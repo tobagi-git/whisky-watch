@@ -73,11 +73,26 @@ def log(msg):
     print(line)
 
 
+# 텔레그램 채팅 ID는 저장소 시크릿(TELEGRAM_CHAT_ID)에만 둔다 — 공개 저장소라 상태 파일에는 "@chat" 자리표시만 남긴다(2026-10-08).
+_CHAT = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
+
+
 def load_json(p, default):
     try:
-        return json.loads(p.read_text())
+        t = p.read_text()
+        if _CHAT:
+            t = t.replace('"@chat"', _CHAT)
+        return json.loads(t)
     except (FileNotFoundError, json.JSONDecodeError):
         return default
+
+
+def dump_state(obj):
+    """상태 JSON 문자열 — 채팅 ID 숫자는 "@chat"으로 바꿔 저장한다."""
+    t = json.dumps(obj, ensure_ascii=False, indent=1)
+    if _CHAT:
+        t = re.sub(rf"(?<![\d.\w]){re.escape(_CHAT)}(?![\d.\w])", '"@chat"', t)
+    return t
 
 
 def qurl(u):
@@ -584,7 +599,7 @@ def handle_telegram(state, dry):
         text = msg["text"].strip()
         if state.get("chat_id") is None:
             state["chat_id"] = chat_id
-            log(f"텔레그램 chat_id 등록: {chat_id}")
+            log("텔레그램 chat_id 등록")
         if chat_id != state.get("chat_id"):
             continue  # 등록된 사람만
         cmd, _, arg = text.partition(" ")
@@ -797,7 +812,7 @@ def main():
     else:
         if not NOTION_TOKEN:
             log("NOTION_TOKEN 없음 — 추적 건너뜀")
-            STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1))
+            STATE.write_text(dump_state(state))
             return
         bottles = [parse_page(pg) for pg in notion_query_tracked_all()]
     apply_pending(state, bottles, dry)
@@ -955,7 +970,7 @@ def main():
             del bstate_all[k]
 
     if not dry or True:  # dry에서도 tg_offset·chat_id는 저장
-        STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1))
+        STATE.write_text(dump_state(state))
     log(f"완료 — 알림 {len(alerts)}건, 이력 {len(hist_rows)}행")
 
 
