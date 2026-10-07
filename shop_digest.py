@@ -41,6 +41,7 @@ SHOP_LABEL = {
     "topwhiskies": "Top Whiskies 🇬🇧", "abbey": "Abbey Whisky 🇬🇧", "reallygood": "Really Good 🇬🇧",
     "wio": "WIO 🇬🇧", "htfw": "HTFW 🇬🇧", "whiskymaniac": "Whisky-Maniac 🇩🇪", "nickolls": "Nickolls & Perks 🇬🇧",
     "whiskysite": "Whiskysite 🇳🇱(일본만)", "lmdw": "La Maison du Whisky 🇫🇷",
+    "dailyshot_cvs": "데일리샷 CU·이마트24 픽업", "lotteon": "롯데ON 스마트픽",
 }
 SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}
 

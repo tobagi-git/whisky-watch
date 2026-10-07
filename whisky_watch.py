@@ -28,7 +28,7 @@ Master of Malt·The Whisky Exchange는 Cloudflare로 막혀 순수 스크립트�
   상태        ~/Claude/Projects/위스키/모니터링/seen.json      (상품ID→마지막 가격, 중복/세일 판정)
   로그        ~/Claude/Projects/위스키/모니터링/watch.log
 """
-import sys, re, json, time, html, urllib.error, urllib.request
+import sys, re, json, time, html, urllib.error, urllib.parse, urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
 
@@ -355,6 +355,73 @@ def scan_vitalaus(cfg, kws):
     return items
 
 
+# -------------------------------------------------------------- 데일리샷 편의점 픽업 (CU·이마트24)
+_DS_UA = ("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 "
+          "(KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1")
+
+
+def scan_dailyshot_cvs(cfg, kws):
+    """데일리샷 공개 상품 목록 API(api.dailyshot.co/items/)를 판매 경로(service_type)별로 전부 읽는다.
+    2=CU 오늘픽업, 7=CU 예약(CU Bar), 9=이마트24 오늘픽업, 10=이마트24 예약 (2026-10-07 실측 — 매물의
+    seller_brand 이름으로 확인). 경로당 수백~천여 개라 100개씩 10~12쪽이면 끝난다.
+    목록에는 품절 상품도 status=1로 남아 있어 '품절→판매중'으로 재입고를 잡을 수 있다.
+    상품 단위(전국) 목록이라 어느 매장에 있는지는 모른다 — 링크로 앱에서 매장을 고른다."""
+    items = []
+    for st, label in cfg.get("channels", {}).items():
+        page = 1
+        while page <= 30:
+            url = f"https://api.dailyshot.co/items/?service_type={st}&page_size=100&page={page}"
+            req = urllib.request.Request(url, headers={"User-Agent": _DS_UA, "Accept": "application/json"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read().decode())
+            for x in d.get("results", []):
+                items.append({
+                    "site": cfg["_site"], "id": f"{cfg['_site']}:{x['id']}",
+                    "title": f"[{label}] {x.get('name', '')}"
+                             + (f" ({x['en_name']})" if x.get("en_name") and x["en_name"] != x.get("name") else ""),
+                    "url": f"https://dailyshot.co/m/item/{x.get('top_product_id')}?item={x['id']}",
+                    "price": x.get("price"), "on_sale_flag": False,
+                    "available": x.get("status") == 0,
+                    "hint": f"{x.get('category') or ''} {x.get('subcategory') or ''}".strip(),
+                })
+            if not d.get("next"):
+                break
+            page += 1
+            time.sleep(0.3)
+    return items
+
+
+# -------------------------------------------------------------- 롯데ON (롯데마트 주류 스마트픽)
+def scan_lotteon(cfg, kws):
+    """롯데ON 검색 결과 페이지에 상품 JSON이 박혀 있다(로그인 없이 주류도 노출, 2026-10-07 실측).
+    검색어(cfg.queries)마다 한 쪽(30개)만 읽고 주류(alcoholYn=Y)만 남긴다. soldOutYn으로 재고 판정."""
+    items = []
+    for q in cfg.get("queries", []):
+        url = ("https://www.lotteon.com/search/search/search.ecn?render=search&platform=pc&q="
+               + urllib.parse.quote(q))
+        try:
+            page = fetch(url)
+        except Exception as e:
+            log(f"  [ERR] lotteon/{q}: {e}")
+            continue
+        for chunk in re.split(r'"key"\s*:\s*"', page)[1:]:
+            def f(k):
+                m = re.search(r'"%s"\s*:\s*"([^"]*)"' % k, chunk)
+                return m.group(1) if m else None
+            pid, name = f("pdId"), f("pdName")
+            if not pid or not name or f("alcoholYn") != "Y":
+                continue
+            link = (f("pdLink") or f"/product/{pid}").replace("\\/", "/")
+            items.append({
+                "site": cfg["_site"], "id": f"{cfg['_site']}:{pid}",
+                "title": f"[{f('storeName') or '롯데ON'}] {html.unescape(name)}",
+                "url": "https://www.lotteon.com" + link, "price": f("finalPrice"), "on_sale_flag": False,
+                "available": f("soldOutYn") != "Y", "hint": f("categoryName") or "",
+            })
+        time.sleep(0.5)
+    return items
+
+
 def _event(kind, it, kw):
     return {"ts": datetime.now().isoformat(timespec="seconds"), "type": kind, "site": it["site"],
             "id": it["id"], "title": it["title"], "url": it["url"], "price": it.get("price"),
@@ -388,6 +455,8 @@ SCANNERS = {
     "nickolls": scan_nickolls,
     "whiskysite": scan_whiskysite,
     "lmdw": scan_lmdw,
+    "dailyshot_cvs": scan_dailyshot_cvs,
+    "lotteon": scan_lotteon,
 }
 
 CUR_SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}
@@ -588,10 +657,17 @@ def main():
         per_site[site] = len(items)
         if not seeded and items:
             log(f"  [BASELINE] {site} 첫 수집 {len(items)}개 — 기준선으로만 기록(알림 없음)")
-        all_items.extend(items)
+        if not cfg.get("kw_only"):               # 편의점·마트 일상 주류 수천 개는 보틀 추적기 후보 탐색에서 뺀다
+            all_items.extend(items)
+        # kw_only 사이트(편의점·마트 픽업처럼 일상 주류가 수천 개 섞인 곳)는 키워드에 걸린 상품만
+        # 신규·재입고 이벤트로 낸다 — 안 그러면 맥주·와인 입고마다 알림이 온다.
+        # 그런 곳은 사이트 전용 키워드(cfg.keywords — 한정·희소 보틀 위주)로 좁힐 수 있다: 라가불린 16·
+        # 라프로익 10 같은 상시품이 품절↔입고를 오갈 때마다 울리지 않도록.
+        kw_only = cfg.get("kw_only", False)
+        site_kws = cfg.get("keywords") or kws
         for it in items:
             iid = it["id"]
-            kw = matches_keyword(it["title"], kws)
+            kw = matches_keyword(it["title"], site_kws)
             prev = known.get(iid)
             price = it.get("price")
 
@@ -601,7 +677,7 @@ def main():
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
                                "on_sale_flag": it.get("on_sale_flag", False), "available": avail,
                                "first_seen": datetime.now().isoformat(timespec="seconds")}
-                if seeded and not deep:
+                if seeded and not deep and (kw or not kw_only):
                     events.append(_event("new", it, kw))
                     if kw:
                         new_hits.append((it, kw))
@@ -618,7 +694,7 @@ def main():
                 if (price_drop or structured_sale) and kw:
                     sale_hits.append((it, kw, prev_price))
                 # 재입고: 직전에 품절로 기록됐던 상품이 재고로 바뀜(재고 정보를 주는 샵만 해당)
-                if prev.get("available") is False and avail is True:
+                if prev.get("available") is False and avail is True and (kw or not kw_only):
                     events.append(_event("restock", it, kw))
                 known[iid] = {"title": it["title"], "price": price, "url": it["url"],
                                "on_sale_flag": it.get("on_sale_flag", False),
@@ -680,7 +756,8 @@ def send_instant(new_hits, sale_hits, events, wl):
     whisky = [e for e in events if D.is_whisky(e)]
     star_ids = {it["id"] for it, _ in new_hits}
     fresh = [e for e in whisky if e["type"] == "new" and e["id"] not in star_ids]
-    back = [e for e in whisky if e["type"] == "restock"]
+    # 키워드에 걸린 재입고는 위스키 판별과 무관하게 알린다(한글 상품명은 판별기가 놓칠 수 있다)
+    back = [e for e in events if e["type"] == "restock" and (e.get("kw") or D.is_whisky(e))]
     if not (new_hits or sale_hits or fresh or back):
         return
     rates = D.bt.fx_rates({})
