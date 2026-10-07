@@ -34,6 +34,9 @@ jobs:
       GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
+      KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
+      KAKAO_TOKEN_KEY: ${{ secrets.KAKAO_TOKEN_KEY }}
     steps:
       - uses: actions/checkout@v4
 

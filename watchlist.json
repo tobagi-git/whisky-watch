@@ -353,5 +353,12 @@
         "1991"
       ]
     }
+  },
+  "kakao": {
+    "sites": [
+      "dailyshot_cvs",
+      "lotteon"
+    ],
+    "_note": "카카오 앱 [플랫폼>Web] 사이트 도메인에 등록한 곳만 링크가 열림: https://dailyshot.co, https://www.lotteon.com"
   }
 }

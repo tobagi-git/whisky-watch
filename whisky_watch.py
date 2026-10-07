@@ -802,8 +802,37 @@ def send_instant(new_hits, sale_hits, events, wl):
     except Exception as e:
         log(f"  [ERR] telegram: {e}")
 
+    send_kakao(new_hits, sale_hits, back, fresh, wl, rates, D)
+
     # 메일은 보내지 않는다(2026-09-26 사용자 요청) — 메일은 08·19시 샵 리포트로만.
     log(f"  [ALERT] 즉시 알림(텔레그램) — {subject}")
+
+def send_kakao(new_hits, sale_hits, back, fresh, wl, rates, D):
+    """카카오톡 '나에게 보내기' 사본(2026-10-07 추가). watchlist.json의 kakao.sites에 든 사이트만 —
+    링크가 카카오 앱에 등록한 도메인에서만 열리기 때문(기본: 데일리샷 편의점 픽업·롯데ON).
+    한 건당 메시지 1개(본문 200자 제한), 실행당 최대 5건. 실패해도 텔레그램 알림에는 영향 없다."""
+    cfg = wl.get("kakao") or {}
+    sites = set(cfg.get("sites", []))
+    if not sites:
+        return
+    try:
+        import kakao
+        if not kakao.enabled():
+            return
+        rows = ([("⭐ 신규", it, f" · {kw}") for it, kw in new_hits]
+                + [("💰 가격 하락", it, "") for it, kw, pp in sale_hits]
+                + [("🔁 재입고", e, "") for e in back] + [("🆕 신제품", e, "") for e in fresh])
+        rows = [r for r in rows if r[1]["site"] in sites]
+        for tag, d, extra in rows[:5]:
+            kakao.send(f"{tag} · {D.SHOP_LABEL.get(d['site'], d['site'])}\n{d['title']}\n"
+                       f"{D.fmt_price(d, rates)}{extra}", d["url"])
+        if len(rows) > 5:
+            kakao.send(f"…외 {len(rows) - 5}건은 텔레그램 알림에서 확인", rows[5][1]["url"])
+        if rows:
+            log(f"  [ALERT] 카카오톡 사본 {min(len(rows), 5)}건")
+    except Exception as e:
+        log(f"  [ERR] kakao: {e}")
+
 
 if __name__ == "__main__":
     main()

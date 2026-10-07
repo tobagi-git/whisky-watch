@@ -87,3 +87,10 @@ Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기
 - 두 곳 모두 `kw_only: true` + 사이트 전용 `keywords`(한정·희소 보틀 위주) — 키워드에 걸린 상품의 신규·재입고만 텔레그램 즉시 알림으로 보내고, 상시품(라가불린 16 등)의 품절↔입고는 울리지 않는다. 보틀 추적기 후보 탐색(`latest_items.json`)에서도 뺀다.
 - 결제는 하지 않는다(결제 PIN·성인인증 때문에 자동화 불가·비권장) — 알림 링크로 앱에서 직접 결제.
 - 이마트(SSG·와인그랩)는 일반 요청을 403으로 막아 미지원. GS25 와인25플러스는 앱 전용이라 미지원.
+
+## 카카오톡 '나에게 보내기' 사본 (2026-10-07 추가)
+
+- `kakao.py`: 즉시 알림 중 `watchlist.json`의 `kakao.sites`(기본: `dailyshot_cvs`·`lotteon`) 건만 카카오톡 나와의 채팅으로 한 건씩(실행당 최대 5건) 보낸다. 텔레그램이 주 채널 — 나와의 채팅은 푸시가 안 올 수 있다.
+- 최초 연결: Kakao Developers 앱 설정 후 로컬에서 `python3 kakao_setup.py` 1회. 키는 화면에 안 보이게 입력받아 `~/.config/whisky-watch/`에, 클라우드용 토큰은 `data/kakao_token.enc`(AES-256, 키는 GitHub Secret `KAKAO_TOKEN_KEY`)에 둔다.
+- 리프레시 토큰(2개월)은 만료 1개월 전부터 자동 갱신돼 같은 파일에 다시 암호화 저장된다. 두 달 넘게 폴링이 멈추면 `kakao_setup.py` 재실행.
+- 링크는 카카오 앱 [플랫폼 > Web > 사이트 도메인]에 등록한 도메인만 열린다(https://dailyshot.co, https://www.lotteon.com).
