@@ -106,3 +106,8 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 ## 수집 2026-10-08 22:32
 - 🆕 [htfw] **Kilchoman - Coull Point Islay Single Malt Scotch Whisky** (매칭: kilchoman) — £63.95 — https://www.htfw.com/kilchoman-coull-point-islay-single-malt-scotch-whisky
 - 🆕 [htfw] **Kilchoman - Genesis - Peating Stage 3 Islay Single Malt Scotch Whisky** (매칭: kilchoman) — £94.95 — https://www.htfw.com/kilchoman-genesis-peating-stage-3-islay-single-malt-scotch-whisky
+
+## 수집 2026-10-09 00:12
+- 🆕 [innout] **Bruichladdich single cask 2011 Old Particular 48,4% vol. 0,7l  Whisky Douglas Laing #dlxx** (매칭: bruichladdich) — €168.00 — https://inn-out-shop.com/products/bruichladdich-single-cask-2011-20xx-12-y-old-particular-48-4-vol-0-7l-whisky-douglas-laing-dlxx
+- 🆕 [lmdw] **BOWMORE 10 ans Single Minded Douglas Laing** (매칭: bowmore) — €65 — https://www.whisky.fr/en/bowmore-10-ans-single-minded-douglas-laing.html
+- 🆕 [lmdw] **CAOL ILA 8 ans Single Minded Douglas Laing** (매칭: caol ila) — €57 — https://www.whisky.fr/en/caol-ila-8-ans-single-minded-douglas-laing.html
