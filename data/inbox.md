@@ -102,3 +102,7 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-08 21:32
 - 🆕 [lmdw] **DUFFTOWN 34 ans 1991 Refill Barrel Whiskyland Chapter Thirty Five Decadent Drinks** (매칭: 1991) — €620 — https://www.whisky.fr/en/dufftown-34-ans-1991-refill-barrel-whiskyland-chapter-thirty-five-decadent-drinks.html
+
+## 수집 2026-10-08 22:32
+- 🆕 [htfw] **Kilchoman - Coull Point Islay Single Malt Scotch Whisky** (매칭: kilchoman) — £63.95 — https://www.htfw.com/kilchoman-coull-point-islay-single-malt-scotch-whisky
+- 🆕 [htfw] **Kilchoman - Genesis - Peating Stage 3 Islay Single Malt Scotch Whisky** (매칭: kilchoman) — £94.95 — https://www.htfw.com/kilchoman-genesis-peating-stage-3-islay-single-malt-scotch-whisky
