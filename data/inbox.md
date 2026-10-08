@@ -96,3 +96,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-08 17:32
 - 🆕 [mukawa] **ブルイックラディ クラシックラディ 旧ラベル 【並行品】 （キャップ不良）** (매칭: ブルイックラディ) — ¥6750 — https://mukawa-spirit.com/?pid=193862539
+
+## 수집 2026-10-08 20:32
+- 💰 [innout] **Kilchoman Maury Cask Matured Edition 2026 0.7l 50 % scotch whisky limitiert Full-Term Maturation Limited Edition** (매칭: kilchoman) — €68.98 → €67.48 — https://inn-out-shop.com/products/kilchoman-maury-cask-matured-2026-whisky
