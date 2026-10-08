@@ -99,3 +99,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-08 20:32
 - 💰 [innout] **Kilchoman Maury Cask Matured Edition 2026 0.7l 50 % scotch whisky limitiert Full-Term Maturation Limited Edition** (매칭: kilchoman) — €68.98 → €67.48 — https://inn-out-shop.com/products/kilchoman-maury-cask-matured-2026-whisky
+
+## 수집 2026-10-08 21:32
+- 🆕 [lmdw] **DUFFTOWN 34 ans 1991 Refill Barrel Whiskyland Chapter Thirty Five Decadent Drinks** (매칭: 1991) — €620 — https://www.whisky.fr/en/dufftown-34-ans-1991-refill-barrel-whiskyland-chapter-thirty-five-decadent-drinks.html
