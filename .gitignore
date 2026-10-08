@@ -2,3 +2,6 @@ __pycache__/
 .DS_Store
 worker/.wrangler/
 worker/node_modules/
+# 상태 파일은 state 브랜치에만 (2026-10-08) — inbox.md만 main
+data/*
+!data/inbox.md

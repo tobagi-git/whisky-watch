@@ -41,6 +41,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # 상태 파일(seen.json 등 ~11MB)은 커밋 1개짜리 state 브랜치에 산다(2026-10-08, main 비대화 방지).
+      # 못 받아오면 중단 — 빈 상태로 돌면 전 항목을 "신규"로 재알림하게 된다.
+      - name: Restore state (state 브랜치)
+        run: |
+          git clone -q --depth 1 -b state "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" "$RUNNER_TEMP/state" \
+            || { echo "::error::state 브랜치를 받지 못함 — 빈 상태로 실행하지 않음"; exit 1; }
+          mkdir -p data && rsync -a --exclude .git "$RUNNER_TEMP/state/" data/
+
       - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
@@ -69,16 +77,21 @@ jobs:
         run: |
           # 로그는 최근 3000줄만 유지
           if [ -f data/watch.log ]; then tail -n 3000 data/watch.log > data/watch.log.tmp && mv data/watch.log.tmp data/watch.log; fi
-          git config user.name "whisky-watch-bot"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
+          # ① 큰 상태 파일 → state 브랜치 (항상 커밋 1개, 강제 푸시)
+          rsync -a --delete --exclude .git --exclude inbox.md data/ "$RUNNER_TEMP/state/"
+          cd "$RUNNER_TEMP/state"
+          git config user.name "whisky-watch-bot"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q --orphan state-new && git add -A
+          if ! git diff --cached --quiet; then
+            git commit -q -m "state: $(date '+%Y-%m-%d %H:%M') KST"
+            for i in 1 2 3 4; do git push -q --force origin HEAD:state && break; echo "state push 실패 ($i회차)"; sleep $((i * 10)); done
+          fi
+          cd "$GITHUB_WORKSPACE"
+          # ② inbox.md만 main에 (주간 루틴이 읽고 비운다)
+          git config user.name "whisky-watch-bot"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/inbox.md
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "state: $(date '+%Y-%m-%d %H:%M') KST"
-          # 깃허브가 가끔 push를 500으로 튕긴다(2026-09-23 실측) — 몇 번 물러섰다 다시 시도한다.
-          for i in 1 2 3 4; do
-            git pull --rebase && git push && exit 0
-            echo "push 실패 ($i회차) — 재시도"
-            sleep $((i * 10))
-          done
-          echo "::warning::상태 저장 push 실패 — 다음 실행에서 다시 기록된다"
+          git commit -q -m "inbox: $(date '+%Y-%m-%d %H:%M') KST"
+          for i in 1 2 3 4; do git pull -q --rebase && git push -q && exit 0; echo "push 실패 ($i회차) — 재시도"; sleep $((i * 10)); done
+          echo "::warning::inbox push 실패 — 다음 실행에서 다시 기록된다"
           exit 0
