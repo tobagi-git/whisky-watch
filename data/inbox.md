@@ -117,3 +117,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 - 💰 [innout] **Kilchoman Family Collection Series No.1 20 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 49,9 %vol. Whisky #** (매칭: kilchoman) — €399.00 → €348.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-20-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-49-9-vol-whisky
 - 💰 [innout] **Kilchoman Family Collection Series No.1 18 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 50%vol. Whisky #** (매칭: kilchoman) — €248.00 → €211.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-18-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-50-vol-whisky
 - 💰 [innout] **Kilchoman Family Collection Series No.1 14 y Rockside Barley 20 ppm Bourbon Cask Peated 2026 0,7l 50,9%vol. Whisky #** (매칭: kilchoman) — €149.00 → €138.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-14-y-rockside-barley-20-ppm-bourbon-cask-peated-2026-0-7l-50-9-vol-whisky
+
+## 수집 2026-10-09 04:12
+- 🆕 [whiskymaniac] **Ben Nevis 1996/2026 - 29 Jahre - Refill Hoghshead - The Whisky Jury - Cask 1860** (매칭: ben nevis) — €549.9 — https://www.whisky-maniac.de/p/ben-nevis-1996-2026-29-jahre-refill-hoghshead-the-whisky-jury-cask-1860
