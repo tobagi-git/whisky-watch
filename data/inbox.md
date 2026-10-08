@@ -93,3 +93,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-07 18:02
 - 🆕 [nickolls] **Stagg Batch 26A** (매칭: stagg) — £87.5 — https://nickollsandperks.com/p/stagg-batch-26a-106306421211/
+
+## 수집 2026-10-08 17:32
+- 🆕 [mukawa] **ブルイックラディ クラシックラディ 旧ラベル 【並行品】 （キャップ不良）** (매칭: ブルイックラディ) — ¥6750 — https://mukawa-spirit.com/?pid=193862539
