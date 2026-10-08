@@ -111,3 +111,9 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 - 🆕 [innout] **Bruichladdich single cask 2011 Old Particular 48,4% vol. 0,7l  Whisky Douglas Laing #dlxx** (매칭: bruichladdich) — €168.00 — https://inn-out-shop.com/products/bruichladdich-single-cask-2011-20xx-12-y-old-particular-48-4-vol-0-7l-whisky-douglas-laing-dlxx
 - 🆕 [lmdw] **BOWMORE 10 ans Single Minded Douglas Laing** (매칭: bowmore) — €65 — https://www.whisky.fr/en/bowmore-10-ans-single-minded-douglas-laing.html
 - 🆕 [lmdw] **CAOL ILA 8 ans Single Minded Douglas Laing** (매칭: caol ila) — €57 — https://www.whisky.fr/en/caol-ila-8-ans-single-minded-douglas-laing.html
+
+## 수집 2026-10-09 02:12
+- 🆕 [whiskysite] **Ardbeg 17 Years Old Murray McDavid 0.70 ltr 57.2%** (매칭: ardbeg) — €369.99 — https://www.whiskysite.nl/en/ardbeg-17-years-old-murray-mcdavid-070-ltr-572.html
+- 💰 [innout] **Kilchoman Family Collection Series No.1 20 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 49,9 %vol. Whisky #** (매칭: kilchoman) — €399.00 → €348.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-20-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-49-9-vol-whisky
+- 💰 [innout] **Kilchoman Family Collection Series No.1 18 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 50%vol. Whisky #** (매칭: kilchoman) — €248.00 → €211.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-18-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-50-vol-whisky
+- 💰 [innout] **Kilchoman Family Collection Series No.1 14 y Rockside Barley 20 ppm Bourbon Cask Peated 2026 0,7l 50,9%vol. Whisky #** (매칭: kilchoman) — €149.00 → €138.00 — https://inn-out-shop.com/products/kilchoman-family-casks-series-14-y-rockside-barley-20-ppm-bourbon-cask-peated-2026-0-7l-50-9-vol-whisky
