@@ -11,9 +11,9 @@
   - REST API 키(와 클라이언트 시크릿, 쓰는 경우)를 화면에 보이지 않게 입력받아 ~/.config/whisky-watch/에 저장
   - 브라우저로 카카오 동의 화면을 열고, localhost로 돌아온 인가 코드를 받아 토큰 발급
   - 토큰을 ~/.config/whisky-watch/kakao_tokens.json(권한 600)에 저장하고 테스트 메시지 1건 발송
-  - 클라우드용: 무작위 암호 키로 토큰을 암호화해 data/kakao_token.enc에 쓰고,
-    gh CLI로 GitHub Secret(KAKAO_REST_KEY·KAKAO_TOKEN_KEY·KAKAO_CLIENT_SECRET)을 등록
-키·토큰은 화면에 출력하지 않는다. ~/Claude 아래에는 암호화된 파일만 남는다.
+  - 클라우드용: 무작위 암호 키로 토큰을 암호화해 data/kakao_token.enc에 쓰고, gh CLI로
+    GitHub Secret(KAKAO_REST_KEY·KAKAO_TOKEN_KEY·KAKAO_CLIENT_SECRET) 등록 + state 브랜치에 업로드
+키·토큰은 화면에 출력하지 않는다. ~/Claude 아래에는 암호화된 파일만 남는다(저장소가 공개라 클라우드 쪽 파일도 암호화본뿐).
 """
 import getpass, http.server, json, os, secrets, subprocess, sys, threading, urllib.parse, webbrowser
 from pathlib import Path
@@ -86,8 +86,34 @@ def main():
     for name, val in secrets_to_set.items():
         subprocess.run(["gh", "secret", "set", name, "--repo", "tobagi-git/whisky-watch"],
                        input=val.encode(), check=True, cwd=REPO, capture_output=True)
-    print("클라우드용 암호화 토큰(data/kakao_token.enc)과 GitHub Secret 등록 완료:", ", ".join(secrets_to_set))
-    print("이제 Claude에게 '카카오 설정 끝났어'라고 알려 주세요 — 커밋·클라우드 시험 발송을 진행합니다.")
+    print("GitHub Secret 등록 완료:", ", ".join(secrets_to_set))
+    push_state_file(kakao.ENC)
+    print("이제 Claude에게 '카카오 설정 끝났어'라고 알려 주세요 — 클라우드 시험 발송을 진행합니다.")
+
+
+def push_state_file(path, repo="tobagi-git/whisky-watch"):
+    """암호화 토큰을 state 브랜치에 올린다(2026-10-08부터 data/는 main이 아니라 state 브랜치에 산다 —
+    Actions가 시작할 때 state 브랜치를 data/로 복원하므로 거기 있어야 클라우드가 읽는다).
+    실행 중인 워크플로가 끝에 state를 통째로 덮어쓰므로, 도는 중이면 끝나길 기다린 뒤 올린다."""
+    import base64, time
+    for _ in range(40):
+        r = subprocess.run(["gh", "run", "list", "--repo", repo, "--json", "status", "-q",
+                            '[.[]|select(.status=="in_progress" or .status=="queued")]|length', "--limit", "10"],
+                           capture_output=True, text=True)
+        if r.stdout.strip() in ("", "0"):
+            break
+        print("클라우드 폴링이 실행 중 — 끝나길 기다립니다…")
+        time.sleep(15)
+    api = f"repos/{repo}/contents/kakao_token.enc"
+    sha = subprocess.run(["gh", "api", f"{api}?ref=state", "--jq", ".sha"], capture_output=True, text=True).stdout.strip()
+    cmd = ["gh", "api", "-X", "PUT", api, "-f", "branch=state", "-f", "message=kakao token (encrypted)",
+           "-f", "content=" + base64.b64encode(Path(path).read_bytes()).decode()]
+    if sha:
+        cmd += ["-f", f"sha={sha}"]
+    r = subprocess.run(cmd, capture_output=True, text=True)
+    if r.returncode:
+        sys.exit("state 브랜치 업로드 실패: " + r.stderr[:300])
+    print("암호화 토큰을 state 브랜치에 올렸습니다.")
 
 
 if __name__ == "__main__":
