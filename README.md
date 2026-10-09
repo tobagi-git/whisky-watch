@@ -109,3 +109,5 @@ Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기
 ### 세일 메일 감시 확대 (2026-10-10, 연중)
 
 기간 제한(11/1~12/31)을 풀고 세일 전반으로 넓혔다. `watchlist.json mail_watch`의 분류: 거래 메일(`exclude`: 주문·배송 등) 제외 → `keywords`(블랙프라이데이·사이버먼데이)는 즉시 → `sale` 단어가 있는 제목은 `instant_if`(큰 할인·24시간·Up to £…)이거나 내 관심 증류소가 제목에 있으면 즉시, 아니면 `digest`로 쌓아 19시 샵 리포트에 "📬 세일 메일" 한 줄씩 넣는다(07:55·18:55 리포트 슬롯에서 비움).
+
+재입고 메일도 즉시 알림(2026-10-10): `mail_watch.keywords`에 `back in stock`·`restock`·`再入荷` 추가. "알려 드리겠습니다"류 확인 메일(`notify me`·`let you know`·`on the list`·`subscri`)은 `exclude`로 뺀다.

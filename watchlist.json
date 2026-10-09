@@ -377,7 +377,10 @@
     "keywords": [
       "black\\s*friday",
       "cyber\\s*(monday|week)",
-      "ブラック\\s*フライデー"
+      "ブラック\\s*フライデー",
+      "back\\s*in\\s*stock",
+      "restock",
+      "再入荷"
     ],
     "from": "01-01",
     "to": "12-31",
@@ -435,7 +438,13 @@
       "領収",
       "ご利用",
       "주문",
-      "배송"
+      "배송",
+      "notify me",
+      "let you know",
+      "will be notified",
+      "you.re on the list",
+      "subscri",
+      "thank you for"
     ]
   }
 }
