@@ -94,3 +94,7 @@ Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기
 - 최초 연결: Kakao Developers 앱 설정 후 로컬에서 `python3 kakao_setup.py` 1회. 키는 화면에 안 보이게 입력받아 `~/.config/whisky-watch/`에, 클라우드용 토큰은 `kakao_token.enc`(AES-256, 키는 GitHub Secret `KAKAO_TOKEN_KEY`)로 state 브랜치에 둔다(저장소가 공개라 암호화본만 올라간다).
 - 리프레시 토큰(2개월)은 만료 1개월 전부터 자동 갱신돼 같은 파일에 다시 암호화 저장된다. 두 달 넘게 폴링이 멈추면 `kakao_setup.py` 재실행.
 - 링크는 카카오 앱 [플랫폼 > Web > 사이트 도메인]에 등록한 도메인만 열린다(https://dailyshot.co, https://www.lotteon.com).
+
+## 비탈라우스(Vita La) 수집 방식 변경 (2026-10-09)
+
+2026-09 사이트 개편으로 옛 `/shop/list-XXXX` HTML 수집기가 조용히 0개를 냈다(308 리다이렉트 + 목록이 API로 채워짐). 지금은 사이트가 쓰는 공개 API(`/api/v1/products?categoryId=…&isActive=true&limit=100`)를 읽는다. 카테고리는 `watchlist.json`의 `sites.vitalaus.categories`(아메리칸·스카치·기타국가·주류특가, 상위 카테고리는 하위 포함). 가격은 USD, 상품 링크는 `/products/{SKU}`, 상품 ID는 `vitala:{product_id}`(`id_prefix`로 기준선 판정). 옛 `vitalaus:` 기록 60건은 무해하게 남아 있다. 새 상품 약 880개는 첫 실행에서 알림 없이 기준선으로만 기록된다.

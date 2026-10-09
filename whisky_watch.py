@@ -326,32 +326,44 @@ def scan_shinanoya(cfg, kws):
     return items
 
 
-# -------------------------------------------------------------- Vitalaus
+# -------------------------------------------------------------- Vitalaus (Vita La — 2026-09 사이트 개편 후 API 방식)
 def scan_vitalaus(cfg, kws):
+    """2026-09 개편으로 옛 /shop/list-XXXX 페이지는 308으로 새 /products?category=… 로 넘어가고, 목록이
+    브라우저에서 API로 채워져 HTML에는 상품이 없다(옛 정규식 수집기가 조용히 0개를 냈다 — 2026-10-09 확인).
+    사이트가 쓰는 공개 API를 그대로 쓴다: /api/v1/products?categoryId=…&isActive=true&limit=100(최대 100, 초과는 400).
+    categoryId는 상위 카테고리면 하위 포함(아메리칸=버번 포함, 스카치=싱글몰트 포함). 가격은 USD(옛 사이트는 KRW).
+    ※ 옛 ID(vitalaus:SKU)와 섞이지 않게 새 ID는 vitala:product_id — 안 그러면 옛 기록 때문에 첫 수집이
+    '기준선'이 아니라 신규 1,000여 건으로 쏟아진다."""
     items = []
-    for label, list_id in cfg.get("categories", {}).items():
-        url = f"https://vitalaus.com/shop/{list_id}"
-        try:
-            page = fetch(url)
-        except Exception as e:
-            log(f"  [ERR] vitalaus/{label}: {e}")
-            continue
-        for m in re.finditer(
-            r'<a href="(https://vitalaus\.com/shop/([A-Z0-9]+))">\s*<img[^>]*alt="([^"]+)"',
-            page,
-        ):
-            url_, code, title = m.group(1), m.group(2), m.group(3)
-            block_end = page.find("</li>", page.find(code))
-            block = page[page.find(code):block_end] if block_end > 0 else ""
-            pm = re.search(r"￦\s*([\d,]+)", block)
-            price = pm.group(1).replace(",", "") if pm else None
-            soldout = "재고없음" in block
-            items.append({
-                "site": "vitalaus", "id": f"vitalaus:{code}", "title": title,
-                "url": url_, "price": price, "on_sale_flag": False, "soldout": soldout,
-            })
-        time.sleep(0.3)
-    # 같은 상품이 여러 카테고리에 중복 등장할 수 있음 → id로 dedup
+    for label, cat_id in cfg.get("categories", {}).items():
+        page = 1
+        while page <= 20:
+            url = (f"https://vitalaus.com/api/v1/products?categoryId={cat_id}&isActive=true&limit=100"
+                   f"&page={page}&sortBy=created_at&sortOrder=DESC")
+            try:
+                d = json.loads(fetch(url))["data"]
+            except Exception as e:
+                log(f"  [ERR] vitalaus/{label} p{page}: {e}")
+                break
+            for p in d.get("products", []):
+                sell, disc = p.get("selling_price"), p.get("discount_price")
+                try:
+                    on_sale = bool(disc) and 0 < float(disc) < float(sell)
+                except (TypeError, ValueError):
+                    on_sale = False
+                en = p.get("name_en") or ""
+                items.append({
+                    "site": cfg["_site"], "id": f"vitala:{p['product_id']}",
+                    "title": p.get("name_ko", "") + (f" ({en})" if en and en != p.get("name_ko") else ""),
+                    "url": f"https://vitalaus.com/products/{p.get('sku') or p['product_id']}",
+                    "price": disc if on_sale else sell, "cur": "USD", "on_sale_flag": on_sale,
+                    "available": p.get("sale_status") == "ON_SALE" and not p.get("is_out_of_stock"),
+                    "hint": (p.get("category_name") or "") + ("" if "특가" in label else "|whisky"),
+                })
+            if page >= d.get("pagination", {}).get("totalPages", 1):
+                break
+            page += 1
+            time.sleep(0.3)
     return items
 
 
@@ -460,7 +472,7 @@ SCANNERS = {
 }
 
 CUR_SYM = {"JPY": "¥", "EUR": "€", "GBP": "£", "KRW": "₩", "USD": "$"}
-DEFAULT_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "KRW"}
+DEFAULT_CUR = {"rudder": "JPY", "mukawa": "JPY", "shinanoya": "JPY", "deinwhisky": "EUR", "vitalaus": "USD"}
 
 
 def fmt_price(it):
@@ -654,7 +666,7 @@ def main():
     for (site, cfg), (_, items, err) in zip(active, scanned):
         # 처음 붙인 샵은 첫 실행을 '기준선'으로만 기록한다 — 안 그러면 카탈로그 수천 개 중
         # 키워드에 걸리는 기존 상품 수백 건이 한꺼번에 '신규'로 쏟아진다.
-        seeded = any(k.startswith(site + ":") for k in known)
+        seeded = any(k.startswith((cfg.get("id_prefix") or site) + ":") for k in known)   # id_prefix: 상품 ID 접두어가 사이트 키와 다른 곳(비탈라우스 개편 후)
         if err is not None:
             log(f"  [ERR] {site}: {err}")
             errors += 1
