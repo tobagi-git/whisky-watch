@@ -89,6 +89,36 @@ def scan(senders, since_days):
             pass
 
 
+def _h(mid):
+    """Message-ID는 발신 인프라 정보가 담긴 식별자라 공개 state 브랜치에 원문으로 두지 않는다 — 해시만 저장."""
+    import hashlib
+    return mid if re.fullmatch(r"[0-9a-f]{16}", mid or "") else hashlib.sha256((mid or "").encode()).hexdigest()[:16]
+
+
+def _key():
+    return os.environ.get("KAKAO_TOKEN_KEY", "")
+
+
+def _seal(obj):
+    """요약 대기열(제목 포함)은 state 브랜치가 공개라 키가 있으면 AES로 암호화해 둔다(키: KAKAO_TOKEN_KEY 재사용).
+    키가 없는 로컬 환경은 그대로 둔다(비공개 로컬 파일)."""
+    import json
+    if not _key() or not obj:
+        return obj
+    import kakao
+    return {"enc": kakao._openssl([], json.dumps(obj, ensure_ascii=False).encode(), _key()).decode()}
+
+
+def _unseal(v):
+    import json
+    if isinstance(v, dict) and "enc" in v:
+        if not _key():
+            return []
+        import kakao
+        return json.loads(kakao._openssl(["-d"], v["enc"].encode(), _key()))
+    return v or []
+
+
 def _in_window(cfg, now):
     md = now.strftime("%m-%d")
     return cfg.get("from", "01-01") <= md <= cfg.get("to", "12-31")
@@ -125,6 +155,8 @@ def run(wl, seen, log, notify_fn, test=False):
         return
     now = datetime.now()
     st = seen.setdefault("mail", {"last": 0, "ids": [], "digest": []})
+    st["ids"] = [_h(i) for i in st.get("ids", [])]                       # 옛 원문 ID·평문 대기열은 매번 정리(마이그레이션)
+    st["digest"] = _seal(_unseal(st.get("digest")))
     if test:
         rows = scan(senders, 30)
         c = [classify(r[2], wl) for r in rows]
@@ -137,17 +169,17 @@ def run(wl, seen, log, notify_fn, test=False):
     first = st.get("last", 0) == 0
     rows = scan(senders, cfg.get("lookback_days", 3))
     st["last"] = time.time()
-    done = set(st.get("ids", []))
-    fresh = [(r, classify(r[2], wl)) for r in rows if r[3] and r[3] not in done]
-    st["ids"] = (list(done) + [r[3] for r in rows if r[3]])[-400:]
+    done = {_h(i) for i in st.get("ids", [])}          # 옛 원문 ID도 해시로 바꿔 비교·저장
+    fresh = [(r, classify(r[2], wl)) for r in rows if r[3] and _h(r[3]) not in done]
+    st["ids"] = (list(done) + [_h(r[3]) for r in rows if r[3]])[-400:]
     inst = [r for r, c in fresh if c == "instant"]
     dig = [r for r, c in fresh if c == "digest"]
     log(f"  [MAIL] 허용 발신자 {len(rows)}통 확인, 새 세일 메일 즉시 {len(inst)}통 · 요약 {len(dig)}통"
         + (" (첫 실행 — 기준선만 기록)" if first else ""))
     if first:
         return
-    st["digest"] = (st.get("digest", []) + [
-        {"shop": next((v for k, v in SHOP.items() if k in r[0]), r[0]), "date": r[1], "subject": r[2]} for r in dig])[-60:]
+    st["digest"] = _seal((_unseal(st.get("digest")) + [
+        {"shop": next((v for k, v in SHOP.items() if k in r[0]), r[0]), "date": r[1], "subject": r[2]} for r in dig])[-60:])
     for dom, d, subj, _ in inst[:5]:
         shop = next((v for k, v in SHOP.items() if k in dom), dom)
         url = next((v for k, v in SHOP_URL.items() if k in dom), "https://www.thewhiskyexchange.com/")
@@ -161,7 +193,7 @@ def take_digest(seen_path, clear=True):
         d = json.loads(Path(seen_path).read_text())
     except (FileNotFoundError, ValueError):
         return []
-    items = (d.get("mail") or {}).get("digest", [])
+    items = _unseal((d.get("mail") or {}).get("digest"))
     if clear and items:
         d["mail"]["digest"] = []
         Path(seen_path).write_text(json.dumps(d, ensure_ascii=False, indent=1))
