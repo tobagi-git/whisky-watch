@@ -137,3 +137,7 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-09 20:32
 - 💰 [reallygood] **Royal Brackla Old Particular 12 Year Old - 70cl 48.4%** (매칭: brackla) — £85.70 → £75.00 — https://reallygoodwhisky.com/products/royal-brackla-old-particular-12-year-old-70cl-48-4
+
+## 수집 2026-10-10 02:12
+- 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €599.00 → €499.98 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
+- 💰 [innout] **Hazelburn 10 y Bourbon Cask 2026 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €69.89 → €65.98 — https://inn-out-shop.com/products/hazelburn-10-y-bourbon-cask-2026-0-7l-46-vol-whisky-campbeltown
