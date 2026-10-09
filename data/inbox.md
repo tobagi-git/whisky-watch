@@ -134,3 +134,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-09 17:12
 - 🆕 [lmdw] **CAOL ILA 10 ans 2016 Sherry Butt Finish The Un-Chillfiltered Signatory Vintage** (매칭: caol ila) — €59.9 — https://www.whisky.fr/en/caol-ila-10-ans-2016-sherry-butt-finish-the-un-chillfiltered-signatory-vintage.html
+
+## 수집 2026-10-09 20:32
+- 💰 [reallygood] **Royal Brackla Old Particular 12 Year Old - 70cl 48.4%** (매칭: brackla) — £85.70 → £75.00 — https://reallygoodwhisky.com/products/royal-brackla-old-particular-12-year-old-70cl-48-4
