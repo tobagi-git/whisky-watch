@@ -282,7 +282,7 @@ def main():
 def send_mail(alerts):
     """텔레그램과 같은 내용을 메일로도 한 통에 묶어 보낸다(수신자: watchlist.json notify.email).
     HTML 태그는 빼고 평문으로. 메일 설정이 없으면 whisky_watch.send_email이 조용히 넘어간다."""
-    to = (bt.load_json(bt.WATCHLIST, {}).get("notify") or {}).get("email")
+    to = whisky_watch.notify_email(bt.load_json(bt.WATCHLIST, {}))
     if not to:
         return
     strip = lambda t: re.sub(r"<[^>]+>", "", t).replace("&amp;", "&").replace("&lt;", "<").replace("&gt;", ">")

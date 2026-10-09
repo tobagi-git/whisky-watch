@@ -98,3 +98,10 @@ Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기
 ## 비탈라우스(Vita La) 수집 방식 변경 (2026-10-09)
 
 2026-09 사이트 개편으로 옛 `/shop/list-XXXX` HTML 수집기가 조용히 0개를 냈다(308 리다이렉트 + 목록이 API로 채워짐). 지금은 사이트가 쓰는 공개 API(`/api/v1/products?categoryId=…&isActive=true&limit=100`)를 읽는다. 카테고리는 `watchlist.json`의 `sites.vitalaus.categories`(아메리칸·스카치·기타국가·주류특가, 상위 카테고리는 하위 포함). 가격은 USD, 상품 링크는 `/products/{SKU}`, 상품 ID는 `vitala:{product_id}`(`id_prefix`로 기준선 판정). 옛 `vitalaus:` 기록 60건은 무해하게 남아 있다. 새 상품 약 880개는 첫 실행에서 알림 없이 기준선으로만 기록된다.
+
+## 세일 시작 메일 감지 + 수신 주소 시크릿화 (2026-10-10)
+
+- 수신 메일 주소는 공개 저장소라 `watchlist.json`에 두지 않는다(자리표시자 '[수신 메일]'이 ascii 오류로 메일 발송을 깨뜨렸다). `NOTIFY_EMAIL` GitHub Secret(로컬은 `~/.config/whisky-watch/notify_email.txt`)에서 읽는다 — `whisky_watch.notify_email()`.
+- `mail_watch.py`: Gmail IMAP(읽기 전용, 앱 비밀번호)에서 `mail_watch.senders` 발신자 도메인의 새 메일 **제목만** 보고 `keywords`(블랙프라이데이·사이버먼데이 등, 11/1~12/31)에 걸리면 텔레그램·카카오로 알린다. 본문은 가져오지 않고, 로그엔 건수만 남긴다(공개 로그). 첫 실행은 기준선만 기록, 30분 스로틀.
+- 알림 후 `TWE 대조해줘` — Claude가 내장 브라우저로 `/specialoffers/whisky?pg=N`을 읽어 Notion 위시리스트와 대조한다(Cloudflare 때문에 클라우드 자동화 불가).
+- 시험: Actions `test_mail`(스캔 건수만 로그), `test_email`(테스트 메일 1통 발송).

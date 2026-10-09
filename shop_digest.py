@@ -260,7 +260,7 @@ def main():
     chat = bt.load_json(TRACKER_STATE, {}).get("chat_id")
     if chat:
         tg.send(chat, tg_body)
-    to = (wl.get("notify") or {}).get("email")
+    to = whisky_watch.notify_email(wl)
     if to:
         whisky_watch.send_email(f"[위스키] 샵 리포트 {now.strftime('%m/%d')} {slot} — 신제품 {len(new)} · 재입고 {len(rs)}",
                                 "\n".join(mail), to)

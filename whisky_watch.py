@@ -510,6 +510,20 @@ def notify(title, msg, url=None):
         pass
 
 
+def notify_email(wl):
+    """수신 메일 주소 — 환경변수 NOTIFY_EMAIL(클라우드 GitHub Secret) > ~/.config/whisky-watch/notify_email.txt >
+    watchlist.json의 notify.email(공개 저장소라 '[수신 메일]' 같은 자리표시자일 수 있어 '@'가 있을 때만 인정)."""
+    a = (os.environ.get("NOTIFY_EMAIL") or "").strip()
+    if not a:
+        try:
+            a = (Path.home() / ".config/whisky-watch/notify_email.txt").read_text().strip()
+        except FileNotFoundError:
+            a = ""
+    if not a:
+        a = ((wl or {}).get("notify") or {}).get("email") or ""
+    return a if "@" in a else None
+
+
 def send_email(subject, body_text, to_addr):
     """Gmail SMTP(앱 비밀번호)로 자기 자신에게 발송. macOS 알림의 보조 채널 — 실패해도 조용히 넘어감.
     비밀번호는 GMAIL_APP_PASSWORD_FILE(~/.config, 시크릿 표준 위치)에서 읽는다.
@@ -604,10 +618,22 @@ def main():
         return
 
     if "--test-email" in args:
-        addr = wl.get("notify", {}).get("email")
+        addr = notify_email(wl)
+        if not addr:
+            log("[TEST] 수신 메일 주소 없음 — NOTIFY_EMAIL 시크릿 필요")
+            sys.exit(1)
         send_email("[테스트] 위스키 워치 (클라우드)",
                    "GitHub Actions에서 보낸 테스트 메일입니다. 이 메일이 왔으면 클라우드 발송이 정상입니다.", addr)
-        log(f"[TEST] 테스트 메일 발송 시도 → {addr}")
+        log("[TEST] 테스트 메일 발송 시도")          # 주소는 로그에 남기지 않는다(공개 저장소)
+        return
+
+    if "--test-mail" in args:
+        import mail_watch
+        try:
+            mail_watch.run(wl, seen, log, None, test=True)
+        except Exception as e:
+            log(f"[TEST] 메일 스캔 실패: {type(e).__name__}")
+            sys.exit(1)
         return
 
     if "--status" in args:
@@ -647,6 +673,11 @@ def main():
     events = []
 
     announce_site_starts(wl, seen)                  # 발매 시즌 감시가 오늘부터 켜지면 텔레그램으로 1회 알림
+    try:                                            # 샵 세일 시작 메일(제목) 감지 — 실패해도 폴링은 계속
+        import mail_watch
+        mail_watch.run(wl, seen, log, send_mail_alert)
+    except Exception as e:
+        log(f"  [ERR] mail_watch: {type(e).__name__}")
 
     # 사이트 수집은 병렬로(서로 독립), 판정·상태 갱신은 아래에서 순서대로 한다.
     active = [(site, cfg) for site, cfg in wl.get("sites", {}).items()
@@ -827,6 +858,23 @@ def send_instant(new_hits, sale_hits, events, wl):
 
     # 메일은 보내지 않는다(2026-09-26 사용자 요청) — 메일은 08·19시 샵 리포트로만.
     log(f"  [ALERT] 즉시 알림(텔레그램) — {subject}")
+
+def send_mail_alert(text, url, shop):
+    """세일 메일 감지 알림 — 텔레그램 + 카카오(설정돼 있으면). 제목은 비공개 채널에만 보낸다."""
+    try:
+        import tg
+        chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
+        if tg.TOKEN and chat:
+            tg.send(chat, tg.esc(text))
+    except Exception as e:
+        log(f"  [ERR] telegram(mail): {type(e).__name__}")
+    try:
+        import kakao
+        if kakao.enabled():
+            kakao.send(text, url)
+    except Exception as e:
+        log(f"  [ERR] kakao(mail): {type(e).__name__}")
+
 
 def send_kakao(new_hits, sale_hits, back, fresh, wl, rates, D):
     """카카오톡 '나에게 보내기' 사본(2026-10-07 추가). watchlist.json의 kakao.sites에 든 사이트만 —

@@ -11,6 +11,10 @@ on:
         description: "폴링 대신 테스트 메일만 보내기"
         type: boolean
         default: false
+      test_mail:
+        description: "폴링 대신 메일 스캔 시험만(건수만 로그)"
+        type: boolean
+        default: false
       test_kakao:
         description: "폴링 대신 카카오톡 테스트 메시지만 보내기"
         type: boolean
@@ -39,6 +43,7 @@ jobs:
       NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
       TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}   # 공개 저장소라 채팅 ID는 시크릿에만(상태 파일엔 "@chat")
+      NOTIFY_EMAIL: ${{ secrets.NOTIFY_EMAIL }}
       KAKAO_REST_KEY: ${{ secrets.KAKAO_REST_KEY }}
       KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
       KAKAO_TOKEN_KEY: ${{ secrets.KAKAO_TOKEN_KEY }}
@@ -61,24 +66,28 @@ jobs:
         if: ${{ inputs.test_kakao }}
         run: python whisky_watch.py --test-kakao
 
+      - name: Scan mail (test)
+        if: ${{ inputs.test_mail }}
+        run: python whisky_watch.py --test-mail
+
       - name: Send test email
         if: ${{ inputs.test_email }}
         run: python whisky_watch.py --test-email
 
       - name: Poll shops
-        if: ${{ !inputs.test_email && !inputs.test_kakao }}
+        if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}
         run: python whisky_watch.py --force ${{ inputs.deep && '--deep' || '' }}
 
       - name: Track wanted bottles (Notion + Telegram)
-        if: ${{ !inputs.test_email && !inputs.test_kakao }}
+        if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}
         run: python bottle_tracker.py
 
       - name: Watch auctions & UK shops (Telegram)
-        if: ${{ !inputs.test_email && !inputs.test_kakao }}
+        if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}
         run: python auction_watch.py
 
       - name: Shop report 08·19시 (위스키 신제품·재입고, Telegram + mail)
-        if: ${{ !inputs.test_email && !inputs.test_kakao }}
+        if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}
         run: python shop_digest.py --auto
 
       - name: Save state

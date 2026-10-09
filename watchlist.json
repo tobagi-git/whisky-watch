@@ -360,5 +360,32 @@
       "lotteon"
     ],
     "_note": "카카오 앱 [플랫폼>Web] 사이트 도메인에 등록한 곳만 링크가 열림: https://dailyshot.co, https://www.lotteon.com"
+  },
+  "mail_watch": {
+    "senders": [
+      "thewhiskyexchange.com",
+      "masterofmalt.com",
+      "whiskyshop.com",
+      "dekanta.com",
+      "nickollsandperks.co.uk",
+      "shinanoya",
+      "mukawa-spirit.com",
+      "theultimatespirits.jp",
+      "deinwhisky.de",
+      "lmdw.com"
+    ],
+    "keywords": [
+      "black\\s*friday",
+      "cyber\\s*(monday|week)",
+      "christmas\\s*(sale|deals?|offers?)",
+      "ブラック\\s*フライデー",
+      "年末.{0,4}セール",
+      "歳末",
+      "BLACK\\s*FRIDAY"
+    ],
+    "from": "11-01",
+    "to": "12-31",
+    "lookback_days": 3,
+    "throttle_min": 30
   }
 }
