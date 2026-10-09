@@ -124,3 +124,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 ## 수집 2026-10-09 07:56
 - 💰 [innout] **Kilchoman Loch Gorm 10 y 2025 sherry cask Islay single scotch whisky 0,7l 46 % vol.** (매칭: kilchoman) — €77.29 → €74.98 — https://inn-out-shop.com/products/kilchoman-loch-gorm-2025-sherry-cask-islay-single-scotch-whisky-0-7l-46-vol
 - 💰 [innout] **Caol Ila single cask 2015 2024 9 y  Ruby Port Old Particular 56,8% vol. 0,7l  Whisky Douglas Laing #dl18761** (매칭: caol ila) — €84.90 → €78.89 — https://inn-out-shop.com/products/caol-ila-2015-9y-ruby-port-old-particular-56-8-vol-0-7l-whisky-douglas-laing-dl
+
+## 수집 2026-10-09 16:51
+- 🆕 [lmdw] **BEN NEVIS 29 ans 1996 Thompson Bros** (매칭: ben nevis) — €379 — https://www.whisky.fr/en/ben-nevis-29-ans-1996-thompson-bros.html
