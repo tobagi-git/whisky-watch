@@ -377,15 +377,65 @@
     "keywords": [
       "black\\s*friday",
       "cyber\\s*(monday|week)",
-      "christmas\\s*(sale|deals?|offers?)",
-      "ブラック\\s*フライデー",
-      "年末.{0,4}セール",
-      "歳末",
-      "BLACK\\s*FRIDAY"
+      "ブラック\\s*フライデー"
     ],
-    "from": "11-01",
+    "from": "01-01",
     "to": "12-31",
     "lookback_days": 3,
-    "throttle_min": 30
+    "throttle_min": 30,
+    "sale": [
+      "sale",
+      "offers?",
+      "% off",
+      "\\bsave\\b",
+      "discount",
+      "deals?",
+      "clearance",
+      "flash",
+      "24\\s*hours",
+      "last chance",
+      "reduced",
+      "promo",
+      "free gift",
+      "christmas",
+      "セール",
+      "割引",
+      "クリアランス",
+      "歳末",
+      "年末",
+      "\\bprices?\\b"
+    ],
+    "instant_if": [
+      "\\d{2,3}\\s*%\\s*off",
+      "save up to",
+      "up to\\s*£\\s*\\d+",
+      "up to\\s*\\d+%",
+      "24\\s*hours",
+      "flash",
+      "half price",
+      "半額"
+    ],
+    "exclude": [
+      "\\border\\b",
+      "shipped",
+      "dispatch",
+      "delivery",
+      "receipt",
+      "invoice",
+      "tracking",
+      "password",
+      "verify",
+      "confirm",
+      "your account",
+      "review (your|the)",
+      "配送",
+      "配達",
+      "発送",
+      "ご注文",
+      "領収",
+      "ご利用",
+      "주문",
+      "배송"
+    ]
   }
 }

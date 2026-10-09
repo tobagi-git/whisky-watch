@@ -105,3 +105,7 @@ Worker 시크릿: `GH_TOKEN`(fine-grained, whisky-watch 저장소 Actions 읽기
 - `mail_watch.py`: Gmail IMAP(읽기 전용, 앱 비밀번호)에서 `mail_watch.senders` 발신자 도메인의 새 메일 **제목만** 보고 `keywords`(블랙프라이데이·사이버먼데이 등, 11/1~12/31)에 걸리면 텔레그램·카카오로 알린다. 본문은 가져오지 않고, 로그엔 건수만 남긴다(공개 로그). 첫 실행은 기준선만 기록, 30분 스로틀.
 - 알림 후 `TWE 대조해줘` — Claude가 내장 브라우저로 `/specialoffers/whisky?pg=N`을 읽어 Notion 위시리스트와 대조한다(Cloudflare 때문에 클라우드 자동화 불가).
 - 시험: Actions `test_mail`(스캔 건수만 로그), `test_email`(테스트 메일 1통 발송).
+
+### 세일 메일 감시 확대 (2026-10-10, 연중)
+
+기간 제한(11/1~12/31)을 풀고 세일 전반으로 넓혔다. `watchlist.json mail_watch`의 분류: 거래 메일(`exclude`: 주문·배송 등) 제외 → `keywords`(블랙프라이데이·사이버먼데이)는 즉시 → `sale` 단어가 있는 제목은 `instant_if`(큰 할인·24시간·Up to £…)이거나 내 관심 증류소가 제목에 있으면 즉시, 아니면 `digest`로 쌓아 19시 샵 리포트에 "📬 세일 메일" 한 줄씩 넣는다(07:55·18:55 리포트 슬롯에서 비움).

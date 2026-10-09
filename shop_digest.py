@@ -208,6 +208,8 @@ def main():
 
     rates = bt.fx_rates({})
     wl = bt.load_json(bt.WATCHLIST, {})
+    import mail_watch
+    sale_mails = mail_watch.take_digest(whisky_watch.SEEN, clear=False)      # 발송이 끝난 뒤에 비운다
     slot = "오전" if now.hour < 13 else "저녁"
     new = [e for e in items if e["type"] == "new"]
     rs = [e for e in items if e["type"] == "restock"]
@@ -237,6 +239,9 @@ def main():
     else:
         tg_body += "⭐ 취향 매치 없음\n\n"
     tg_body += "<b>샵별 요약</b>\n" + summary + ("\n\n전체 목록은 메일로 보냈습니다." if items else "")
+    if sale_mails:
+        tg_body += f"\n\n<b>📬 세일 메일 {len(sale_mails)}건</b>\n" + "\n".join(
+            f"· {tg.esc(m['shop'])} {m['date'][5:]} — {tg.esc(m['subject'])}" for m in sale_mails[:15])
 
     # 메일: 전체 목록(⭐ 먼저, 그다음 샵별 신제품 → 재입고)
     mail = [head, ""]
@@ -249,6 +254,8 @@ def main():
         mail += [line(e, html=False) for e in sorted(sub, key=lambda x: (x["type"] != "new", x["title"]))] + [""]
     if not items:
         mail.append("이번 구간에는 위스키 신제품·재입고가 없습니다.")
+    if sale_mails:
+        mail += ["", f"📬 세일 메일 {len(sale_mails)}건 (제목)"] + [f"· {m['shop']} {m['date']} — {m['subject']}" for m in sale_mails]
     mail.append(f"(위스키 외 {dropped}건 제외 · 🆕 신제품 · 🔁 재입고)")
 
     if args.dry:
@@ -266,6 +273,8 @@ def main():
                                 "\n".join(mail), to)
     bt.log(f"[DIGEST] 샵 리포트 발송 — 신제품 {len(new)} · 재입고 {len(rs)} · ⭐ {len(stars)} (위스키 외 {dropped} 제외)")
 
+    if sale_mails:
+        mail_watch.take_digest(whisky_watch.SEEN, clear=True)
     state["last_sent"] = now.isoformat(timespec="seconds")
     STATE.write_text(json.dumps(state, ensure_ascii=False))
     cutoff = now - timedelta(days=7)                  # 이벤트 파일 정리

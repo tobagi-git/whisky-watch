@@ -98,33 +98,71 @@ def matches(subject, keywords):
     return any(re.search(k, subject, re.I) for k in keywords)
 
 
-def run(wl, seen, log, notify_fn, test=False):
-    """watchlist.json의 mail_watch 설정대로 한 번 점검. notify_fn(text, url, shop)로 알린다."""
+def classify(subject, wl):
+    """'instant'(즉시 알림) / 'digest'(19시 샵 리포트에 한 줄) / None(무시).
+    ① 거래 메일(주문·배송 안내 등)은 제외 ② 블랙프라이데이 류(major)는 즉시
+    ③ 세일성 제목이면서 (큰 할인 표현이거나 내 관심 증류소가 제목에 있으면) 즉시, 아니면 요약."""
     cfg = wl.get("mail_watch") or {}
-    senders, kws = cfg.get("senders", []), cfg.get("keywords", [])
-    if not senders or not kws:
+    if matches(subject, cfg.get("exclude", [])):
+        return None
+    if matches(subject, cfg.get("keywords", [])):
+        return "instant"
+    if not matches(subject, cfg.get("sale", [])):
+        return None
+    brands = [k for k in (wl.get("keywords_en", []) + wl.get("keywords_ko", []) + wl.get("keywords_ja", []))
+              if len(k) >= 3 and not k.isdigit()]
+    if matches(subject, cfg.get("instant_if", [])) or any(b.lower() in subject.lower() for b in brands):
+        return "instant"
+    return "digest"
+
+
+def run(wl, seen, log, notify_fn, test=False):
+    """watchlist.json의 mail_watch 설정대로 한 번 점검. 즉시 건은 notify_fn(text, url, shop)로 알리고,
+    요약 건은 seen['mail']['digest']에 쌓아 두었다가 19시 샵 리포트(shop_digest)가 가져간다."""
+    cfg = wl.get("mail_watch") or {}
+    senders = cfg.get("senders", [])
+    if not senders or not (cfg.get("keywords") or cfg.get("sale")):
         return
     now = datetime.now()
-    st = seen.setdefault("mail", {"last": 0, "ids": []})
+    st = seen.setdefault("mail", {"last": 0, "ids": [], "digest": []})
     if test:
         rows = scan(senders, 30)
-        hits = [r for r in rows if matches(r[2], kws)]
-        log(f"[TEST] 메일 스캔 성공 — 허용 발신자 30일 {len(rows)}통, 키워드 일치 {len(hits)}통")
+        c = [classify(r[2], wl) for r in rows]
+        log(f"[TEST] 메일 스캔 성공 — 허용 발신자 30일 {len(rows)}통, 즉시 {c.count('instant')}통 · 요약 {c.count('digest')}통")
         return
     if not _in_window(cfg, now):
         return
     if time.time() - st.get("last", 0) < cfg.get("throttle_min", 30) * 60:
         return
-    first = "ids" not in st or st.get("last", 0) == 0
+    first = st.get("last", 0) == 0
     rows = scan(senders, cfg.get("lookback_days", 3))
     st["last"] = time.time()
     done = set(st.get("ids", []))
-    new = [r for r in rows if r[3] and r[3] not in done and matches(r[2], kws)]
+    fresh = [(r, classify(r[2], wl)) for r in rows if r[3] and r[3] not in done]
     st["ids"] = (list(done) + [r[3] for r in rows if r[3]])[-400:]
-    log(f"  [MAIL] 허용 발신자 {len(rows)}통 확인, 새 세일 메일 {len(new)}통" + (" (첫 실행 — 기준선만 기록)" if first else ""))
+    inst = [r for r, c in fresh if c == "instant"]
+    dig = [r for r, c in fresh if c == "digest"]
+    log(f"  [MAIL] 허용 발신자 {len(rows)}통 확인, 새 세일 메일 즉시 {len(inst)}통 · 요약 {len(dig)}통"
+        + (" (첫 실행 — 기준선만 기록)" if first else ""))
     if first:
         return
-    for dom, d, subj, _ in new[:5]:
+    st["digest"] = (st.get("digest", []) + [
+        {"shop": next((v for k, v in SHOP.items() if k in r[0]), r[0]), "date": r[1], "subject": r[2]} for r in dig])[-60:]
+    for dom, d, subj, _ in inst[:5]:
         shop = next((v for k, v in SHOP.items() if k in dom), dom)
         url = next((v for k, v in SHOP_URL.items() if k in dom), "https://www.thewhiskyexchange.com/")
         notify_fn(f"📬 세일 메일 도착 · {shop}\n{subj}\n→ 대조하려면 Claude에게 'TWE 대조해줘'", url, shop)
+
+
+def take_digest(seen_path, clear=True):
+    """19시 샵 리포트용 — 쌓인 요약 건을 돌려주고(clear=True면) 비운다. seen.json 한 파일만 만진다."""
+    import json
+    try:
+        d = json.loads(Path(seen_path).read_text())
+    except (FileNotFoundError, ValueError):
+        return []
+    items = (d.get("mail") or {}).get("digest", [])
+    if clear and items:
+        d["mail"]["digest"] = []
+        Path(seen_path).write_text(json.dumps(d, ensure_ascii=False, indent=1))
+    return items
