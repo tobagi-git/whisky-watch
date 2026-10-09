@@ -582,6 +582,15 @@ def main():
     wl = load_json(WATCHLIST, {})
     seen = load_json(SEEN, {"items": {}, "last_ok": None})
 
+    if "--test-kakao" in args:
+        import kakao
+        if not kakao.enabled():
+            log("[TEST] 카카오 설정 없음 — kakao_setup.py 먼저")
+            sys.exit(1)
+        kakao.send("🥃 위스키 워치 — 클라우드 카카오 테스트 메시지", "https://dailyshot.co")
+        log("[TEST] 카카오 테스트 메시지 발송 완료")
+        return
+
     if "--test-email" in args:
         addr = wl.get("notify", {}).get("email")
         send_email("[테스트] 위스키 워치 (클라우드)",
