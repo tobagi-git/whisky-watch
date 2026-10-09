@@ -127,3 +127,7 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-09 16:51
 - 🆕 [lmdw] **BEN NEVIS 29 ans 1996 Thompson Bros** (매칭: ben nevis) — €379 — https://www.whisky.fr/en/ben-nevis-29-ans-1996-thompson-bros.html
+
+## 수집 2026-10-09 17:02
+- 🆕 [mukawa] **ジェームズ ゴードン スピリット オブ スコットランド カリラ 15年 2010 53.7度** (매칭: カリラ) — ¥16770 — https://mukawa-spirit.com/?pid=193895806
+- 🆕 [whiskysite] **Bowmore Captivo Oak 20 Years Old 0,70 ltr 50,8%** (매칭: bowmore) — €349.99 — https://www.whiskysite.nl/en/bowmore-captivo-oak-20-years-old-070-ltr-508.html
