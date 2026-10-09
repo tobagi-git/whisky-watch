@@ -178,9 +178,10 @@
       "pages": 2
     },
     "htfw": {
-      "enabled": true,
+      "enabled": false,
       "cur": "GBP",
-      "pages": 2
+      "pages": 2,
+      "_note": "2026-10-10 비활성 — Cloudflare 403(로컬·클라우드 모두), 수집 0개가 에러 없이 반환됨. 풀리면 enabled true"
     },
     "whiskymaniac": {
       "enabled": true,

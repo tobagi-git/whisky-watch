@@ -753,6 +753,11 @@ def main():
                                "available": avail if avail is not None else prev.get("available"),
                                "first_seen": prev.get("first_seen")}
 
+    try:                                            # 사이트별 수집 건강검진(0개·급감 경고)
+        check_health(seen, per_site, {site for (site, cfg), (_, items, err) in zip(active, scanned) if err is not None}, log)
+    except Exception as e:
+        log(f"  [ERR] health: {type(e).__name__}")
+
     # 샵 리포트(shop_digest.py)용 이벤트 적재 — 신규·재입고. 필터(위스키 한정)는 리포트 쪽에서 한다.
     if events:
         with (DATA / "shop_events.jsonl").open("a") as f:
@@ -858,6 +863,50 @@ def send_instant(new_hits, sale_hits, events, wl):
 
     # 메일은 보내지 않는다(2026-09-26 사용자 요청) — 메일은 08·19시 샵 리포트로만.
     log(f"  [ALERT] 즉시 알림(텔레그램) — {subject}")
+
+def check_health(seen, per_site, errored, log):
+    """사이트별 수집 건강검진 — 비탈라우스가 몇 주 0개였는데 아무도 몰랐던 사고의 재발 방지(2026-10-10).
+    '정상 건수'는 최근 정상 폴링 30회의 중앙값. 나쁨 = ① 수집 예외 ② 평소 5개↑인데 0개 ③ 평소 10개↑인데 20% 미만.
+    나쁨이 3회·3시간 이상 이어지면 텔레그램 1회 경고(복구 시 1회 안내). 평소부터 계속 0개인 곳은
+    정상 폴링 20회 뒤 1회 경고. 새벽 2시간 간격이어도 '3회·3시간' 조건이라 오탐은 거의 없다."""
+    h = seen.setdefault("health", {})
+    now = datetime.now()
+    msgs = []
+    for site in sorted(set(per_site) | set(errored)):
+        n = None if site in errored else per_site.get(site, 0)
+        st = h.setdefault(site, {"hist": [], "bad": 0, "since": None, "alerted": False})
+        hist = st["hist"]
+        base = sorted(hist)[len(hist) // 2] if len(hist) >= 10 else None
+        bad = (n is None) or (n == 0 and (base or 0) >= 5) or (base is not None and base >= 10 and n < base * 0.2)
+        dead = (not bad) and n == 0 and len(hist) >= 20 and base == 0
+        if bad or dead:
+            st["bad"] += 1
+            st["since"] = st["since"] or now.isoformat(timespec="minutes")
+            hours = (now - datetime.fromisoformat(st["since"])).total_seconds() / 3600
+            if not st["alerted"] and ((bad and st["bad"] >= 3 and hours >= 3) or dead):
+                why = ("수집 오류" if n is None else
+                       "계속 0개(처음부터 안 잡힘)" if dead else f"{n}개(평소 약 {base}개)")
+                streak = "" if dead else f", {st['bad']}회 연속"
+                msgs.append(f"⚠️ 수집 이상 · {site} — {why}{streak}. 사이트 개편·차단일 수 있음")
+                st["alerted"] = True
+            if dead:
+                st["hist"] = hist[-30:]
+        else:
+            if st["alerted"]:
+                msgs.append(f"✅ 수집 복구 · {site} — {n}개")
+            st["bad"], st["since"], st["alerted"] = 0, None, False
+            st["hist"] = (hist + [n])[-30:]
+    for m in msgs:
+        log(f"  [HEALTH] {m}")
+    if msgs:
+        try:
+            import tg
+            chat = os.environ.get("TELEGRAM_CHAT_ID") or load_json(DATA / "tracker_state.json", {}).get("chat_id")
+            if tg.TOKEN and chat:
+                tg.send(chat, "\n".join(tg.esc(m) for m in msgs))
+        except Exception as e:
+            log(f"  [ERR] telegram(health): {type(e).__name__}")
+
 
 def send_mail_alert(text, url, shop):
     """세일 메일 감지 알림 — 텔레그램 + 카카오(설정돼 있으면). 제목은 비공개 채널에만 보낸다."""
