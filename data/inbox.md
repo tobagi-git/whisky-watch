@@ -131,3 +131,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 ## 수집 2026-10-09 17:02
 - 🆕 [mukawa] **ジェームズ ゴードン スピリット オブ スコットランド カリラ 15年 2010 53.7度** (매칭: カリラ) — ¥16770 — https://mukawa-spirit.com/?pid=193895806
 - 🆕 [whiskysite] **Bowmore Captivo Oak 20 Years Old 0,70 ltr 50,8%** (매칭: bowmore) — €349.99 — https://www.whiskysite.nl/en/bowmore-captivo-oak-20-years-old-070-ltr-508.html
+
+## 수집 2026-10-09 17:12
+- 🆕 [lmdw] **CAOL ILA 10 ans 2016 Sherry Butt Finish The Un-Chillfiltered Signatory Vintage** (매칭: caol ila) — €59.9 — https://www.whisky.fr/en/caol-ila-10-ans-2016-sherry-butt-finish-the-un-chillfiltered-signatory-vintage.html
