@@ -1,0 +1,66 @@
+{
+ "chat_id": "@chat",
+ "tg_offset": 509581438,
+ "bottles": {
+  "3b76ba9a-b62d-8162-95c4-cf81e7381cd8": {
+   "links": {},
+   "suggested": [
+    "https://theultimatespirits.jp/products/laphroaig-ラフロイグ-1991-34年-whiskyland-chapter-23",
+    "https://www.abbeywhisky.com/products/laphroaig-34-year-old-1991-whiskyland-chapter-23",
+    "https://www.thewhiskybarrel.com/products/laphroaig-1991-vintage-23-year-old",
+    "https://nickollsandperks.com/p/laphroaig-31-year-old-1991-the-kinship-hunter-laing-103381941211",
+    "https://www.thewhiskybarrel.com/products/mystery-malt-laphroaig-islay-30-year-old-1991-signatory-cask-strength"
+   ],
+   "last_write": "2026-10-11T08:02:05.381707+09:00"
+  },
+  "3936ba9a-b62d-81ef-af94-f3c066281370": {
+   "links": {
+    "https://theultimatespirits.jp/products/laphroaig-ラフロイグ-1991-34年-whiskyland-chapter-23": {
+     "in_stock": true,
+     "price": 186120.0,
+     "currency": "JPY",
+     "krw": 1578540,
+     "title": "Laphroaig ラフロイグ 1991 34年 Whiskyland Chapter 23",
+     "checked": "2026-10-11 08:32",
+     "note": null,
+     "stock_num": null
+    }
+   },
+   "suggested": [
+    "https://www.abbeywhisky.com/products/laphroaig-34-year-old-1991-whiskyland-chapter-23"
+   ],
+   "last_write": "2026-10-11T06:58:52.004864+09:00"
+  },
+  "3e56ba9a-b62d-81d1-9fab-d042424d9132": {
+   "links": {},
+   "suggested": [],
+   "last_write": "2026-10-11T08:32:18.421969+09:00"
+  },
+  "3e56ba9a-b62d-8196-8d83-ee562e4f0702": {
+   "links": {},
+   "suggested": [
+    "https://www.thewhiskybarrel.com/products/lagavulin-12-year-old-special-releases-2024",
+    "https://inn-out-shop.com/products/lagavulin-12y-special-release-2024-single-malt-0-7l-57-4-vol",
+    "https://nickollsandperks.com/p/lagavulin-12-year-old-special-release-2024-104349851211"
+   ],
+   "last_write": "2026-10-11T08:02:05.051511+09:00"
+  },
+  "3e76ba9a-b62d-81ef-baf9-d0fc65114acc": {
+   "links": {
+    "https://dailyshot.co/m/item/20593?item=231613": {
+     "in_stock": true,
+     "price": 26000,
+     "currency": "KRW",
+     "krw": 26000,
+     "title": "Dashwood Sauvignon Blanc",
+     "checked": "2026-10-11 08:32",
+     "note": null,
+     "stock_num": 8
+    }
+   },
+   "suggested": [],
+   "last_write": "2026-10-11T08:32:19.923051+09:00"
+  }
+ },
+ "pending_adds": {}
+}
