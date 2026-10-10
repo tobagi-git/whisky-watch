@@ -144,3 +144,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 
 ## 수집 2026-10-10 15:02
 - 🆕 [rudder] **Ben Nevis ベンネヴィス 13年 THE OLD FRIENDS** (매칭: ben nevis) — ¥15125 — https://theultimatespirits.jp/products/ben-nevis-ベンネヴィス-13年-the-old-friends
+
+## 수집 2026-10-10 16:41
+- 💰 [wio] **Hazelburn 10 Year Old Single Malt Whisky 2026 Release 46%** (매칭: hazelburn) — £99.95 → £89.95 — https://whiskyinternationalonline.com/products/hazelburn-10-year-old-whisky-release-46-copy
