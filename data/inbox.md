@@ -141,3 +141,6 @@ _(2026-10-03 whisky-rare-monitor 실행에서 10-03 10:31 수집분까지 처리
 ## 수집 2026-10-10 02:12
 - 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €599.00 → €499.98 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
 - 💰 [innout] **Hazelburn 10 y Bourbon Cask 2026 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €69.89 → €65.98 — https://inn-out-shop.com/products/hazelburn-10-y-bourbon-cask-2026-0-7l-46-vol-whisky-campbeltown
+
+## 수집 2026-10-10 15:02
+- 🆕 [rudder] **Ben Nevis ベンネヴィス 13年 THE OLD FRIENDS** (매칭: ben nevis) — ¥15125 — https://theultimatespirits.jp/products/ben-nevis-ベンネヴィス-13年-the-old-friends
