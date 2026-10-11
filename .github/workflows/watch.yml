@@ -84,7 +84,7 @@ jobs:
 
       - name: Watch auctions & UK shops (Telegram)
         if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}
-        run: python auction_watch.py
+        run: python auction_watch.py --skip-source yahoo   # 야후는 Mac 로컬(launchd)이 5분마다 감시 — local/run_yahoo_alert.sh
 
       - name: Shop report 08·19시 (위스키 신제품·재입고, Telegram + mail)
         if: ${{ !inputs.test_email && !inputs.test_kakao && !inputs.test_mail }}

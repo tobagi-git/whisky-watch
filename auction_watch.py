@@ -118,7 +118,10 @@ def matches(title, target):
         return False
     if target.get("ages") and bt.age_conflict(title, target["ages"]):
         return False
-    return all(any(tok.lower() in low for tok in group) for group in rule.get("all_of", []))
+    def hit(tok):
+        # "re:" 로 시작하면 정규식 — 에디션 번호(7.1)가 도수(57.1%)·다른 에디션(17.1)에 걸리지 않게 할 때 쓴다
+        return re.search(tok[3:], low) is not None if tok.startswith("re:") else tok.lower() in low
+    return all(any(hit(tok) for tok in group) for group in rule.get("all_of", []))
 
 
 # ---------------------------------------------------------------- 수집·판정
@@ -213,6 +216,9 @@ def main():
     ap.add_argument("--dry", action="store_true", help="알림 없이 매치 목록만 출력")
     ap.add_argument("--report", action="store_true", help="현재 매치 전체를 텔레그램으로 1회 보고")
     ap.add_argument("--only", help="이 이름이 들어간 감시 대상만")
+    ap.add_argument("--only-source", help="이 사이트만 조회(예: yahoo) — Mac 로컬 상시 감시용")
+    ap.add_argument("--skip-source", action="append", default=[], help="이 사이트는 조회하지 않음(여러 번 지정 가능) — 로컬이 맡은 사이트를 클라우드에서 뺄 때")
+    ap.add_argument("--seed", action="store_true", help="알림 없이 현재 매물을 '본 것'으로만 기록(첫 실행 때 알림 폭주 방지)")
     args = ap.parse_args()
 
     seen = bt.load_json(SEEN, None)
@@ -227,6 +233,9 @@ def main():
     targets = targets_from_conf() + targets_from_notion()
     if args.only:
         targets = [t for t in targets if args.only.lower() in t["name"].lower()]
+    for t in targets:
+        t["sources"] = [k for k in t["sources"] if (not args.only_source or k == args.only_source) and k not in args.skip_source]
+    targets = [t for t in targets if t["sources"]]
     log(f"감시 대상 {len(targets)}건 · 사이트 {len(sources.REGISTRY)}곳")
 
     for target in targets:
@@ -267,6 +276,9 @@ def main():
     SEEN.parent.mkdir(parents=True, exist_ok=True)
     SEEN.write_text(json.dumps(seen, ensure_ascii=False, indent=1))
 
+    if args.seed:
+        log(f"시드 완료 — 매치 {total}건을 본 것으로 기록(알림 없음)")
+        return
     if not alerts:
         log(f"변화 없음 (매치 {total}건)")
         return
