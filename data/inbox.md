@@ -5,3 +5,6 @@
 ## 수집 2026-10-11 04:12
 - 🆕 [whiskymaniac] **Ben Nevis 1996/2025 - 28 Jahre - Butt - The Whisky Agency (TWA)** (매칭: ben nevis) — €374.9 — https://www.whisky-maniac.de/p/ben-nevis-1996-2025-28-jahre-butt-the-whisky-agency-twa
 - 🆕 [whiskymaniac] **Bruichladdich 2006/2026 - 20 Jahre - Barrel & Sauternes - Old Islay - Decadent Drinks (DeDr)** (매칭: bruichladdich) — €449.0 — https://www.whisky-maniac.de/p/bruichladdich-2006-2026-20-jahre-barrel-und-sauternes-old-islay-decadent-drinks-dedr
+
+## 수집 2026-10-12 18:02
+- 💰 [innout] **Caol Ila Carn Mor 2012 oloroso cask 14 y Islay 52,1 % vol. SL 0,7l Whisky** (매칭: caol ila) — €89.00 → €79.99 — https://inn-out-shop.com/products/caol-ila-carn-mor-2012-52-1-xx-cask-x-y-carn-mor-islay-51-1-vol-sl-0-7l-whisky
