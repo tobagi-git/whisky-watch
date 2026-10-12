@@ -8,3 +8,7 @@
 
 ## 수집 2026-10-12 18:02
 - 💰 [innout] **Caol Ila Carn Mor 2012 oloroso cask 14 y Islay 52,1 % vol. SL 0,7l Whisky** (매칭: caol ila) — €89.00 → €79.99 — https://inn-out-shop.com/products/caol-ila-carn-mor-2012-52-1-xx-cask-x-y-carn-mor-islay-51-1-vol-sl-0-7l-whisky
+
+## 수집 2026-10-12 23:32
+- 🆕 [whiskysite] **Caol Ila 13 Years Old 2012 Gordon & MacPhail 0.70 ltr 57.1%** (매칭: caol ila) — €119.99 — https://www.whiskysite.nl/en/caol-ila-13-years-old-2012-gordon-and-macphail-070.html
+- 🆕 [whiskysite] **Royal Brackla 15 Years Old 2011 Gordon & MacPhail 0,70 ltr 56,5%** (매칭: brackla) — €119.99 — https://www.whiskysite.nl/en/royal-brackla-15-years-old-2011-gordon-and-macphai.html
