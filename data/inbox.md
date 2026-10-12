@@ -20,3 +20,6 @@
 
 ## 수집 2026-10-13 01:02
 - 🆕 [nickolls] **Bruichladdich Bundle: Yellow Submarine III 14 Year Old & Micro Provenance 11 Year Old Jurancon Wine Cask (Cask 1564)** (매칭: bruichladdich) — £175.0 — https://nickollsandperks.com/p/bruichladdich-bundle-yellow-submarine-iii-14-year-old-micro-provenance-11-year-old-jurancon-wine-cask-cask-1564-106375221211/
+
+## 수집 2026-10-13 04:12
+- 🆕 [nickolls] **Bruichladdich 11 Year Old 2014 Jurancon Wine Cask (Cask 1564) – Micro Provenance** (매칭: bruichladdich) — £91.67 — https://nickollsandperks.com/p/bruichladdich-11-year-old-2014-jurancon-wine-cask-cask-1564-micro-provenance-106230311211/
