@@ -12,3 +12,8 @@
 ## 수집 2026-10-12 23:32
 - 🆕 [whiskysite] **Caol Ila 13 Years Old 2012 Gordon & MacPhail 0.70 ltr 57.1%** (매칭: caol ila) — €119.99 — https://www.whiskysite.nl/en/caol-ila-13-years-old-2012-gordon-and-macphail-070.html
 - 🆕 [whiskysite] **Royal Brackla 15 Years Old 2011 Gordon & MacPhail 0,70 ltr 56,5%** (매칭: brackla) — €119.99 — https://www.whiskysite.nl/en/royal-brackla-15-years-old-2011-gordon-and-macphai.html
+
+## 수집 2026-10-13 00:12
+- 🆕 [nickolls] **Bowmore 28 Year Old 1998 Bourbon Cask (Cask 582) – Crafted by Hand** (매칭: bowmore) — £829.17 — https://nickollsandperks.com/p/bowmore-28-year-old-1998-bourbon-cask-cask-582-crafted-by-hand-106176641211/
+- 🆕 [nickolls] **Bowmore 14 Year Old 2012 Virgin Oak (Cask 4068) – Crafted by Hand** (매칭: bowmore) — £249.96 — https://nickollsandperks.com/p/bowmore-14-year-old-2012-virgin-oak-cask-4068-crafted-by-hand-106176621211/
+- 🆕 [nickolls] **Bowmore 9 Year Old 2016 (Cask 3756) – Fèis Ìle 2026 Release** (매칭: bowmore) — £208.29 — https://nickollsandperks.com/p/bowmore-9-year-old-2016-cask-3756-feis-ile-2026-release-106176611211/
