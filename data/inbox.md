@@ -26,3 +26,6 @@
 
 ## 수집 2026-10-13 15:02
 - 🆕 [deinwhisky] **Ardbeg Dolce Limited Edition 47,8% vol.** (매칭: ardbeg) — €87.90 — https://www.deinwhisky.de/schottland/islay/ardbeg/11823-ardbeg-dolce-limited-edition-47-8-vol..html?c=94
+
+## 수집 2026-10-13 15:32
+- 🆕 [mukawa] **ラフロイグ 10年 シェリーオークフィニッシュ 48度 新ラベル（箱不良）** (매칭: ラフロイグ) — ¥9900 — https://mukawa-spirit.com/?pid=193880210
