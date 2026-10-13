@@ -23,3 +23,6 @@
 
 ## 수집 2026-10-13 04:12
 - 🆕 [nickolls] **Bruichladdich 11 Year Old 2014 Jurancon Wine Cask (Cask 1564) – Micro Provenance** (매칭: bruichladdich) — £91.67 — https://nickollsandperks.com/p/bruichladdich-11-year-old-2014-jurancon-wine-cask-cask-1564-micro-provenance-106230311211/
+
+## 수집 2026-10-13 15:02
+- 🆕 [deinwhisky] **Ardbeg Dolce Limited Edition 47,8% vol.** (매칭: ardbeg) — €87.90 — https://www.deinwhisky.de/schottland/islay/ardbeg/11823-ardbeg-dolce-limited-edition-47-8-vol..html?c=94
