@@ -39,3 +39,7 @@
 
 ## 수집 2026-10-13 19:02
 - 🆕 [nickolls] **Springbank 14 Year Old Fresh Sherry Single Cask – Cage Bottling** (매칭: springbank) — £325.0 — https://nickollsandperks.com/p/springbank-14-year-old-fresh-sherry-single-cask-cage-bottling-2106375371214432818/
+
+## 수집 2026-10-14 02:12
+- 🆕 [nickolls] **Dailuaine 16 Year Old 2007 Ex-Ardbeg Butt (Cask 149) – Artful Dodger** (매칭: ardbeg) — £45.83 — https://nickollsandperks.com/p/dailuaine-16-year-old-2007-ex-ardbeg-butt-cask-149-artful-dodger-106215831211/
+- 💰 [innout] **Bruichladdich single cask 2011 Old Particular 48,4% vol. 0,7l  Whisky Douglas Laing #dl18523** (매칭: bruichladdich) — €168.00 → €142.89 — https://inn-out-shop.com/products/bruichladdich-single-cask-2011-20xx-12-y-old-particular-48-4-vol-0-7l-whisky-douglas-laing-dlxx
