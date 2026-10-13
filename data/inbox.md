@@ -29,3 +29,7 @@
 
 ## 수집 2026-10-13 15:32
 - 🆕 [mukawa] **ラフロイグ 10年 シェリーオークフィニッシュ 48度 新ラベル（箱不良）** (매칭: ラフロイグ) — ¥9900 — https://mukawa-spirit.com/?pid=193880210
+
+## 수집 2026-10-13 16:41
+- 🆕 [deinwhisky] **Glen Keith 33 Jahre 1993/2026 Hogshead #82793 Best Dram 56,7% vol.** (매칭: glen keith) — €324.90 — https://www.deinwhisky.de/detail/index/sArticle/12275/sCategory/45
+- 🆕 [deinwhisky] **Caol Ila 10 Jahre 2016/2026 1st Fill St. Michael-Eppan Chardonnay Butt Best Dram 57,6% vol.** (매칭: caol ila) — €74.90 — https://www.deinwhisky.de/detail/index/sArticle/12274/sCategory/45
