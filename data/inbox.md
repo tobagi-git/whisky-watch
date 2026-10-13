@@ -36,3 +36,6 @@
 
 ## 수집 2026-10-13 18:57
 - 💰 [innout] **Laphroaig Elements L1.0 Whisky 0,7l 58,6% vol.** (매칭: laphroaig) — €137.99 → €129.99 — https://inn-out-shop.com/products/laphroaig-elements-1-0-whisky-0-7l-58-6-vol
+
+## 수집 2026-10-13 19:02
+- 🆕 [nickolls] **Springbank 14 Year Old Fresh Sherry Single Cask – Cage Bottling** (매칭: springbank) — £325.0 — https://nickollsandperks.com/p/springbank-14-year-old-fresh-sherry-single-cask-cage-bottling-2106375371214432818/
