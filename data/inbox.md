@@ -33,3 +33,6 @@
 ## 수집 2026-10-13 16:41
 - 🆕 [deinwhisky] **Glen Keith 33 Jahre 1993/2026 Hogshead #82793 Best Dram 56,7% vol.** (매칭: glen keith) — €324.90 — https://www.deinwhisky.de/detail/index/sArticle/12275/sCategory/45
 - 🆕 [deinwhisky] **Caol Ila 10 Jahre 2016/2026 1st Fill St. Michael-Eppan Chardonnay Butt Best Dram 57,6% vol.** (매칭: caol ila) — €74.90 — https://www.deinwhisky.de/detail/index/sArticle/12274/sCategory/45
+
+## 수집 2026-10-13 18:57
+- 💰 [innout] **Laphroaig Elements L1.0 Whisky 0,7l 58,6% vol.** (매칭: laphroaig) — €137.99 → €129.99 — https://inn-out-shop.com/products/laphroaig-elements-1-0-whisky-0-7l-58-6-vol
