@@ -55,3 +55,6 @@
 
 ## 수집 2026-10-14 18:02
 - 🆕 [lmdw] **KILCHOMAN Sanaig Cask Strength** (매칭: kilchoman) — €95 — https://www.whisky.fr/en/kilchoman-sanaig-cask-strength-101901.html
+
+## 수집 2026-10-14 18:12
+- 🆕 [deinwhisky] **Ben Nevis 2017/2026 1st Fill Orange Wine Cask Finish #6 Signatory Vintage Dragons 59% vol.** (매칭: ben nevis) — €64.90 — https://www.deinwhisky.de/detail/index/sArticle/12257/sCategory/45
