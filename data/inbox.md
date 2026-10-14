@@ -62,3 +62,7 @@
 ## 수집 2026-10-14 18:21
 - 💰 [innout] **Kilchoman Family Collection Series No.1 18 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 50%vol. Whisky #** (매칭: kilchoman) — €211.00 → €199.99 — https://inn-out-shop.com/products/kilchoman-family-casks-series-18-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-50-vol-whisky
 - 💰 [innout] **Kilchoman Family Collection Series No.1 11 y Sherry Cask Matured 50 ppm Heavily Peated 2026 0,7l 54,7%vol. Whisky #** (매칭: kilchoman) — €123.99 → €119.99 — https://inn-out-shop.com/products/kilchoman-family-casks-series-11-y-sherry-cask-matured-50-ppm-heavily-peated-20th-anniversary-2026-0-7l-54-7-vol-whisky
+
+## 수집 2026-10-14 19:32
+- 🆕 [deinwhisky] **Laphroaig 10 Jahre 2016/2026 Claxton&#039;s 62,3% vol.** (매칭: laphroaig) — €79.90 — https://www.deinwhisky.de/detail/index/sArticle/12294/sCategory/45
+- 🆕 [deinwhisky] **Bowmore 11 Jahre 2015/2026 Claxton&#039;s 57,8% vol.** (매칭: bowmore) — €79.90 — https://www.deinwhisky.de/detail/index/sArticle/12293/sCategory/45
