@@ -49,3 +49,6 @@
 
 ## 수집 2026-10-14 12:02
 - 🆕 [vitalaus] **스태그 25D 배치 버번 위스키 750ml (Stagg Bourbon Batch 26D Whiskey 750ml)** (매칭: stagg) — $342.00 — https://vitalaus.com/products/STAGGJR11
+
+## 수집 2026-10-14 17:02
+- 🆕 [mukawa] **シグナトリー ラフロイグ 25年 2000 54.5度** (매칭: ラフロイグ) — ¥116900 — https://mukawa-spirit.com/?pid=193964703
