@@ -73,3 +73,9 @@
 
 ## 수집 2026-10-14 21:32
 - 🆕 [whiskybarrel] **Caol Ila 10 Year Old Adelphi's Islay** (매칭: caol ila) — £54.95 — https://www.thewhiskybarrel.com/products/caol-ila-10-year-old-adelphis-islay-2026
+
+## 수집 2026-10-15 02:12
+- 🆕 [nickolls] **Longrow 12 Year Old 2003 Sherry Cask – Handfill** (매칭: longrow) — £83.29 — https://nickollsandperks.com/p/longrow-12-year-old-2003-sherry-cask-handfill-103385661211/
+- 🆕 [nickolls] **Longrow 8 Year Old 2007 Sauternes Cask – Handfill** (매칭: longrow) — £70.83 — https://nickollsandperks.com/p/longrow-8-year-old-2007-sauternes-cask-handfill-103397541211/
+- 🆕 [nickolls] **Longrow 12 Year Old 2004 Sherry Cask – Handfill** (매칭: longrow) — £83.29 — https://nickollsandperks.com/p/longrow-12-year-old-2004-sherry-cask-handfill-103397521211/
+- 🆕 [nickolls] **Springbank 19 Year Old 1997 Dark Rum Cask – Handfill** (매칭: springbank) — £291.67 — https://nickollsandperks.com/p/springbank-19-year-old-1997-dark-rum-cask-handfill-103385651211/
