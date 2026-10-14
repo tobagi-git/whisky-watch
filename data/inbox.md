@@ -46,3 +46,6 @@
 
 ## 수집 2026-10-14 07:58
 - 💰 [innout] **Caol Ila 2015 single cask Ruby Port Old Particular 9y 56,8% vol. 0,7l  Whisky Douglas Laing #dl18761** (매칭: caol ila) — €78.89 → €69.99 — https://inn-out-shop.com/products/caol-ila-2015-9y-ruby-port-old-particular-56-8-vol-0-7l-whisky-douglas-laing-dl
+
+## 수집 2026-10-14 12:02
+- 🆕 [vitalaus] **스태그 25D 배치 버번 위스키 750ml (Stagg Bourbon Batch 26D Whiskey 750ml)** (매칭: stagg) — $342.00 — https://vitalaus.com/products/STAGGJR11
