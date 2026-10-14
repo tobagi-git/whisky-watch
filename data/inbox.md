@@ -82,3 +82,6 @@
 
 ## 수집 2026-10-15 04:12
 - 🆕 [nickolls] **Springbank 13 Year Old 2002 Sherry Hogshead – Handfill** (매칭: springbank) — £249.96 — https://nickollsandperks.com/p/springbank-13-year-old-2002-sherry-hogshead-handfill-103397531211/
+
+## 수집 2026-10-15 06:11
+- 🆕 [deinwhisky] **Laphroaig Bourbon Single Cask #611542 50th Anniversary Kirsch Import 58,2% vol.** (매칭: laphroaig) — €174.90 — https://www.deinwhisky.de/detail/index/sArticle/12252/sCategory/45
