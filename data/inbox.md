@@ -85,3 +85,10 @@
 
 ## 수집 2026-10-15 06:11
 - 🆕 [deinwhisky] **Laphroaig Bourbon Single Cask #611542 50th Anniversary Kirsch Import 58,2% vol.** (매칭: laphroaig) — €174.90 — https://www.deinwhisky.de/detail/index/sArticle/12252/sCategory/45
+
+## 수집 2026-10-15 07:58
+- 💰 [nickolls] **Bruichladdich 23 Year Old 2002 (Cask 427) – Nickolls & Perks Rare Cask Collection** (매칭: bruichladdich) — £233.33 → £198.33 — https://nickollsandperks.com/p/bruichladdich-23-year-old-2002-cask-427-nickolls-perks-rare-cask-collection-105355531211/
+- 💰 [nickolls] **Kilchoman Winter 2010 Release** (매칭: kilchoman) — £100.0 → £41.65 — https://nickollsandperks.com/p/kilchoman-winter-2010-release-103413421211/
+- 💰 [nickolls] **Kilchoman 7 Year Old 2008** (매칭: kilchoman) — £54.17 → £40.63 — https://nickollsandperks.com/p/kilchoman-7-year-old-2008-103415671211/
+- 💰 [nickolls] **Rosebank 31 Year Old – Release Two** (매칭: rosebank) — £1500.0 → £1200.0 — https://nickollsandperks.com/p/rosebank-31-year-old-release-two-103360681211/
+- 💰 [nickolls] **Kilchoman 11 Year Old – Feis Ile 2019** (매칭: kilchoman) — £295.83 → £207.08 — https://nickollsandperks.com/p/kilchoman-11-year-old-feis-ile-2019-103375241211/
