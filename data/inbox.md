@@ -58,3 +58,7 @@
 
 ## 수집 2026-10-14 18:12
 - 🆕 [deinwhisky] **Ben Nevis 2017/2026 1st Fill Orange Wine Cask Finish #6 Signatory Vintage Dragons 59% vol.** (매칭: ben nevis) — €64.90 — https://www.deinwhisky.de/detail/index/sArticle/12257/sCategory/45
+
+## 수집 2026-10-14 18:21
+- 💰 [innout] **Kilchoman Family Collection Series No.1 18 y Bourbon Cask 50 ppm Heavily Peated 2026 0,7l 50%vol. Whisky #** (매칭: kilchoman) — €211.00 → €199.99 — https://inn-out-shop.com/products/kilchoman-family-casks-series-18-y-bourbon-cask-50-ppm-heavily-peated-2026-0-7l-50-vol-whisky
+- 💰 [innout] **Kilchoman Family Collection Series No.1 11 y Sherry Cask Matured 50 ppm Heavily Peated 2026 0,7l 54,7%vol. Whisky #** (매칭: kilchoman) — €123.99 → €119.99 — https://inn-out-shop.com/products/kilchoman-family-casks-series-11-y-sherry-cask-matured-50-ppm-heavily-peated-20th-anniversary-2026-0-7l-54-7-vol-whisky
