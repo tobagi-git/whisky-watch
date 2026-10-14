@@ -52,3 +52,6 @@
 
 ## 수집 2026-10-14 17:02
 - 🆕 [mukawa] **シグナトリー ラフロイグ 25年 2000 54.5度** (매칭: ラフロイグ) — ¥116900 — https://mukawa-spirit.com/?pid=193964703
+
+## 수집 2026-10-14 18:02
+- 🆕 [lmdw] **KILCHOMAN Sanaig Cask Strength** (매칭: kilchoman) — €95 — https://www.whisky.fr/en/kilchoman-sanaig-cask-strength-101901.html
