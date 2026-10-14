@@ -70,3 +70,6 @@
 ## 수집 2026-10-14 20:31
 - 🆕 [whiskysite] **Kilchoman Cognac Cask Matured 0.70 ltr 50%** (매칭: kilchoman) — €74.99 — https://www.whiskysite.nl/en/kilchoman-cognac-cask-matured-070-ltr-50.html
 - 🆕 [whiskysite] **Laphroaig 20 Years Old Douglas Laing Old Particular 0,70 ltr 48,4%** (매칭: laphroaig) — €229.99 — https://www.whiskysite.nl/en/laphroaig-20-years-old-douglas-laing-old-particula.html
+
+## 수집 2026-10-14 21:32
+- 🆕 [whiskybarrel] **Caol Ila 10 Year Old Adelphi's Islay** (매칭: caol ila) — £54.95 — https://www.thewhiskybarrel.com/products/caol-ila-10-year-old-adelphis-islay-2026
