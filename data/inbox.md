@@ -66,3 +66,7 @@
 ## 수집 2026-10-14 19:32
 - 🆕 [deinwhisky] **Laphroaig 10 Jahre 2016/2026 Claxton&#039;s 62,3% vol.** (매칭: laphroaig) — €79.90 — https://www.deinwhisky.de/detail/index/sArticle/12294/sCategory/45
 - 🆕 [deinwhisky] **Bowmore 11 Jahre 2015/2026 Claxton&#039;s 57,8% vol.** (매칭: bowmore) — €79.90 — https://www.deinwhisky.de/detail/index/sArticle/12293/sCategory/45
+
+## 수집 2026-10-14 20:31
+- 🆕 [whiskysite] **Kilchoman Cognac Cask Matured 0.70 ltr 50%** (매칭: kilchoman) — €74.99 — https://www.whiskysite.nl/en/kilchoman-cognac-cask-matured-070-ltr-50.html
+- 🆕 [whiskysite] **Laphroaig 20 Years Old Douglas Laing Old Particular 0,70 ltr 48,4%** (매칭: laphroaig) — €229.99 — https://www.whiskysite.nl/en/laphroaig-20-years-old-douglas-laing-old-particula.html
