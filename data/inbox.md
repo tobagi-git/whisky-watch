@@ -105,3 +105,8 @@
 
 ## 수집 2026-10-15 23:02
 - 💰 [whiskybarrel] **Caol Ila 40 Years Old Single Malts of Scotland Director's Special** (매칭: caol ila) — £1771.96 → £1500.00 — https://www.thewhiskybarrel.com/products/caol-ila-40-years-old-single-malts-of-scotland-directors-special
+
+## 수집 2026-10-15 23:32
+- 🆕 [wio] **Big Peat Blended Malt Feis Ile 2026 52.6%** (매칭: feis ile) — £56.95 — https://whiskyinternationalonline.com/products/big-peat-blended-malt-feis-ile-2026-52-6
+- 💰 [whiskybarrel] **Laphroaig 10 Year Old 2015 Single Malts of Scotland Small Batch** (매칭: laphroaig) — £79.81 → £59.00 — https://www.thewhiskybarrel.com/products/laphroaig-10-year-old-2015-single-malts-of-scotland-small-batch
+- 💰 [whiskybarrel] **Kilchoman 13 Year Old Limited Edition** (매칭: kilchoman) — £89.00 → £79.96 — https://www.thewhiskybarrel.com/products/kilchoman-13-year-old-limited-edition
