@@ -92,3 +92,6 @@
 - 💰 [nickolls] **Kilchoman 7 Year Old 2008** (매칭: kilchoman) — £54.17 → £40.63 — https://nickollsandperks.com/p/kilchoman-7-year-old-2008-103415671211/
 - 💰 [nickolls] **Rosebank 31 Year Old – Release Two** (매칭: rosebank) — £1500.0 → £1200.0 — https://nickollsandperks.com/p/rosebank-31-year-old-release-two-103360681211/
 - 💰 [nickolls] **Kilchoman 11 Year Old – Feis Ile 2019** (매칭: kilchoman) — £295.83 → £207.08 — https://nickollsandperks.com/p/kilchoman-11-year-old-feis-ile-2019-103375241211/
+
+## 수집 2026-10-15 09:32
+- 🆕 [vitalaus] **스태그 26B 배치 버번 위스키 750ml (복사) (Stagg Bourbon Batch 26B Whiskey 750ml)** (매칭: stagg) — $342.00 — https://vitalaus.com/products/STAGGJR12
