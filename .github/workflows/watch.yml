@@ -48,7 +48,7 @@ jobs:
       KAKAO_CLIENT_SECRET: ${{ secrets.KAKAO_CLIENT_SECRET }}
       KAKAO_TOKEN_KEY: ${{ secrets.KAKAO_TOKEN_KEY }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       # 상태 파일(seen.json 등 ~11MB)은 커밋 1개짜리 state 브랜치에 산다(2026-10-08, main 비대화 방지).
       # 못 받아오면 중단 — 빈 상태로 돌면 전 항목을 "신규"로 재알림하게 된다.
@@ -58,7 +58,7 @@ jobs:
             || { echo "::error::state 브랜치를 받지 못함 — 빈 상태로 실행하지 않음"; exit 1; }
           mkdir -p data && rsync -a --exclude .git "$RUNNER_TEMP/state/" data/
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
         with:
           python-version: "3.12"
 
