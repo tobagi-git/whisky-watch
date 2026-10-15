@@ -110,3 +110,11 @@
 - 🆕 [wio] **Big Peat Blended Malt Feis Ile 2026 52.6%** (매칭: feis ile) — £56.95 — https://whiskyinternationalonline.com/products/big-peat-blended-malt-feis-ile-2026-52-6
 - 💰 [whiskybarrel] **Laphroaig 10 Year Old 2015 Single Malts of Scotland Small Batch** (매칭: laphroaig) — £79.81 → £59.00 — https://www.thewhiskybarrel.com/products/laphroaig-10-year-old-2015-single-malts-of-scotland-small-batch
 - 💰 [whiskybarrel] **Kilchoman 13 Year Old Limited Edition** (매칭: kilchoman) — £89.00 → £79.96 — https://www.thewhiskybarrel.com/products/kilchoman-13-year-old-limited-edition
+
+## 수집 2026-10-16 00:12
+- 🆕 [wio] **Bowmore 2011 Hand Filled Rum Single Cask #242 59.9%** (매칭: bowmore) — £249.95 — https://whiskyinternationalonline.com/products/bowmore-2011-hand-filled-rum-single-cask-242-59-9
+- 💰 [whiskybarrel] **Springbank 21 Year Old (2022)** (매칭: springbank) — £1200.00 → £900.00 — https://www.thewhiskybarrel.com/products/springbank-21-year-old-2022
+- 💰 [whiskybarrel] **Mystery Malt (Laphroaig) Islay 28 Year Old 1992 Signatory Cask Strength** (매칭: laphroaig) — £360.00 → £295.00 — https://www.thewhiskybarrel.com/products/mystery-malt-laphroaig-islay-28-year-old-1992-signatory-cask-strength-6772-2021
+- 💰 [whiskybarrel] **Springbank 11 Year Old 2011 Local Barley (Dec. 2022)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-11-year-old-2011-local-barley-dec-2022
+- 💰 [whiskybarrel] **Springbank 11 Year Old 2006 Local Barley (Feb. 2017)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-11-year-old-2006-local-barley-feb-2017
+- 💰 [whiskybarrel] **Springbank 10 Year Old 2007 Local Barley (Nov. 2017)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-10-year-old-2007-local-barley-nov-2017
