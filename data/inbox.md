@@ -102,3 +102,6 @@
 
 ## 수집 2026-10-15 21:32
 - 🆕 [wio] **Laphroaig 1980 27 Year Old Oloroso Sherry Cask 57.4%** (매칭: laphroaig) — £8333.33 — https://whiskyinternationalonline.com/products/laphroaig-1980-27-year-old-oloroso-casks-57-4
+
+## 수집 2026-10-15 23:02
+- 💰 [whiskybarrel] **Caol Ila 40 Years Old Single Malts of Scotland Director's Special** (매칭: caol ila) — £1771.96 → £1500.00 — https://www.thewhiskybarrel.com/products/caol-ila-40-years-old-single-malts-of-scotland-directors-special
