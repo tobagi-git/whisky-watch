@@ -118,3 +118,25 @@
 - 💰 [whiskybarrel] **Springbank 11 Year Old 2011 Local Barley (Dec. 2022)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-11-year-old-2011-local-barley-dec-2022
 - 💰 [whiskybarrel] **Springbank 11 Year Old 2006 Local Barley (Feb. 2017)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-11-year-old-2006-local-barley-feb-2017
 - 💰 [whiskybarrel] **Springbank 10 Year Old 2007 Local Barley (Nov. 2017)** (매칭: springbank) — £480.00 → £350.00 — https://www.thewhiskybarrel.com/products/springbank-10-year-old-2007-local-barley-nov-2017
+
+## 수집 2026-10-16 07:57
+- 💰 [whiskybarrel] **Laphroaig 25 Year Old 1998 Signatory Symington’s Choice** (매칭: laphroaig) — £395.00 → £275.00 — https://www.thewhiskybarrel.com/products/laphroaig-25-year-old-1998-signatory-symington-s-choice-10495
+- 💰 [whiskybarrel] **Springbank 26 Year Old 1998 Travis Raze The Bar** (매칭: springbank) — £1500.00 → £1200.00 — https://www.thewhiskybarrel.com/products/springbank-26-year-old-1998-travis-raze-the-bar
+- 💰 [whiskybarrel] **Ben Nevis 10 Year Old 2012 Murray McDavid Benchmark UK Exclusive** (매칭: ben nevis) — £86.86 → £59.00 — https://www.thewhiskybarrel.com/products/ben-nevis-10-year-old-2012-murray-mcdavid-benchmark-uk-exclusive
+- 💰 [whiskybarrel] **Macallan 32 Year Old 1991 Legends Collection** (매칭: 1991) — £5000.00 → £3600.00 — https://www.thewhiskybarrel.com/products/macallan-32-year-old-1991-legends-collection-2023
+- 💰 [whiskybarrel] **Springbank 21 Year Old (2013)** (매칭: springbank) — £1200.00 → £900.00 — https://www.thewhiskybarrel.com/products/springbank-21-year-old-2013
+- 💰 [whiskybarrel] **Springbank 21 Year Old (2015)** (매칭: springbank) — £1200.00 → £900.00 — https://www.thewhiskybarrel.com/products/springbank-21-year-old-2015
+- 💰 [whiskybarrel] **Springbank 1996 Samaroli Magnifico** (매칭: springbank) — £2990.00 → £1800.00 — https://www.thewhiskybarrel.com/products/springbank-1996-samaroli-magnifico-2022-567
+- 💰 [whiskybarrel] **Springbank 26 Year Old 1995 Samaroli Magnifico** (매칭: springbank) — £2990.00 → £1800.00 — https://www.thewhiskybarrel.com/products/springbank-27-year-old-1995-samaroli-magnifico-2022
+- 💰 [whiskybarrel] **Bowmore 45 Year Old 1972 Signatory 30th Anniversary** (매칭: bowmore) — £4995.00 → £3600.00 — https://www.thewhiskybarrel.com/products/bowmore-45-year-old-1972-signatory-30th-anniversary
+- 💰 [whiskybarrel] **Macallan 25 Year Old 1991 Old & Rare Platinum** (매칭: 1991) — £2990.00 → £2400.00 — https://www.thewhiskybarrel.com/products/macallan-25-year-old-1991-old-rare
+- 💰 [whiskybarrel] **Bowmore 15 Year Old 1994 The Golden Cask** (매칭: bowmore) — £249.95 → £199.96 — https://www.thewhiskybarrel.com/products/bowmore-15-year-old-1994-the-golden-cask-2009-cm138
+- 💰 [whiskybarrel] **Ardbeg 8 Years Old Committee Release 2021** (매칭: ardbeg) — £75.00 → £59.00 — https://www.thewhiskybarrel.com/products/ardbeg-8-years-old-committee-release-2021
+- 💰 [whiskybarrel] **Ardbeg 30 Year Old 1991 Magnum Old & Rare** (매칭: 1991) — £3900.00 → £2700.00 — https://www.thewhiskybarrel.com/products/ardbeg-30-year-old-1991-magnum-old-rare
+- 💰 [whiskybarrel] **Laphroaig 21 Year Old 1996 Magnum Old & Rare** (매칭: laphroaig) — £1900.00 → £1200.00 — https://www.thewhiskybarrel.com/products/laphroaig-21-year-old-1996-magnum-old-rare
+- 💰 [whiskybarrel] **Springbank 21 Year Old 1995 Magnum Old & Rare** (매칭: springbank) — £1295.00 → £1080.00 — https://www.thewhiskybarrel.com/products/springbank-21-year-old-1995-magnum-old-rare
+- 💰 [whiskybarrel] **Ardbeg 25 Year Old 1991 Magnum Old & Rare** (매칭: 1991) — £3600.00 → £2400.00 — https://www.thewhiskybarrel.com/products/ardbeg-25-year-old-1991-magnum-old-rare-hunter-laing
+- 💰 [whiskybarrel] **Ardbeg 29 Year Old 1975 Old & Rare Platinum** (매칭: ardbeg) — £3999.95 → £2295.00 — https://www.thewhiskybarrel.com/products/ardbeg-29-year-old-1975-old-rare
+- 💰 [whiskybarrel] **Kilchoman Inaugural 2009 Release** (매칭: kilchoman) — £250.00 → £150.00 — https://www.thewhiskybarrel.com/products/kilchoman-inaugural-2009-release
+- 💰 [whiskybarrel] **Laphroaig 21 Year Old Heathrow Terminal 5** (매칭: laphroaig) — £1990.00 → £1500.00 — https://www.thewhiskybarrel.com/products/laphroaig-21-year-old-terminal-5
+- 💰 [whiskybarrel] **Bowmore 7 Year Old 1999 Feis Ile 2007** (매칭: bowmore) — £495.00 → £250.00 — https://www.thewhiskybarrel.com/products/bowmore-7-year-old-feis-ile-2007
