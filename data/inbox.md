@@ -99,3 +99,6 @@
 ## 수집 2026-10-15 15:32
 - 🆕 [mukawa] **ザ オールドフレンズ ベンネヴィス 13年 2012 57.6度** (매칭: ベンネヴィス) — ¥15200 — https://mukawa-spirit.com/?pid=193980675
 - 🆕 [vitalaus] **부커스 26-02 밀크셰이크 배치 버번 위스키 750ml (Booker's 26-02 Milkshake Batch Bourbon Whiskey 750ml)** (매칭: booker's) — $196.00 — https://vitalaus.com/products/BOOKERS13
+
+## 수집 2026-10-15 21:32
+- 🆕 [wio] **Laphroaig 1980 27 Year Old Oloroso Sherry Cask 57.4%** (매칭: laphroaig) — £8333.33 — https://whiskyinternationalonline.com/products/laphroaig-1980-27-year-old-oloroso-casks-57-4
