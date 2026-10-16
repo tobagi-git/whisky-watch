@@ -140,3 +140,8 @@
 - 💰 [whiskybarrel] **Kilchoman Inaugural 2009 Release** (매칭: kilchoman) — £250.00 → £150.00 — https://www.thewhiskybarrel.com/products/kilchoman-inaugural-2009-release
 - 💰 [whiskybarrel] **Laphroaig 21 Year Old Heathrow Terminal 5** (매칭: laphroaig) — £1990.00 → £1500.00 — https://www.thewhiskybarrel.com/products/laphroaig-21-year-old-terminal-5
 - 💰 [whiskybarrel] **Bowmore 7 Year Old 1999 Feis Ile 2007** (매칭: bowmore) — £495.00 → £250.00 — https://www.thewhiskybarrel.com/products/bowmore-7-year-old-feis-ile-2007
+
+## 수집 2026-10-16 18:57
+- 💰 [nickolls] **Octomore 16.2** (매칭: octomore) — £129.13 → £116.21 — https://nickollsandperks.com/p/octomore-16-2-105362191211/
+- 💰 [nickolls] **Port Ellen 30 Year Old – Old Malt Cask 60th Anniversary (Douglas Laing)** (매칭: port ellen) — £1666.63 → £1166.64 — https://nickollsandperks.com/p/port-ellen-30-year-old-old-malt-cask-60th-anniversary-douglas-laing-103413431211/
+- 💰 [nickolls] **Port Ellen 40 Year Old 1979 – Xtra Old Particular The Black Series (Douglas Laing)** (매칭: port ellen) — £2916.67 → £2100.0 — https://nickollsandperks.com/p/port-ellen-40-year-old-1979-xtra-old-particular-the-black-series-douglas-laing-103379311211/
