@@ -154,3 +154,6 @@
 
 ## 수집 2026-10-17 04:12
 - 🆕 [abbey] **Springbank 21 Year Old 2026 + KIlkerran 12 Year Old** (매칭: springbank) — £349.00 — https://www.abbeywhisky.com/products/springbank-21-year-old-2026-kilkerran-12-year-old
+
+## 수집 2026-10-17 06:12
+- 🆕 [whiskybarrel] **Bruichladdich Old Skool 10 Year Old 25th Anniversary** (매칭: bruichladdich) — £64.94 — https://www.thewhiskybarrel.com/products/bruichladdich-old-skool-10-year-old-25th-anniversary
