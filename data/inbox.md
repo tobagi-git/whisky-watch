@@ -145,3 +145,6 @@
 - 💰 [nickolls] **Octomore 16.2** (매칭: octomore) — £129.13 → £116.21 — https://nickollsandperks.com/p/octomore-16-2-105362191211/
 - 💰 [nickolls] **Port Ellen 30 Year Old – Old Malt Cask 60th Anniversary (Douglas Laing)** (매칭: port ellen) — £1666.63 → £1166.64 — https://nickollsandperks.com/p/port-ellen-30-year-old-old-malt-cask-60th-anniversary-douglas-laing-103413431211/
 - 💰 [nickolls] **Port Ellen 40 Year Old 1979 – Xtra Old Particular The Black Series (Douglas Laing)** (매칭: port ellen) — £2916.67 → £2100.0 — https://nickollsandperks.com/p/port-ellen-40-year-old-1979-xtra-old-particular-the-black-series-douglas-laing-103379311211/
+
+## 수집 2026-10-16 20:52
+- 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €499.98 → €469.99 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
