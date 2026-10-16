@@ -151,3 +151,6 @@
 
 ## 수집 2026-10-16 21:32
 - 🆕 [whiskysite] **Bowmore 11 Years Old 2015 Little Brown Dog 0.70 ltr 58,3%** (매칭: bowmore) — €89.99 — https://www.whiskysite.nl/en/bowmore-11-years-old-2015-little-brown-dog-070-ltr.html
+
+## 수집 2026-10-17 04:12
+- 🆕 [abbey] **Springbank 21 Year Old 2026 + KIlkerran 12 Year Old** (매칭: springbank) — £349.00 — https://www.abbeywhisky.com/products/springbank-21-year-old-2026-kilkerran-12-year-old
