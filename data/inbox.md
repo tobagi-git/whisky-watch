@@ -148,3 +148,6 @@
 
 ## 수집 2026-10-16 20:52
 - 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €499.98 → €469.99 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
+
+## 수집 2026-10-16 21:32
+- 🆕 [whiskysite] **Bowmore 11 Years Old 2015 Little Brown Dog 0.70 ltr 58,3%** (매칭: bowmore) — €89.99 — https://www.whiskysite.nl/en/bowmore-11-years-old-2015-little-brown-dog-070-ltr.html
