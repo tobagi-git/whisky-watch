@@ -14,3 +14,7 @@
 ## 수집 2026-10-19 15:31
 - 🆕 [whiskymaniac] **Springbank 12 Jahre Cask Strength Edition 2025 - Batch 28 - 55,5%** (매칭: springbank) — €179.9 — https://www.whisky-maniac.de/p/springbank-12-jahre-cask-strength-edition-2025-batch-28-55-5
 - 🆕 [whiskymaniac] **10cl Sample - Springbank 15 Jahre Edition 2026 - 46,0% - 100% Sherry Casks - Code 26/59** (매칭: springbank) — €24.9 — https://www.whisky-maniac.de/p/10cl-sample-springbank-15-jahre-edition-2026-46-0-100-sherry-casks-code-26-59
+
+## 수집 2026-10-19 18:56
+- 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €129.00 → €119.00 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
+- 💰 [innout] **Kilchoman Loch Gorm 2023 sherry cask Islay single scotch whisky 0,7l 46 % vol.** (매칭: kilchoman) — €79.99 → €74.00 — https://inn-out-shop.com/products/kilchoman-loch-gorm-2023-sherry-cask-islay-single-scotch-whisky-0-7l-46-vol
