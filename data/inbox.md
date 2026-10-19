@@ -18,3 +18,6 @@
 ## 수집 2026-10-19 18:56
 - 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €129.00 → €119.00 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
 - 💰 [innout] **Kilchoman Loch Gorm 2023 sherry cask Islay single scotch whisky 0,7l 46 % vol.** (매칭: kilchoman) — €79.99 → €74.00 — https://inn-out-shop.com/products/kilchoman-loch-gorm-2023-sherry-cask-islay-single-scotch-whisky-0-7l-46-vol
+
+## 수집 2026-10-19 23:31
+- 🆕 [deinwhisky] **Caol Ila 2012/2026 1st Fill Sherry Cask #311514 Gordon &amp; MacPhail Cask Strength 57,1% vol.** (매칭: caol ila) — €139.90 — https://www.deinwhisky.de/detail/index/sArticle/12296/sCategory/45
