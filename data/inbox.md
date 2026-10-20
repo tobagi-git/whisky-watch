@@ -24,3 +24,6 @@
 
 ## 수집 2026-10-20 13:01
 - 🆕 [rudder] **Bowmore ボウモア 2006 19年 ソルティアレアモルト for バーキッチン** (매칭: bowmore) — ¥51700 — https://theultimatespirits.jp/products/bowmore-ボウモア-2006-19年-ソルティアレアモルト-for-バーキッチン
+
+## 수집 2026-10-20 15:31
+- 💰 [innout] **Bruichladdich single cask 2011 Old Particular 48,4% vol. 0,7l  Whisky Douglas Laing #dl18523** (매칭: bruichladdich) — €142.89 → €136.00 — https://inn-out-shop.com/products/bruichladdich-single-cask-2011-20xx-12-y-old-particular-48-4-vol-0-7l-whisky-douglas-laing-dlxx
