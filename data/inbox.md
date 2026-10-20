@@ -27,3 +27,8 @@
 
 ## 수집 2026-10-20 15:31
 - 💰 [innout] **Bruichladdich single cask 2011 Old Particular 48,4% vol. 0,7l  Whisky Douglas Laing #dl18523** (매칭: bruichladdich) — €142.89 → €136.00 — https://inn-out-shop.com/products/bruichladdich-single-cask-2011-20xx-12-y-old-particular-48-4-vol-0-7l-whisky-douglas-laing-dlxx
+
+## 수집 2026-10-20 17:01
+- 🆕 [mukawa] **ワットウイスキー ベンネヴィス 11年 2015 53.7度** (매칭: ベンネヴィス) — ¥13200 — https://mukawa-spirit.com/?pid=194065292
+- 🆕 [mukawa] **ワットウイスキー ラフロイグ 12年 2014 57.1度** (매칭: ラフロイグ) — ¥15000 — https://mukawa-spirit.com/?pid=194065289
+- 🆕 [mukawa] **ワットウイスキー ノースブリティッシュ 35年 1991 48.3度** (매칭: 1991) — ¥23370 — https://mukawa-spirit.com/?pid=194065288
