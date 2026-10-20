@@ -40,3 +40,6 @@
 - 🆕 [deinwhisky] **Kilchoman Sanaig Cask Strength 2026 57,5% vol.** (매칭: kilchoman) — €74.90 — https://www.deinwhisky.de/schottland/islay/kilchoman/12317-kilchoman-sanaig-cask-strength-2026-57-5-vol..html?c=45
 - 🆕 [innout] **Hazelburn Cage bottling 2020 2026 fresh sherry Cask 6y 0,7l 58,2 % vol. Whisky w6 r314 duty paid sample** (매칭: hazelburn) — €299.00 — https://inn-out-shop.com/products/hazelburn-cage-bottling-2020-2026-fresh-sherry-cask-6y-0-7l-58-2-vol-whisky-w6-r314-duty-paid-sample
 - 💰 [innout] **Kilchoman Sanaig cask strength dark batch 2 Edition 2026 0.7l 57,5 % scotch whisky limitiert dark batch** (매칭: kilchoman) — €79.99 → €78.29 — https://inn-out-shop.com/products/kilchoman-sanaig-cask-strength-dark-batch-2-edition-2026-0-7l-57-5-scotch-whisky-limitiert-dark-batch
+
+## 수집 2026-10-21 02:29
+- 🆕 [innout] **Springbank Cage bottling 2014 fresh Bourbon Cask 11y 0,7l 59,4 % vol. Whisky w5 r56 duty paid sample Elliot Gemmill** (매칭: springbank) — €299.00 — https://inn-out-shop.com/products/springbank-cage-bottling-2014-fresh-bourbon-cask-11y-0-7l-59-4-vol-whisky-w5-r56-duty-paid-sample-elliot-gemmill
