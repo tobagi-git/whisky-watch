@@ -21,3 +21,6 @@
 
 ## 수집 2026-10-19 23:31
 - 🆕 [deinwhisky] **Caol Ila 2012/2026 1st Fill Sherry Cask #311514 Gordon &amp; MacPhail Cask Strength 57,1% vol.** (매칭: caol ila) — €139.90 — https://www.deinwhisky.de/detail/index/sArticle/12296/sCategory/45
+
+## 수집 2026-10-20 13:01
+- 🆕 [rudder] **Bowmore ボウモア 2006 19年 ソルティアレアモルト for バーキッチン** (매칭: bowmore) — ¥51700 — https://theultimatespirits.jp/products/bowmore-ボウモア-2006-19年-ソルティアレアモルト-for-バーキッチン
