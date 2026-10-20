@@ -32,3 +32,6 @@
 - 🆕 [mukawa] **ワットウイスキー ベンネヴィス 11年 2015 53.7度** (매칭: ベンネヴィス) — ¥13200 — https://mukawa-spirit.com/?pid=194065292
 - 🆕 [mukawa] **ワットウイスキー ラフロイグ 12年 2014 57.1度** (매칭: ラフロイグ) — ¥15000 — https://mukawa-spirit.com/?pid=194065289
 - 🆕 [mukawa] **ワットウイスキー ノースブリティッシュ 35年 1991 48.3度** (매칭: 1991) — ¥23370 — https://mukawa-spirit.com/?pid=194065288
+
+## 수집 2026-10-21 00:11
+- 🆕 [innout] **Kilchoman Sanaig cask strength dark batch 2 Edition 2026 0.7l 57,5 % scotch whisky limitiert dark batch** (매칭: kilchoman) — €79.99 — https://inn-out-shop.com/products/kilchoman-sanaig-cask-strength-dark-batch-2-edition-2026-0-7l-57-5-scotch-whisky-limitiert-dark-batch
