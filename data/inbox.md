@@ -43,3 +43,10 @@
 
 ## 수집 2026-10-21 02:29
 - 🆕 [innout] **Springbank Cage bottling 2014 fresh Bourbon Cask 11y 0,7l 59,4 % vol. Whisky w5 r56 duty paid sample Elliot Gemmill** (매칭: springbank) — €299.00 — https://inn-out-shop.com/products/springbank-cage-bottling-2014-fresh-bourbon-cask-11y-0-7l-59-4-vol-whisky-w5-r56-duty-paid-sample-elliot-gemmill
+
+## 수집 2026-10-21 15:01
+- 🆕 [deinwhisky] **Secret Islay 34 Jahre 1991/2026 The Whisky Jury x 10th Anniversary deinwhisky.de 49,3% vol.** (매칭: 1991) — €379.90 — https://www.deinwhisky.de/detail/index/sArticle/12233/sCategory/244
+- 🆕 [whiskymaniac] **Laphroaig 33 y.o. - Strong Characters 2024** (매칭: laphroaig) — €649.9 — https://www.whisky-maniac.de/p/laphroaig-33-y-o-strong-characters-2024
+- 🆕 [whiskymaniac] **Laphroaig 34 y.o. - The Ian Hunter Story 2023  - Book 5 - Ex-Bourbon** (매칭: laphroaig) — €849.9 — https://www.whisky-maniac.de/p/laphroaig-34-y-o-the-ian-hunter-story-2023-book-5-ex-bourbon
+- 🆕 [whiskymaniac] **Kilchoman Sanaig Private Vatting Germany** (매칭: kilchoman) — €44.9 — https://www.whisky-maniac.de/p/kilchoman-sanaig-private-vatting-germany
+- 🆕 [whiskymaniac] **Bowmore 30 Jahre - Distillery Bottling - Edition 2023 - 45,9%** (매칭: bowmore) — €1049.9 — https://www.whisky-maniac.de/p/bowmore-30-jahre-distillery-bottling-edition-2023-45-9
