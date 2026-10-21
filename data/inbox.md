@@ -56,3 +56,11 @@
 
 ## 수집 2026-10-21 18:02
 - 🆕 [shinanoya] **ブルイックラディ[1991] 33年 バーボンホグスヘッド ''Asia''【ザンジバー/FAZZiNO】** (매칭: 1991) — ¥92180 — https://shinanoya-tokyo.jp/view/item/000000022588
+
+## 수집 2026-10-22 07:57
+- 💰 [reallygood] **Caol Ila 20 Year Old 1975 Rare Malts - 75cl 61.18%** (매칭: caol ila) — £738.00 → £591.00 — https://reallygoodwhisky.com/products/caol-ila-20-year-old-1975-rare-malts-75cl-61-18
+- 💰 [reallygood] **Caol Ila 20 Year Old 1977 Rare Malts - 75cl 61.3%** (매칭: caol ila) — £3149.10 → £2520.00 — https://reallygoodwhisky.com/products/caol-ila-20-year-old-1977-rare-malts-75cl-61-3-with-box
+- 💰 [reallygood] **Caol Ila 21 Year Old 1975 Rare Malts - 70cl 61.3%** (매칭: caol ila) — £605.00 → £484.00 — https://reallygoodwhisky.com/products/caol-lla-21-year-old-1975-rare-malts-70cl-61-3
+- 💰 [reallygood] **Caol Ila 20 Year Old 1975 Rare Malts - 75cl 61.12% No Box** (매칭: caol ila) — £1035.00 → £828.00 — https://reallygoodwhisky.com/products/caol-ila-20-year-old-1975-rare-malts-75cl-61-12
+- 💰 [reallygood] **Rosebank 1979 20 Year Old Rare Malts - 70cl 60.3%** (매칭: rosebank) — £1203.96 → £964.00 — https://reallygoodwhisky.com/products/rosebank-1979-20-year-old-rare-malts-70cl-60-3
+- 💰 [reallygood] **Rosebank 1979 - 19 Year Old Rare Malts 75cl 60.2%** (매칭: rosebank) — £1584.00 → £1268.00 — https://reallygoodwhisky.com/products/rosebank-1979-20-year-old-rare-malts-70cl-60-2
