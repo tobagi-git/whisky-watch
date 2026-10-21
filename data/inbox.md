@@ -50,3 +50,6 @@
 - 🆕 [whiskymaniac] **Laphroaig 34 y.o. - The Ian Hunter Story 2023  - Book 5 - Ex-Bourbon** (매칭: laphroaig) — €849.9 — https://www.whisky-maniac.de/p/laphroaig-34-y-o-the-ian-hunter-story-2023-book-5-ex-bourbon
 - 🆕 [whiskymaniac] **Kilchoman Sanaig Private Vatting Germany** (매칭: kilchoman) — €44.9 — https://www.whisky-maniac.de/p/kilchoman-sanaig-private-vatting-germany
 - 🆕 [whiskymaniac] **Bowmore 30 Jahre - Distillery Bottling - Edition 2023 - 45,9%** (매칭: bowmore) — €1049.9 — https://www.whisky-maniac.de/p/bowmore-30-jahre-distillery-bottling-edition-2023-45-9
+
+## 수집 2026-10-21 16:41
+- 🆕 [mukawa] **A&G レアカスクセレクション カリラ 11年 2014 48度** (매칭: カリラ) — ¥19980 — https://mukawa-spirit.com/?pid=194080480
