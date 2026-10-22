@@ -71,3 +71,8 @@
 ## 수집 2026-10-22 17:02
 - 🆕 [mukawa] **カリラ 11年 スペシャルリリース 2024 57.3度** (매칭: カリラ) — ¥21950 — https://mukawa-spirit.com/?pid=194099831
 - 🆕 [mukawa] **モルトバーン カリラ 19年 2007 52.9度** (매칭: カリラ) — ¥38500 — https://mukawa-spirit.com/?pid=194099808
+
+## 수집 2026-10-23 02:35
+- 🆕 [wio] **Springbank 2014 11 Year Old Recharred Sherry Duty Paid Sample Rotation #411 54.7%** (매칭: springbank) — £399.95 — https://whiskyinternationalonline.com/products/springbank-2014-11-year-old-recharred-sherry-duty-paid-sample-rotation-411-54-7
+- 🆕 [wio] **Springbank 2019 6 Year Old Fresh Jamaican Rum Cask Duty Paid Sample #1572 57.9%** (매칭: springbank) — £249.95 — https://whiskyinternationalonline.com/products/springbank-2019-6-year-old-fresh-jamaican-rum-cask-duty-paid-sample-1572-57-9
+- 🆕 [wio] **Springbank 18 Year Old Single Malt Whisky 46%** (매칭: springbank) — £249.95 — https://whiskyinternationalonline.com/products/springbank-18-year-old-single-malt-whisky-46
