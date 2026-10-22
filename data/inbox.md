@@ -67,3 +67,7 @@
 
 ## 수집 2026-10-22 09:02
 - 🆕 [dailyshot_cvs] **[이마트24 예약] 러셀 리저브 13년 배럴 프루프 2025 (Russell Reserve 13yo Barrel Proof 2025)** (매칭: barrel proof) — ₩399000 — https://dailyshot.co/m/item/30464?item=469005
+
+## 수집 2026-10-22 17:02
+- 🆕 [mukawa] **カリラ 11年 スペシャルリリース 2024 57.3度** (매칭: カリラ) — ¥21950 — https://mukawa-spirit.com/?pid=194099831
+- 🆕 [mukawa] **モルトバーン カリラ 19年 2007 52.9度** (매칭: カリラ) — ¥38500 — https://mukawa-spirit.com/?pid=194099808
