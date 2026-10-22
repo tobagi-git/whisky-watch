@@ -64,3 +64,6 @@
 - 💰 [reallygood] **Caol Ila 20 Year Old 1975 Rare Malts - 75cl 61.12% No Box** (매칭: caol ila) — £1035.00 → £828.00 — https://reallygoodwhisky.com/products/caol-ila-20-year-old-1975-rare-malts-75cl-61-12
 - 💰 [reallygood] **Rosebank 1979 20 Year Old Rare Malts - 70cl 60.3%** (매칭: rosebank) — £1203.96 → £964.00 — https://reallygoodwhisky.com/products/rosebank-1979-20-year-old-rare-malts-70cl-60-3
 - 💰 [reallygood] **Rosebank 1979 - 19 Year Old Rare Malts 75cl 60.2%** (매칭: rosebank) — £1584.00 → £1268.00 — https://reallygoodwhisky.com/products/rosebank-1979-20-year-old-rare-malts-70cl-60-2
+
+## 수집 2026-10-22 09:02
+- 🆕 [dailyshot_cvs] **[이마트24 예약] 러셀 리저브 13년 배럴 프루프 2025 (Russell Reserve 13yo Barrel Proof 2025)** (매칭: barrel proof) — ₩399000 — https://dailyshot.co/m/item/30464?item=469005
