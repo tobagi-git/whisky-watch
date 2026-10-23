@@ -101,3 +101,6 @@
 ## 수집 2026-10-23 21:01
 - 🆕 [innout] **Laphroaig 34y Ian Hunter Whisky 0,7l 45,5% vol.  chapter 5** (매칭: laphroaig) — €848.00 — https://inn-out-shop.com/products/laphroaig-34y-ian-hunter-whisky-0-7l-45-5-vol-chapter-5
 - 🆕 [innout] **Laphroaig 33 y Strong Character Whisky 0,7l 43,8 % vol.** (매칭: laphroaig) — €896.00 — https://inn-out-shop.com/products/laphroaig-33-y-strong-character-whisky-0-7l-43-8-vol
+
+## 수집 2026-10-24 02:25
+- 🆕 [wio] **Bruichladdich 2014 11 Year Old  2nd Fill Jurançon Wine Single Cask #1564 56.5%** (매칭: bruichladdich) — £99.95 — https://whiskyinternationalonline.com/products/bruichladdich-2014-11-year-old-2nd-fill-jurancon-wine-single-cask-1564-56-5
