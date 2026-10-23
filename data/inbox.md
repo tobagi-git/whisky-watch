@@ -82,3 +82,6 @@
 
 ## 수집 2026-10-23 14:02
 - 🆕 [rudder] **Bowmore ボウモア 2005 20年 ウィルソン＆モーガン** (매칭: bowmore) — ¥42350 — https://theultimatespirits.jp/products/bowmore-ボウモア-2005-20年-ウィルソン-モーガン
+
+## 수집 2026-10-23 16:01
+- 💰 [innout] **Kilchoman Sanaig cask strength dark batch 2 Edition 2026 0.7l 57,5 % scotch whisky limitiert dark batch** (매칭: kilchoman) — €78.29 → €74.89 — https://inn-out-shop.com/products/kilchoman-sanaig-cask-strength-dark-batch-2-edition-2026-0-7l-57-5-scotch-whisky-limitiert-dark-batch
