@@ -85,3 +85,8 @@
 
 ## 수집 2026-10-23 16:01
 - 💰 [innout] **Kilchoman Sanaig cask strength dark batch 2 Edition 2026 0.7l 57,5 % scotch whisky limitiert dark batch** (매칭: kilchoman) — €78.29 → €74.89 — https://inn-out-shop.com/products/kilchoman-sanaig-cask-strength-dark-batch-2-edition-2026-0-7l-57-5-scotch-whisky-limitiert-dark-batch
+
+## 수집 2026-10-23 17:11
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 11年 2015 56.1度** (매칭: ボウモア) — ¥14250 — https://mukawa-spirit.com/?pid=194119390
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2014 60.0度** (매칭: ボウモア) — ¥15580 — https://mukawa-spirit.com/?pid=194119387
+- 🆕 [mukawa] **ミルロイズ ソーホーセレクション ベンネヴィス 12年 2013 51.5度** (매칭: ベンネヴィス) — ¥13600 — https://mukawa-spirit.com/?pid=194119370
