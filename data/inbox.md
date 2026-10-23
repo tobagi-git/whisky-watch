@@ -79,3 +79,6 @@
 
 ## 수집 2026-10-23 12:01
 - 🆕 [rudder] **Ben Nevis ベンネヴィス 2013 12年 ミルロイズ ソーホーセレクション** (매칭: ben nevis) — ¥13640 — https://theultimatespirits.jp/products/ben-nevis-ベンネヴィス-2013-12年-ミルロイズ-ソーホーセレクション
+
+## 수집 2026-10-23 14:02
+- 🆕 [rudder] **Bowmore ボウモア 2005 20年 ウィルソン＆モーガン** (매칭: bowmore) — ¥42350 — https://theultimatespirits.jp/products/bowmore-ボウモア-2005-20年-ウィルソン-モーガン
