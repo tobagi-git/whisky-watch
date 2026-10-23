@@ -93,3 +93,7 @@
 
 ## 수집 2026-10-23 18:01
 - 🆕 [mukawa] **ボウモア 9年 新ラベル 【正規品】** (매칭: ボウモア) — ¥4100 — https://mukawa-spirit.com/?pid=194119508
+
+## 수집 2026-10-23 18:57
+- 💰 [innout] **Hazelburn 7 y 2018 2026 Sherry Cask 0,7l  47,9 % vol. Whisky Campbeltown** (매칭: hazelburn) — €139.00 → €109.99 — https://inn-out-shop.com/products/hazelburn-7-y-2026-sherry-cask-0-7l-47-9-vol-whisky-campbeltown
+- 💰 [innout] **Kilchoman Cognac cask 2023 0.7l 50% single cask scotch whisky** (매칭: kilchoman) — €84.99 → €74.98 — https://inn-out-shop.com/products/kilchoman-cognac-cask-2023-0-7l-50-single-cask-scotch-whisky
