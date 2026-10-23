@@ -97,3 +97,7 @@
 ## 수집 2026-10-23 18:57
 - 💰 [innout] **Hazelburn 7 y 2018 2026 Sherry Cask 0,7l  47,9 % vol. Whisky Campbeltown** (매칭: hazelburn) — €139.00 → €109.99 — https://inn-out-shop.com/products/hazelburn-7-y-2026-sherry-cask-0-7l-47-9-vol-whisky-campbeltown
 - 💰 [innout] **Kilchoman Cognac cask 2023 0.7l 50% single cask scotch whisky** (매칭: kilchoman) — €84.99 → €74.98 — https://inn-out-shop.com/products/kilchoman-cognac-cask-2023-0-7l-50-single-cask-scotch-whisky
+
+## 수집 2026-10-23 21:01
+- 🆕 [innout] **Laphroaig 34y Ian Hunter Whisky 0,7l 45,5% vol.  chapter 5** (매칭: laphroaig) — €848.00 — https://inn-out-shop.com/products/laphroaig-34y-ian-hunter-whisky-0-7l-45-5-vol-chapter-5
+- 🆕 [innout] **Laphroaig 33 y Strong Character Whisky 0,7l 43,8 % vol.** (매칭: laphroaig) — €896.00 — https://inn-out-shop.com/products/laphroaig-33-y-strong-character-whisky-0-7l-43-8-vol
