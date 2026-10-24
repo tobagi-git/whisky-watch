@@ -104,3 +104,6 @@
 
 ## 수집 2026-10-24 02:25
 - 🆕 [wio] **Bruichladdich 2014 11 Year Old  2nd Fill Jurançon Wine Single Cask #1564 56.5%** (매칭: bruichladdich) — £99.95 — https://whiskyinternationalonline.com/products/bruichladdich-2014-11-year-old-2nd-fill-jurancon-wine-single-cask-1564-56-5
+
+## 수집 2026-10-24 20:32
+- 🆕 [deinwhisky] **Laphroaig 13 Jahre 2013/2026 Port Cask Sansibar Finest Whiskies 54,6% vol.** (매칭: laphroaig) — €108.90 — https://www.deinwhisky.de/schottland/islay/laphroaig/12334-laphroaig-13-jahre-2013/2026-port-cask-sansibar-finest-whiskies-54-6-vol..html?c=45
