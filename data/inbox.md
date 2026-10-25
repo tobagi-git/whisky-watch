@@ -107,3 +107,7 @@
 
 ## 수집 2026-10-24 20:32
 - 🆕 [deinwhisky] **Laphroaig 13 Jahre 2013/2026 Port Cask Sansibar Finest Whiskies 54,6% vol.** (매칭: laphroaig) — €108.90 — https://www.deinwhisky.de/schottland/islay/laphroaig/12334-laphroaig-13-jahre-2013/2026-port-cask-sansibar-finest-whiskies-54-6-vol..html?c=45
+
+## 수집 2026-10-26 01:47
+- 🆕 [wio] **Ben Nevis 16 Year Old Single Malt Whisky Chorlton Whisky 52.8%** (매칭: ben nevis) — £72.95 — https://whiskyinternationalonline.com/products/ben-nevis-16-year-old-single-malt-whisky-chorlton-whisky-52-8
+- 💰 [wio] **Springbank 21 Year Old Single Malt Whisky 2026 Release 46%** (매칭: springbank) — £419.95 → £404.95 — https://whiskyinternationalonline.com/products/springbank-21-year-old-single-malt-whisky-2026-release-46
