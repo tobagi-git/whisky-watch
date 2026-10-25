@@ -111,3 +111,7 @@
 ## 수집 2026-10-26 01:47
 - 🆕 [wio] **Ben Nevis 16 Year Old Single Malt Whisky Chorlton Whisky 52.8%** (매칭: ben nevis) — £72.95 — https://whiskyinternationalonline.com/products/ben-nevis-16-year-old-single-malt-whisky-chorlton-whisky-52-8
 - 💰 [wio] **Springbank 21 Year Old Single Malt Whisky 2026 Release 46%** (매칭: springbank) — £419.95 → £404.95 — https://whiskyinternationalonline.com/products/springbank-21-year-old-single-malt-whisky-2026-release-46
+
+## 수집 2026-10-26 06:12
+- 🆕 [innout] **x Christian Drouin 19y Springbank cask Angels Calvados Experimental 0,7l 50,4% vol.#10** (매칭: springbank) — €119.99 — https://inn-out-shop.com/products/christian-drouin-19y-springbank-cask-angels-calvados-0-7l-50-4-vol-6
+- 🆕 [whiskybarrel] **Caol Ila 16 Year Old 2010 Unicorn for TWB** (매칭: caol ila) — £75.00 — https://www.thewhiskybarrel.com/products/caol-ila-16-year-old-2010-unicorn-paps-of-jura
