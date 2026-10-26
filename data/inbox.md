@@ -125,3 +125,8 @@
 ## 수집 2026-10-26 18:01
 - 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2013 57度 100ml** (매칭: ボウモア) — ¥2360 — https://mukawa-spirit.com/?pid=194166745
 - 🆕 [mukawa] **ソルティア レア モルト ボウモア 19年 2006 for バーキッチン 54.0度** (매칭: ボウモア) — ¥49800 — https://mukawa-spirit.com/?pid=194165219
+
+## 수집 2026-10-27 06:11
+- 🆕 [wio] **Bruichladdich Valinch No 91 Fay Sutherland 13 Year Old 1st Fill Rivsaltes 59.3%** (매칭: bruichladdich) — £99.95 — https://whiskyinternationalonline.com/products/bruichladdich-valinch-no-91-fay-sutherland-59-3
+- 🆕 [wio] **Octomore Edition 10.3 6 Year Old Single Malt Whisky 61.3%** (매칭: octomore) — £159.95 — https://whiskyinternationalonline.com/products/octomore-edition-10-3-6-year-old-single-malt-whisky-61-3
+- 💰 [reallygood] **Springbank 5 Year Old 100 Proof Single Malt - 70cl 57.1%** (매칭: springbank) — £52.00 → £47.00 — https://reallygoodwhisky.com/products/springbank-5-year-old-100-proof-single-malt-70cl-57-1
