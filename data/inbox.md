@@ -118,3 +118,6 @@
 
 ## 수집 2026-10-26 07:58
 - 💰 [innout] **Kilchoman Sanaig cask strength dark batch Edition 2024  0.7l 57,8 % scotch whisky limitiert dark batch** (매칭: kilchoman) — €69.98 → €67.76 — https://inn-out-shop.com/products/kilchoman-sanaig-cask-strength-edition-2024-0-7l-57-8-scotch-whisky-limitiert
+
+## 수집 2026-10-26 17:11
+- 🆕 [mukawa] **ボウモア 18年 シェリーカスク** (매칭: ボウモア) — ¥18850 — https://mukawa-spirit.com/?pid=194165228
