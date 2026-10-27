@@ -134,3 +134,6 @@
 ## 수집 2026-10-27 12:01
 - 🆕 [rudder] **Ardbeg アードベッグ 1975** (매칭: ardbeg) — ¥297000 — https://theultimatespirits.jp/products/ardbeg-adobetugu-1975
 - 🆕 [rudder] **Springbank スプリングバンク 2010 13年 ローカルバーレイ** (매칭: springbank) — ¥79750 — https://theultimatespirits.jp/products/springbank-supuringubanku-2010-13nian-local-barley
+
+## 수집 2026-10-27 16:01
+- 💰 [mukawa] **ボウモア 9年 新ラベル 【正規品】** (매칭: ボウモア) — ¥4100 → ¥3850 — https://mukawa-spirit.com/?pid=194119508
