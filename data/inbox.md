@@ -141,3 +141,6 @@
 ## 수집 2026-10-27 17:11
 - 🆕 [mukawa] **キルホーマン ロックサイド 11年** (매칭: キルホーマン) — ¥7150 — https://mukawa-spirit.com/?pid=194185574
 - 🆕 [mukawa] **キルホーマン モーリーワインカスク 50度** (매칭: キルホーマン) — ¥12850 — https://mukawa-spirit.com/?pid=194185570
+
+## 수집 2026-10-27 18:01
+- 💰 [innout] **Laphroaig 33 y Strong Character Whisky 0,7l 43,8 % vol. Chapter One Donald Johnston** (매칭: laphroaig) — €896.00 → €799.99 — https://inn-out-shop.com/products/laphroaig-33-y-strong-character-whisky-0-7l-43-8-vol
