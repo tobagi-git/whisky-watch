@@ -130,3 +130,7 @@
 - 🆕 [wio] **Bruichladdich Valinch No 91 Fay Sutherland 13 Year Old 1st Fill Rivsaltes 59.3%** (매칭: bruichladdich) — £99.95 — https://whiskyinternationalonline.com/products/bruichladdich-valinch-no-91-fay-sutherland-59-3
 - 🆕 [wio] **Octomore Edition 10.3 6 Year Old Single Malt Whisky 61.3%** (매칭: octomore) — £159.95 — https://whiskyinternationalonline.com/products/octomore-edition-10-3-6-year-old-single-malt-whisky-61-3
 - 💰 [reallygood] **Springbank 5 Year Old 100 Proof Single Malt - 70cl 57.1%** (매칭: springbank) — £52.00 → £47.00 — https://reallygoodwhisky.com/products/springbank-5-year-old-100-proof-single-malt-70cl-57-1
+
+## 수집 2026-10-27 12:01
+- 🆕 [rudder] **Ardbeg アードベッグ 1975** (매칭: ardbeg) — ¥297000 — https://theultimatespirits.jp/products/ardbeg-adobetugu-1975
+- 🆕 [rudder] **Springbank スプリングバンク 2010 13年 ローカルバーレイ** (매칭: springbank) — ¥79750 — https://theultimatespirits.jp/products/springbank-supuringubanku-2010-13nian-local-barley
