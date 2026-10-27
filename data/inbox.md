@@ -144,3 +144,9 @@
 
 ## 수집 2026-10-27 18:01
 - 💰 [innout] **Laphroaig 33 y Strong Character Whisky 0,7l 43,8 % vol. Chapter One Donald Johnston** (매칭: laphroaig) — €896.00 → €799.99 — https://inn-out-shop.com/products/laphroaig-33-y-strong-character-whisky-0-7l-43-8-vol
+
+## 수집 2026-10-28 06:11
+- 🆕 [innout] **Hazelburn 10 y Bourbon Cask 2025 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €69.89 — https://inn-out-shop.com/products/hazelburn-10y-bourbon-cask-2025-whisky
+- 🆕 [nickolls] **Weller Antique 107 Single Barrel (Barrel #467) – Nickolls & Perks Exclusive** (매칭: weller) — £45.79 — https://nickollsandperks.com/p/weller-antique-107-single-barrel-barrel-467-nickolls-perks-exclusive-106194601211/
+- 🆕 [wio] **Springbank 10 Year Old Distillery Exclusive Release 2026 58.8%** (매칭: springbank) — £219.95 — https://whiskyinternationalonline.com/products/springbank-10-year-old-distillery-exclusive-release-2026-58-8
+- 💰 [innout] **Hazelburn 10 y Bourbon Cask 2026 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €65.98 → €64.00 — https://inn-out-shop.com/products/hazelburn-10-y-bourbon-cask-2026-0-7l-46-vol-whisky-campbeltown
