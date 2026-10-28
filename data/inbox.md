@@ -164,3 +164,6 @@
 
 ## 수집 2026-10-28 22:01
 - 💰 [innout] **Hazelburn 10 y Bourbon Cask 2025 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €69.89 → €59.99 — https://inn-out-shop.com/products/hazelburn-10y-bourbon-cask-2025-whisky
+
+## 수집 2026-10-29 06:12
+- 💰 [wio] **Springbank 2014 11 Year Old Recharred Sherry Duty Paid Sample Rotation #411 54.7%** (매칭: springbank) — £399.95 → £379.95 — https://whiskyinternationalonline.com/products/springbank-2014-11-year-old-recharred-sherry-duty-paid-sample-rotation-411-54-7
