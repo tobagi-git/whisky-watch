@@ -161,3 +161,6 @@
 - 🆕 [mukawa] **ウィルソン&モーガン ボウモア 20年 2005 55.6度** (매칭: ボウモア) — ¥41650 — https://mukawa-spirit.com/?pid=194200957
 - 🆕 [mukawa] **ホグスヘッド インディ ベンネヴィス 15年 2010 52.8度** (매칭: ベンネヴィス) — ¥24750 — https://mukawa-spirit.com/?pid=194200949
 - 🆕 [mukawa] **ホグスヘッド インディ ラフロイグ 13年 2011 57.4度** (매칭: ラフロイグ) — ¥33000 — https://mukawa-spirit.com/?pid=194200947
+
+## 수집 2026-10-28 22:01
+- 💰 [innout] **Hazelburn 10 y Bourbon Cask 2025 0,7l 46 % vol. Whisky Campbeltown** (매칭: hazelburn) — €69.89 → €59.99 — https://inn-out-shop.com/products/hazelburn-10y-bourbon-cask-2025-whisky
