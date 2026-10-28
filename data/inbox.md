@@ -153,3 +153,6 @@
 
 ## 수집 2026-10-28 07:57
 - 💰 [innout] **Kilkerran 16y 2024 o.Dose 0,7l 46%vol. Whisky Campbeltown** (매칭: kilkerran) — €119.00 → €109.00 — https://inn-out-shop.com/products/kilkerran-16y-2024-o-dose-0-7l-46-vol-campbeltown
+
+## 수집 2026-10-28 16:01
+- 🆕 [lotteon] **[롯데마트] 부커스 (750ML)** (매칭: 부커스) — ₩213800 — https://www.lotteon.com/product/LM0080686011408?sitmNo=LM0080686011408_001&mall_no=1
