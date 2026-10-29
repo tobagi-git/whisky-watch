@@ -167,3 +167,8 @@
 
 ## 수집 2026-10-29 06:12
 - 💰 [wio] **Springbank 2014 11 Year Old Recharred Sherry Duty Paid Sample Rotation #411 54.7%** (매칭: springbank) — £399.95 → £379.95 — https://whiskyinternationalonline.com/products/springbank-2014-11-year-old-recharred-sherry-duty-paid-sample-rotation-411-54-7
+
+## 수집 2026-10-29 14:01
+- 🆕 [lotteon] **[롯데마트] [한정수량] 스태그 (750ML)** (매칭: 스태그) — ₩468000 — https://www.lotteon.com/product/LM0088004018580?sitmNo=LM0088004018580_001&mall_no=1
+- 🆕 [lotteon] **[롯데마트] [한정수량] 웰러 12년 (750ML)** (매칭: 웰러) — ₩198000 — https://www.lotteon.com/product/LM0088004027742?sitmNo=LM0088004027742_001&mall_no=1
+- 💰 [lotteon] **[롯데마트] [한정수량] 부커스 (750ML)** (매칭: 부커스) — ₩213800 → ₩198000 — https://www.lotteon.com/product/LM0080686011408?sitmNo=LM0080686011408_001&mall_no=1
