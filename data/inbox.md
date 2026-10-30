@@ -178,3 +178,6 @@
 
 ## 수집 2026-10-30 17:12
 - 🆕 [mukawa] **シグナトリー ボウモア 10年 2016 56.5度 【並行品】** (매칭: ボウモア) — ¥22000 — https://mukawa-spirit.com/?pid=194234989
+
+## 수집 2026-10-30 22:29
+- 🆕 [wio] **Bowmore 2016 10 Year Old UCF Signatory Vintage 46%** (매칭: bowmore) — £51.95 — https://whiskyinternationalonline.com/products/bowmore-2016-10-year-old-ucf-signatory-vintage-46
