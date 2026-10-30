@@ -181,3 +181,9 @@
 
 ## 수집 2026-10-30 22:29
 - 🆕 [wio] **Bowmore 2016 10 Year Old UCF Signatory Vintage 46%** (매칭: bowmore) — £51.95 — https://whiskyinternationalonline.com/products/bowmore-2016-10-year-old-ucf-signatory-vintage-46
+
+## 수집 2026-10-31 06:11
+- 🆕 [innout] **Kilchoman Ballinaby Oloroso 0.7l 46 % scotch whisky** (매칭: kilchoman) — €89.00 — https://inn-out-shop.com/products/kilchoman-ballinaby-oloroso-0-7l-46-scotch-whisky
+- 🆕 [whiskysite] **Kilchoman Sanaig Cask Strength 2026 Release 0,70 ltr 57,5%** (매칭: kilchoman) — €79.99 — https://www.whiskysite.nl/en/kilchoman-sanaig-cask-strength-2026-release-070-lt.html
+- 🆕 [wio] **Bowmore 2010 16 Year Old 1st Fill Bourbon Barrel Woodrow's Of Edinburgh 56.8%** (매칭: bowmore) — £94.95 — https://whiskyinternationalonline.com/products/bowmore-2010-16-year-old-1st-fill-bourbon-barrel-single-malt-whisky-56-8
+- 🆕 [wio] **Laphroaig 2016 10 Year Old UCF Signatory Vintage Single Malt Whisky 46%** (매칭: laphroaig) — £51.95 — https://whiskyinternationalonline.com/products/laphroaig-2016-10-year-old-ucf-signatory-vintage-46
