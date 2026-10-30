@@ -175,3 +175,6 @@
 
 ## 수집 2026-10-30 15:23
 - 🆕 [vitalaus] **부커스 25-01 배리스 배치 버번 위스키 750ml (Booker's 25-01 Barry's Batch Bourbon Whiskey 750ml)** (매칭: booker's) — $200.00 — https://vitalaus.com/products/BOOKERS14
+
+## 수집 2026-10-30 17:12
+- 🆕 [mukawa] **シグナトリー ボウモア 10年 2016 56.5度 【並行品】** (매칭: ボウモア) — ¥22000 — https://mukawa-spirit.com/?pid=194234989
