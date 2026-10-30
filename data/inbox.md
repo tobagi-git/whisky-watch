@@ -172,3 +172,6 @@
 - 🆕 [lotteon] **[롯데마트] [한정수량] 스태그 (750ML)** (매칭: 스태그) — ₩468000 — https://www.lotteon.com/product/LM0088004018580?sitmNo=LM0088004018580_001&mall_no=1
 - 🆕 [lotteon] **[롯데마트] [한정수량] 웰러 12년 (750ML)** (매칭: 웰러) — ₩198000 — https://www.lotteon.com/product/LM0088004027742?sitmNo=LM0088004027742_001&mall_no=1
 - 💰 [lotteon] **[롯데마트] [한정수량] 부커스 (750ML)** (매칭: 부커스) — ₩213800 → ₩198000 — https://www.lotteon.com/product/LM0080686011408?sitmNo=LM0080686011408_001&mall_no=1
+
+## 수집 2026-10-30 15:23
+- 🆕 [vitalaus] **부커스 25-01 배리스 배치 버번 위스키 750ml (Booker's 25-01 Barry's Batch Bourbon Whiskey 750ml)** (매칭: booker's) — $200.00 — https://vitalaus.com/products/BOOKERS14
