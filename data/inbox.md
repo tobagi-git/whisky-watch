@@ -28,3 +28,6 @@
 ## 수집 2026-11-02 18:58
 - 💰 [innout] **Mac-Talla feis ile 2025 Amarone wine cask limited edition Whisky 0,7l 54,3% vol. Morrison** (매칭: feis ile) — €129.99 → €109.99 — https://inn-out-shop.com/products/mac-talla-amarone-wine-cask-limited-edition-whisky-0-7l-54-3-vol-morrison
 - 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €119.00 → €99.99 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
+
+## 수집 2026-11-02 22:02
+- 💰 [innout] **Kilkerran 2011 Vintage 14 y Tour 2026 Edition 0,7l  56,1 %vol. Whisky o.Dose Campbeltown Limited** (매칭: kilkerran) — €239.00 → €169.00 — https://inn-out-shop.com/products/kilkerran-14-y-tour-2026-edition-0-7l-xx-vol-o-dose-campbeltown-limited
