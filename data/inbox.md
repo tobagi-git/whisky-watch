@@ -12,3 +12,8 @@
 - 💰 [reallygood] **Caol Ila Feis Ile 2009 Single Malt Scotch Whisky 70cl 58%** (매칭: caol ila) — £441.96 → £299.99 — https://reallygoodwhisky.com/products/caol-ila-feis-ile-2009-single-malt-scotch-whisky
 - 💰 [reallygood] **Ardbeg Drum Committee Release - 70cl  52%** (매칭: ardbeg) — £198.12 → £135.00 — https://reallygoodwhisky.com/products/ardbeg-drum-committee-release-70cl-52
 - 💰 [reallygood] **Laphroaig 15 Year Old 200 Years Old Limited Edition Scotch Whisky - 70cl 43%** (매칭: laphroaig) — £189.99 → £139.99 — https://reallygoodwhisky.com/products/laphroaig-15-year-old-200-years-old-limited-edition-whisky
+
+## 수집 2026-11-02 17:11
+- 🆕 [deinwhisky] **Laphroaig 5 Jahre 2021/2026 1st Fill Bourbon Barrel The Caskhound Peatwave 57,1% vol.** (매칭: laphroaig) — €59.90 — https://www.deinwhisky.de/schottland/islay/laphroaig/12342-laphroaig-5-jahre-2021/2026-1st-fill-bourbon-barrel-the-caskhound-peatwave-57-1-vol..html?c=45
+- 🆕 [mukawa] **アードベッグ ヘビー ヴェーパー 50.2度** (매칭: アードベッグ) — ¥33470 — https://mukawa-spirit.com/?pid=194238374
+- 💰 [innout] **Mac-Talla feis ile 2026 Cognac wine cask limited edition Whisky 0,7l 52,4% vol. Morrison** (매칭: feis ile) — €98.89 → €89.09 — https://inn-out-shop.com/products/mac-talla-feis-ile-2026-cognac-whisky
