@@ -31,3 +31,6 @@
 
 ## 수집 2026-11-02 22:02
 - 💰 [innout] **Kilkerran 2011 Vintage 14 y Tour 2026 Edition 0,7l  56,1 %vol. Whisky o.Dose Campbeltown Limited** (매칭: kilkerran) — €239.00 → €169.00 — https://inn-out-shop.com/products/kilkerran-14-y-tour-2026-edition-0-7l-xx-vol-o-dose-campbeltown-limited
+
+## 수집 2026-11-03 06:11
+- 🆕 [innout] **Glen Keith 2013 10y American Vrigin Oak 0,7l 47,5 % vol  Carn Mor Whisky** (매칭: glen keith) — €59.99 — https://inn-out-shop.com/products/glen-keith-2013-10y-american-vrigin-oak-0-7l-47-5-vol-carn-mor-whisky
