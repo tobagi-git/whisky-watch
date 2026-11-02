@@ -17,3 +17,10 @@
 - 🆕 [deinwhisky] **Laphroaig 5 Jahre 2021/2026 1st Fill Bourbon Barrel The Caskhound Peatwave 57,1% vol.** (매칭: laphroaig) — €59.90 — https://www.deinwhisky.de/schottland/islay/laphroaig/12342-laphroaig-5-jahre-2021/2026-1st-fill-bourbon-barrel-the-caskhound-peatwave-57-1-vol..html?c=45
 - 🆕 [mukawa] **アードベッグ ヘビー ヴェーパー 50.2度** (매칭: アードベッグ) — ¥33470 — https://mukawa-spirit.com/?pid=194238374
 - 💰 [innout] **Mac-Talla feis ile 2026 Cognac wine cask limited edition Whisky 0,7l 52,4% vol. Morrison** (매칭: feis ile) — €98.89 → €89.09 — https://inn-out-shop.com/products/mac-talla-feis-ile-2026-cognac-whisky
+
+## 수집 2026-11-02 18:02
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2013 57.0度 20ml** (매칭: ボウモア) — ¥640 — https://mukawa-spirit.com/?pid=194293156
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2014 60.0度 20ml** (매칭: ボウモア) — ¥630 — https://mukawa-spirit.com/?pid=194293152
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 11年 2015 56.1度 20ml** (매칭: ボウモア) — ¥590 — https://mukawa-spirit.com/?pid=194293150
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2014 60.0度 100ml** (매칭: ボウモア) — ¥2320 — https://mukawa-spirit.com/?pid=194293148
+- 🆕 [mukawa] **キングスバリー ゴールド ボウモア 11年 2015 56.1度 100ml** (매칭: ボウモア) — ¥2130 — https://mukawa-spirit.com/?pid=194293143
