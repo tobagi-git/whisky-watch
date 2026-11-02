@@ -24,3 +24,7 @@
 - 🆕 [mukawa] **キングスバリー ゴールド ボウモア 11年 2015 56.1度 20ml** (매칭: ボウモア) — ¥590 — https://mukawa-spirit.com/?pid=194293150
 - 🆕 [mukawa] **キングスバリー ゴールド ボウモア 12年 2014 60.0度 100ml** (매칭: ボウモア) — ¥2320 — https://mukawa-spirit.com/?pid=194293148
 - 🆕 [mukawa] **キングスバリー ゴールド ボウモア 11年 2015 56.1度 100ml** (매칭: ボウモア) — ¥2130 — https://mukawa-spirit.com/?pid=194293143
+
+## 수집 2026-11-02 18:58
+- 💰 [innout] **Mac-Talla feis ile 2025 Amarone wine cask limited edition Whisky 0,7l 54,3% vol. Morrison** (매칭: feis ile) — €129.99 → €109.99 — https://inn-out-shop.com/products/mac-talla-amarone-wine-cask-limited-edition-whisky-0-7l-54-3-vol-morrison
+- 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €119.00 → €99.99 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
