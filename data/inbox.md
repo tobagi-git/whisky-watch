@@ -45,3 +45,8 @@
 - 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €489.99 → €399.99 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
 - 💰 [innout] **Springbank Tasting Set distillery exclusive 6x 2cl 0,12l xx % vol. Whisky local barley, fino, hp 13** (매칭: springbank) — €99.00 → €89.00 — https://inn-out-shop.com/products/springbank-tasting-set-distillery-exclusive-5x-2cl-0-1l-xx-vol-whisky-local-barley-fino-hp-13
 - 💰 [innout] **Mac-Talla feis ile 2026 Cognac wine cask limited edition Whisky 0,7l 52,4% vol. Morrison** (매칭: feis ile) — €89.09 → €79.99 — https://inn-out-shop.com/products/mac-talla-feis-ile-2026-cognac-whisky
+
+## 수집 2026-11-04 04:46
+- 💰 [reallygood] **Bruichladdich 5 Year Old X4 Futures 2006-2011 - 70cl 64.6%** (매칭: bruichladdich) — £134.99 → £104.99 — https://reallygoodwhisky.com/products/bruichladdich-5-year-old-x4-futures-2006-2011-70cl-64-6
+- 💰 [reallygood] **Royal Brackla Old Particular 12 Year Old - 70cl 48.4%** (매칭: brackla) — £75.00 → £69.99 — https://reallygoodwhisky.com/products/royal-brackla-old-particular-12-year-old-70cl-48-4
+- 💰 [wio] **Caol Ila 19 Year Old Jazz Festival Edition 2026 – The Drummer 52%** (매칭: caol ila) — £279.95 → £259.95 — https://whiskyinternationalonline.com/products/caol-ila-19-year-old-jazz-festival-edition-2026-the-drummer-52
