@@ -34,3 +34,8 @@
 
 ## 수집 2026-11-03 06:11
 - 🆕 [innout] **Glen Keith 2013 10y American Vrigin Oak 0,7l 47,5 % vol  Carn Mor Whisky** (매칭: glen keith) — €59.99 — https://inn-out-shop.com/products/glen-keith-2013-10y-american-vrigin-oak-0-7l-47-5-vol-carn-mor-whisky
+
+## 수집 2026-11-03 18:58
+- 💰 [innout] **Kilchoman Maury Cask Matured Edition 2026 0.7l 50 % scotch whisky limitiert Full-Term Maturation Limited Edition** (매칭: kilchoman) — €67.48 → €64.98 — https://inn-out-shop.com/products/kilchoman-maury-cask-matured-2026-whisky
+- 💰 [innout] **Kilchoman 13 Jubilee 2025 limited edition whisky 0,7l 50 % vol.** (매칭: kilchoman) — €75.00 → €68.98 — https://inn-out-shop.com/products/kilchoman-13-2024-single-cask-whisky-0-7l-50-vol
+- 💰 [innout] **Kilchoman 2018 Ruby Port Cask Vollreifung 2024 Edition 0.7l 50% scotch whisky limitiert matured** (매칭: kilchoman) — €81.89 → €68.98 — https://inn-out-shop.com/products/kilchoman-ruby-port-cask-vollreifung-2024-edition-0-7l-50-scotch-whisky-limitiert-matured
