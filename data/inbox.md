@@ -39,3 +39,9 @@
 - 💰 [innout] **Kilchoman Maury Cask Matured Edition 2026 0.7l 50 % scotch whisky limitiert Full-Term Maturation Limited Edition** (매칭: kilchoman) — €67.48 → €64.98 — https://inn-out-shop.com/products/kilchoman-maury-cask-matured-2026-whisky
 - 💰 [innout] **Kilchoman 13 Jubilee 2025 limited edition whisky 0,7l 50 % vol.** (매칭: kilchoman) — €75.00 → €68.98 — https://inn-out-shop.com/products/kilchoman-13-2024-single-cask-whisky-0-7l-50-vol
 - 💰 [innout] **Kilchoman 2018 Ruby Port Cask Vollreifung 2024 Edition 0.7l 50% scotch whisky limitiert matured** (매칭: kilchoman) — €81.89 → €68.98 — https://inn-out-shop.com/products/kilchoman-ruby-port-cask-vollreifung-2024-edition-0-7l-50-scotch-whisky-limitiert-matured
+
+## 수집 2026-11-03 22:02
+- 💰 [innout] **Laphroaig 11 y Living Souls Bourbon cask Whisky 0,7l 50 % vol. Single malt** (매칭: laphroaig) — €73.89 → €69.99 — https://inn-out-shop.com/products/laphroaig-11-y-living-souls-bourbon-cask-whisky
+- 💰 [innout] **Springbank 21 y 2026 0,7l 46 % vol. Campbeltown whisky Limited Edition** (매칭: springbank) — €489.99 → €399.99 — https://inn-out-shop.com/products/springbank-21-y-2026-0-7l-46-vol-campbeltown-whisky-limited-edition
+- 💰 [innout] **Springbank Tasting Set distillery exclusive 6x 2cl 0,12l xx % vol. Whisky local barley, fino, hp 13** (매칭: springbank) — €99.00 → €89.00 — https://inn-out-shop.com/products/springbank-tasting-set-distillery-exclusive-5x-2cl-0-1l-xx-vol-whisky-local-barley-fino-hp-13
+- 💰 [innout] **Mac-Talla feis ile 2026 Cognac wine cask limited edition Whisky 0,7l 52,4% vol. Morrison** (매칭: feis ile) — €89.09 → €79.99 — https://inn-out-shop.com/products/mac-talla-feis-ile-2026-cognac-whisky
