@@ -50,3 +50,11 @@
 - 💰 [reallygood] **Bruichladdich 5 Year Old X4 Futures 2006-2011 - 70cl 64.6%** (매칭: bruichladdich) — £134.99 → £104.99 — https://reallygoodwhisky.com/products/bruichladdich-5-year-old-x4-futures-2006-2011-70cl-64-6
 - 💰 [reallygood] **Royal Brackla Old Particular 12 Year Old - 70cl 48.4%** (매칭: brackla) — £75.00 → £69.99 — https://reallygoodwhisky.com/products/royal-brackla-old-particular-12-year-old-70cl-48-4
 - 💰 [wio] **Caol Ila 19 Year Old Jazz Festival Edition 2026 – The Drummer 52%** (매칭: caol ila) — £279.95 → £259.95 — https://whiskyinternationalonline.com/products/caol-ila-19-year-old-jazz-festival-edition-2026-the-drummer-52
+
+## 수집 2026-11-04 07:56
+- 💰 [reallygood] **Port Ellen 32 Year Old 1979 12th Release Single Malt - 70cl 52.5%** (매칭: port ellen) — £2743.20 → £2243.20 — https://reallygoodwhisky.com/products/port-ellen-1979-32-year-old-12th-release
+- 💰 [reallygood] **Port Ellen 32 Year Old 1979 11th Release Single Malt - 70cl 53.9%** (매칭: port ellen) — £2819.40 → £2289.40 — https://reallygoodwhisky.com/products/port-ellen-1979-32-year-old-11th-release
+- 💰 [reallygood] **Brora 25 Year Old 2008 Release Single Malt - 70cl 56.3%** (매칭: brora) — £2115.00 → £1700.00 — https://reallygoodwhisky.com/products/brora-25-year-old-2008-release-70cl-56-3
+- 💰 [reallygood] **Laphroaig Elements L2.0 - 70cl 59.6%** (매칭: laphroaig) — £155.00 → £129.99 — https://reallygoodwhisky.com/products/laphroaig-elements-l2-0-70cl-59-6
+- 💰 [reallygood] **Bowmore 25 Year Old Islay Single Malt Scotch Whisky - 70cl 43%** (매칭: bowmore) — £399.99 → £299.99 — https://reallygoodwhisky.com/products/bowmore-25-year-old-whisky
+- 💰 [wio] **Springbank 10 Year Old Single Malt Whisky 46%** (매칭: springbank) — £84.95 → £69.95 — https://whiskyinternationalonline.com/products/springbank-10-year-old-whisky-46
