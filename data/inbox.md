@@ -67,3 +67,6 @@
 
 ## 수집 2026-11-04 18:01
 - 💰 [wio] **Bruichladdich 14 Year Old Whisky Yellow Submarine Reclassified 54.2%** (매칭: bruichladdich) — £249.95 → £224.95 — https://whiskyinternationalonline.com/products/bruichladdich-14-year-old-whisky-yellow-submarine-reclassified-54-2
+
+## 수집 2026-11-04 18:58
+- 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €99.99 → €89.99 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
