@@ -73,3 +73,6 @@
 
 ## 수집 2026-11-04 22:01
 - 🆕 [wio] **Octomore 9 Year Old Single Cask #2932 1st-Fill Bourbon Cask 61.6%** (매칭: octomore) — £274.95 — https://whiskyinternationalonline.com/products/octomore-single-cask-2932-61-6
+
+## 수집 2026-11-05 05:00
+- 🆕 [whiskybarrel] **Bowmore 16 Year Old Living Souls** (매칭: bowmore) — £90.95 — https://www.thewhiskybarrel.com/products/bowmore-16-year-old-living-souls
