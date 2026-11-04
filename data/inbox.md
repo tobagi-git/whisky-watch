@@ -61,3 +61,6 @@
 
 ## 수집 2026-11-04 14:02
 - 🆕 [vitalaus] **스태그 26C 배치 버번 위스키 750ml (Stagg Bourbon Batch 26C Whiskey 750ml)** (매칭: stagg) — $342.00 — https://vitalaus.com/products/STAGGJR13
+
+## 수집 2026-11-04 17:12
+- 🆕 [mukawa] **ザ シングルカスク ベンネヴィス 10年 2015 ヘビリーピーテッド for TASTING MARKET 60.6度** (매칭: ベンネヴィス) — ¥19800 — https://mukawa-spirit.com/?pid=194309383
