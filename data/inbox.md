@@ -58,3 +58,6 @@
 - 💰 [reallygood] **Laphroaig Elements L2.0 - 70cl 59.6%** (매칭: laphroaig) — £155.00 → £129.99 — https://reallygoodwhisky.com/products/laphroaig-elements-l2-0-70cl-59-6
 - 💰 [reallygood] **Bowmore 25 Year Old Islay Single Malt Scotch Whisky - 70cl 43%** (매칭: bowmore) — £399.99 → £299.99 — https://reallygoodwhisky.com/products/bowmore-25-year-old-whisky
 - 💰 [wio] **Springbank 10 Year Old Single Malt Whisky 46%** (매칭: springbank) — £84.95 → £69.95 — https://whiskyinternationalonline.com/products/springbank-10-year-old-whisky-46
+
+## 수집 2026-11-04 14:02
+- 🆕 [vitalaus] **스태그 26C 배치 버번 위스키 750ml (Stagg Bourbon Batch 26C Whiskey 750ml)** (매칭: stagg) — $342.00 — https://vitalaus.com/products/STAGGJR13
