@@ -70,3 +70,6 @@
 
 ## 수집 2026-11-04 18:58
 - 💰 [innout] **Mac-Talla PX Feis ile 2023 limited edition Whisky Islay 0,7l 54,6% vol. mit GP Morrison** (매칭: feis ile) — €99.99 → €89.99 — https://inn-out-shop.com/products/mac-talla-morrison-px-limited-edition-whisky-islay-54-6
+
+## 수집 2026-11-04 22:01
+- 🆕 [wio] **Octomore 9 Year Old Single Cask #2932 1st-Fill Bourbon Cask 61.6%** (매칭: octomore) — £274.95 — https://whiskyinternationalonline.com/products/octomore-single-cask-2932-61-6
