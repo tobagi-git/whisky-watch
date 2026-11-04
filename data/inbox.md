@@ -64,3 +64,6 @@
 
 ## 수집 2026-11-04 17:12
 - 🆕 [mukawa] **ザ シングルカスク ベンネヴィス 10年 2015 ヘビリーピーテッド for TASTING MARKET 60.6度** (매칭: ベンネヴィス) — ¥19800 — https://mukawa-spirit.com/?pid=194309383
+
+## 수집 2026-11-04 18:01
+- 💰 [wio] **Bruichladdich 14 Year Old Whisky Yellow Submarine Reclassified 54.2%** (매칭: bruichladdich) — £249.95 → £224.95 — https://whiskyinternationalonline.com/products/bruichladdich-14-year-old-whisky-yellow-submarine-reclassified-54-2
