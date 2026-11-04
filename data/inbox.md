@@ -76,3 +76,6 @@
 
 ## 수집 2026-11-05 05:00
 - 🆕 [whiskybarrel] **Bowmore 16 Year Old Living Souls** (매칭: bowmore) — £90.95 — https://www.thewhiskybarrel.com/products/bowmore-16-year-old-living-souls
+
+## 수집 2026-11-05 07:58
+- 💰 [innout] **Springbank Local Barley 11 y 0,7l 55,1% vol. Schottland Campbeltown** (매칭: springbank) — €499.89 → €449.99 — https://inn-out-shop.com/products/springbank-local-barley-11y-0-7l-55-1-vol-schottland-campbeltown
